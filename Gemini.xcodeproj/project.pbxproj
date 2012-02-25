@@ -1,0 +1,400 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2B14F99687006B1E17 /* Foundation.framework */; };
+		76BC9A3214F99687006B1E17 /* Gemini.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A3114F99687006B1E17 /* Gemini.m */; };
+		76BC9A3A14F99687006B1E17 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A3914F99687006B1E17 /* SenTestingKit.framework */; };
+		76BC9A3C14F99687006B1E17 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A3B14F99687006B1E17 /* UIKit.framework */; };
+		76BC9A3D14F99687006B1E17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2B14F99687006B1E17 /* Foundation.framework */; };
+		76BC9A4014F99687006B1E17 /* libGemini.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2814F99687006B1E17 /* libGemini.a */; };
+		76BC9A4614F99687006B1E17 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76BC9A4414F99687006B1E17 /* InfoPlist.strings */; };
+		76BC9A4914F99687006B1E17 /* GeminiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A4814F99687006B1E17 /* GeminiTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		76BC9A3E14F99687006B1E17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76BC9A1F14F99687006B1E17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76BC9A2714F99687006B1E17;
+			remoteInfo = Gemini;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		76BC9A2814F99687006B1E17 /* libGemini.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGemini.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		76BC9A2B14F99687006B1E17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
+		76BC9A3014F99687006B1E17 /* Gemini.h */ = {isa = PBXFileReference; path = Gemini.h; sourceTree = "<group>"; };
+		76BC9A3114F99687006B1E17 /* Gemini.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Gemini.m; sourceTree = "<group>"; };
+		76BC9A3814F99687006B1E17 /* GeminiTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeminiTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76BC9A3914F99687006B1E17 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		76BC9A3B14F99687006B1E17 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		76BC9A4314F99687006B1E17 /* GeminiTests-Info.plist */ = {isa = PBXFileReference; path = "GeminiTests-Info.plist"; sourceTree = "<group>"; };
+		76BC9A4514F99687006B1E17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		76BC9A4714F99687006B1E17 /* GeminiTests.h */ = {isa = PBXFileReference; path = GeminiTests.h; sourceTree = "<group>"; };
+		76BC9A4814F99687006B1E17 /* GeminiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeminiTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		76BC9A2514F99687006B1E17 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76BC9A3414F99687006B1E17 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76BC9A3A14F99687006B1E17 /* SenTestingKit.framework in Frameworks */,
+				76BC9A3C14F99687006B1E17 /* UIKit.framework in Frameworks */,
+				76BC9A3D14F99687006B1E17 /* Foundation.framework in Frameworks */,
+				76BC9A4014F99687006B1E17 /* libGemini.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		76BC9A1D14F99687006B1E17 = {
+			isa = PBXGroup;
+			children = (
+				76BC9A2D14F99687006B1E17 /* Gemini */,
+				76BC9A4114F99687006B1E17 /* GeminiTests */,
+				76BC9A2A14F99687006B1E17 /* Frameworks */,
+				76BC9A2914F99687006B1E17 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		76BC9A2914F99687006B1E17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A2814F99687006B1E17 /* libGemini.a */,
+				76BC9A3814F99687006B1E17 /* GeminiTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76BC9A2A14F99687006B1E17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A2B14F99687006B1E17 /* Foundation.framework */,
+				76BC9A3914F99687006B1E17 /* SenTestingKit.framework */,
+				76BC9A3B14F99687006B1E17 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		76BC9A2D14F99687006B1E17 /* Gemini */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A3014F99687006B1E17 /* Gemini.h */,
+				76BC9A3114F99687006B1E17 /* Gemini.m */,
+				76BC9A2E14F99687006B1E17 /* Supporting Files */,
+			);
+			path = Gemini;
+			sourceTree = "<group>";
+		};
+		76BC9A2E14F99687006B1E17 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		76BC9A4114F99687006B1E17 /* GeminiTests */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A4714F99687006B1E17 /* GeminiTests.h */,
+				76BC9A4814F99687006B1E17 /* GeminiTests.m */,
+				76BC9A4214F99687006B1E17 /* Supporting Files */,
+			);
+			path = GeminiTests;
+			sourceTree = "<group>";
+		};
+		76BC9A4214F99687006B1E17 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A4314F99687006B1E17 /* GeminiTests-Info.plist */,
+				76BC9A4414F99687006B1E17 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		76BC9A2614F99687006B1E17 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		76BC9A2714F99687006B1E17 /* Gemini */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76BC9A4C14F99687006B1E17 /* Build configuration list for PBXNativeTarget "Gemini" */;
+			buildPhases = (
+				76BC9A2414F99687006B1E17 /* Sources */,
+				76BC9A2514F99687006B1E17 /* Frameworks */,
+				76BC9A2614F99687006B1E17 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Gemini;
+			productName = Gemini;
+			productReference = 76BC9A2814F99687006B1E17 /* libGemini.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		76BC9A3714F99687006B1E17 /* GeminiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76BC9A4F14F99687006B1E17 /* Build configuration list for PBXNativeTarget "GeminiTests" */;
+			buildPhases = (
+				76BC9A3314F99687006B1E17 /* Sources */,
+				76BC9A3414F99687006B1E17 /* Frameworks */,
+				76BC9A3514F99687006B1E17 /* Resources */,
+				76BC9A3614F99687006B1E17 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76BC9A3F14F99687006B1E17 /* PBXTargetDependency */,
+			);
+			name = GeminiTests;
+			productName = GeminiTests;
+			productReference = 76BC9A3814F99687006B1E17 /* GeminiTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		76BC9A1F14F99687006B1E17 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 76BC9A2214F99687006B1E17 /* Build configuration list for PBXProject "Gemini" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 76BC9A1D14F99687006B1E17;
+			productRefGroup = 76BC9A2914F99687006B1E17 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				76BC9A2714F99687006B1E17 /* Gemini */,
+				76BC9A3714F99687006B1E17 /* GeminiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		76BC9A3514F99687006B1E17 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76BC9A4614F99687006B1E17 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		76BC9A3614F99687006B1E17 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		76BC9A2414F99687006B1E17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76BC9A3214F99687006B1E17 /* Gemini.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76BC9A3314F99687006B1E17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76BC9A4914F99687006B1E17 /* GeminiTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		76BC9A3F14F99687006B1E17 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76BC9A2714F99687006B1E17 /* Gemini */;
+			targetProxy = 76BC9A3E14F99687006B1E17 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		76BC9A4414F99687006B1E17 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				76BC9A4514F99687006B1E17 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		76BC9A4A14F99687006B1E17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		76BC9A4B14F99687006B1E17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		76BC9A4D14F99687006B1E17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Gemini.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		76BC9A4E14F99687006B1E17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Gemini.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		76BC9A5014F99687006B1E17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				INFOPLIST_FILE = "GeminiTests/GeminiTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		76BC9A5114F99687006B1E17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				INFOPLIST_FILE = "GeminiTests/GeminiTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		76BC9A2214F99687006B1E17 /* Build configuration list for PBXProject "Gemini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76BC9A4A14F99687006B1E17 /* Debug */,
+				76BC9A4B14F99687006B1E17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76BC9A4C14F99687006B1E17 /* Build configuration list for PBXNativeTarget "Gemini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76BC9A4D14F99687006B1E17 /* Debug */,
+				76BC9A4E14F99687006B1E17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		76BC9A4F14F99687006B1E17 /* Build configuration list for PBXNativeTarget "GeminiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76BC9A5014F99687006B1E17 /* Debug */,
+				76BC9A5114F99687006B1E17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 76BC9A1F14F99687006B1E17 /* Project object */;
+}
