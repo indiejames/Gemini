@@ -1,0 +1,147 @@
+//
+//  LGeminiObject.m
+//  Gemini
+//
+//  Created by James Norton on 2/25/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#include <stdio.h>
+#import "Gemini.h"
+#import "GeminiObject.h"
+#import "LGeminiObject.h"
+
+
+static int newGeminiObject(lua_State *L){
+    GeminiObject *go = [[GeminiObject alloc] initWithLuaState:L];
+    
+    GeminiObject **lgo = (GeminiObject **)lua_newuserdata(L, sizeof(GeminiObject *));
+    *lgo = go;
+    
+    luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
+    lua_setmetatable(L, -2);
+    
+    NSLog(@"New GeminiObject created");
+    
+    // add this new object to the globall list of objects
+    [[Gemini shared].geminiObjects addObject:go];
+    
+    return 1;
+    
+}
+
+static int geminiObjectGC (lua_State *L){
+    GeminiObject **go = (GeminiObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
+    [*go release];
+    NSLog(@"GeminiObject released");
+    
+    return 0;
+}
+
+static int addEventListener(lua_State *L){
+    GeminiObject **go = (GeminiObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
+    const char *eventName = luaL_checkstring(L, 2);
+    NSString *name = [[NSString stringWithFormat:@"%s", eventName] retain];
+    int callback = luaL_ref(L, LUA_REGISTRYINDEX);
+    [*go addEventListener:callback forEvent:name];
+    
+    [name release];
+    
+    return 0;
+}
+
+static const struct luaL_Reg geminiObjectLib_f [] = {
+    {"new", newGeminiObject},
+    {NULL, NULL}
+};
+
+static const struct luaL_Reg geminiObjectLib_m [] = {
+    {"addEventListener", addEventListener},
+    {NULL, NULL}
+};
+
+static int l_irc_index( lua_State* L )
+{
+    NSLog(@"Calling l_irc_index()");
+    /* object, key */
+    /* first check the environment */ 
+    lua_getuservalue( L, -2 );
+    if(lua_isnil(L,-1)){
+        NSLog(@"user value for user data is nil");
+    }
+    lua_pushvalue( L, -2 );
+    
+    lua_rawget( L, -2 );
+    if( lua_isnoneornil( L, -1 ) == 0 )
+    {
+        return 1;
+    }
+    
+    lua_pop( L, 2 );
+    
+    /* second check the metatable */    
+    lua_getmetatable( L, -2 );
+    lua_pushvalue( L, -2 );
+    lua_rawget( L, -2 );
+    
+    /* nil or otherwise, we return here */
+    return 1;
+}
+
+static int l_irc_newindex( lua_State* L )
+{
+    NSLog(@"Calling l_irc_newindex()");
+    int top = lua_gettop(L);
+    NSLog(@"stack has %d values", top);
+    /* object, key, value */
+    
+    lua_getuservalue( L, -3 );
+    BOOL newtable = NO;
+    if (lua_isnil(L, -1)) {
+        NSLog(@"No data table for lua data");
+        // this object has no lua object associated with it yes, so create a table and set it
+        lua_newtable(L);
+        newtable = YES;
+    }
+    if (newtable) {
+        lua_pushvalue( L, -4 );
+        lua_pushvalue( L, -4 );
+        lua_rawset( L, -3 );
+        lua_setuservalue(L, -5);
+    } else {
+        lua_pushvalue(L, -3);
+        lua_pushvalue(L,-3);
+        lua_rawset( L, -3 );
+    }
+    
+    return 0;
+}
+
+int luaopen_geminiObjectLib (lua_State *L){
+    // create the metatable and put it into the registry
+    luaL_newmetatable(L, GEMINI_OBJECT_LUA_KEY);
+    
+    lua_pushvalue(L, -1); // duplicates the metatable
+    
+    //lua_setfield(L, -2, "__index");
+    luaL_setfuncs(L, geminiObjectLib_m, 0);
+    
+    lua_pushstring(L,"__gc");
+    lua_pushcfunction(L, geminiObjectGC);
+    lua_settable(L, -3);
+    
+    lua_pushstring(L,"__index");
+    lua_pushcfunction(L,l_irc_index);
+    lua_settable(L,-3);
+    
+    lua_pushstring(L,"__newindex");
+    lua_pushcfunction(L,l_irc_newindex);
+    lua_settable(L,-3);
+    
+    // create a table/library to hold the functions
+    luaL_newlib(L, geminiObjectLib_f);
+    
+    NSLog(@"gemini lib opened");
+    
+    return 1;
+}

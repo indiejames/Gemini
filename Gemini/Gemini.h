@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GLKit/GLKit.h>
+#import "ObjectAL.h"
 
 @interface Gemini : NSObject
+
+@property (readonly) NSMutableArray *geminiObjects;
+@property (readonly) GLKViewController *viewController;
+
+-(void)execute:(NSString *)filename;
+-(BOOL)handleEvent:(NSString *)event;
++(Gemini *)shared;
 
 @end

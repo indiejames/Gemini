@@ -15,6 +15,137 @@
 		76BC9A4014F99687006B1E17 /* libGemini.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2814F99687006B1E17 /* libGemini.a */; };
 		76BC9A4614F99687006B1E17 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76BC9A4414F99687006B1E17 /* InfoPlist.strings */; };
 		76BC9A4914F99687006B1E17 /* GeminiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A4814F99687006B1E17 /* GeminiTests.m */; };
+		76BC9A8C14F99746006B1E17 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5314F99746006B1E17 /* lapi.c */; };
+		76BC9A8D14F99746006B1E17 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A5414F99746006B1E17 /* lapi.h */; };
+		76BC9A8E14F99746006B1E17 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5514F99746006B1E17 /* lauxlib.c */; };
+		76BC9A8F14F99746006B1E17 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A5614F99746006B1E17 /* lauxlib.h */; };
+		76BC9A9014F99746006B1E17 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5714F99746006B1E17 /* lbaselib.c */; };
+		76BC9A9114F99746006B1E17 /* lbitlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5814F99746006B1E17 /* lbitlib.c */; };
+		76BC9A9214F99746006B1E17 /* lcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5914F99746006B1E17 /* lcode.c */; };
+		76BC9A9314F99746006B1E17 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A5A14F99746006B1E17 /* lcode.h */; };
+		76BC9A9414F99746006B1E17 /* lcorolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5B14F99746006B1E17 /* lcorolib.c */; };
+		76BC9A9514F99746006B1E17 /* lctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5C14F99746006B1E17 /* lctype.c */; };
+		76BC9A9614F99746006B1E17 /* lctype.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A5D14F99746006B1E17 /* lctype.h */; };
+		76BC9A9714F99746006B1E17 /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5E14F99746006B1E17 /* ldblib.c */; };
+		76BC9A9814F99746006B1E17 /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A5F14F99746006B1E17 /* ldebug.c */; };
+		76BC9A9914F99746006B1E17 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6014F99746006B1E17 /* ldebug.h */; };
+		76BC9A9A14F99746006B1E17 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6114F99746006B1E17 /* ldo.c */; };
+		76BC9A9B14F99746006B1E17 /* ldo.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6214F99746006B1E17 /* ldo.h */; };
+		76BC9A9C14F99746006B1E17 /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6314F99746006B1E17 /* ldump.c */; };
+		76BC9A9D14F99746006B1E17 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6414F99746006B1E17 /* lfunc.c */; };
+		76BC9A9E14F99746006B1E17 /* lfunc.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6514F99746006B1E17 /* lfunc.h */; };
+		76BC9A9F14F99746006B1E17 /* lgc.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6614F99746006B1E17 /* lgc.c */; };
+		76BC9AA014F99746006B1E17 /* lgc.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6714F99746006B1E17 /* lgc.h */; };
+		76BC9AA114F99746006B1E17 /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6814F99746006B1E17 /* linit.c */; };
+		76BC9AA214F99746006B1E17 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6914F99746006B1E17 /* liolib.c */; };
+		76BC9AA314F99746006B1E17 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6A14F99746006B1E17 /* llex.c */; };
+		76BC9AA414F99746006B1E17 /* llex.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6B14F99746006B1E17 /* llex.h */; };
+		76BC9AA514F99746006B1E17 /* llimits.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6C14F99746006B1E17 /* llimits.h */; };
+		76BC9AA614F99746006B1E17 /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6D14F99746006B1E17 /* lmathlib.c */; };
+		76BC9AA714F99746006B1E17 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A6E14F99746006B1E17 /* lmem.c */; };
+		76BC9AA814F99746006B1E17 /* lmem.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A6F14F99746006B1E17 /* lmem.h */; };
+		76BC9AA914F99746006B1E17 /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7014F99746006B1E17 /* loadlib.c */; };
+		76BC9AAA14F99746006B1E17 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7114F99746006B1E17 /* lobject.c */; };
+		76BC9AAB14F99746006B1E17 /* lobject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7214F99746006B1E17 /* lobject.h */; };
+		76BC9AAC14F99746006B1E17 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7314F99746006B1E17 /* lopcodes.c */; };
+		76BC9AAD14F99746006B1E17 /* lopcodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7414F99746006B1E17 /* lopcodes.h */; };
+		76BC9AAE14F99746006B1E17 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7514F99746006B1E17 /* loslib.c */; };
+		76BC9AAF14F99746006B1E17 /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7614F99746006B1E17 /* lparser.c */; };
+		76BC9AB014F99746006B1E17 /* lparser.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7714F99746006B1E17 /* lparser.h */; };
+		76BC9AB114F99746006B1E17 /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7814F99746006B1E17 /* lstate.c */; };
+		76BC9AB214F99746006B1E17 /* lstate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7914F99746006B1E17 /* lstate.h */; };
+		76BC9AB314F99746006B1E17 /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7A14F99746006B1E17 /* lstring.c */; };
+		76BC9AB414F99746006B1E17 /* lstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7B14F99746006B1E17 /* lstring.h */; };
+		76BC9AB514F99746006B1E17 /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7C14F99746006B1E17 /* lstrlib.c */; };
+		76BC9AB614F99746006B1E17 /* ltable.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7D14F99746006B1E17 /* ltable.c */; };
+		76BC9AB714F99746006B1E17 /* ltable.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A7E14F99746006B1E17 /* ltable.h */; };
+		76BC9AB814F99746006B1E17 /* ltablib.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A7F14F99746006B1E17 /* ltablib.c */; };
+		76BC9AB914F99746006B1E17 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A8014F99746006B1E17 /* ltm.c */; };
+		76BC9ABA14F99746006B1E17 /* ltm.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8114F99746006B1E17 /* ltm.h */; };
+		76BC9ABB14F99746006B1E17 /* lua.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8214F99746006B1E17 /* lua.h */; };
+		76BC9ABC14F99746006B1E17 /* lua.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8314F99746006B1E17 /* lua.hpp */; };
+		76BC9ABD14F99746006B1E17 /* luaconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8414F99746006B1E17 /* luaconf.h */; };
+		76BC9ABE14F99746006B1E17 /* lualib.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8514F99746006B1E17 /* lualib.h */; };
+		76BC9ABF14F99746006B1E17 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A8614F99746006B1E17 /* lundump.c */; };
+		76BC9AC014F99746006B1E17 /* lundump.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8714F99746006B1E17 /* lundump.h */; };
+		76BC9AC114F99746006B1E17 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A8814F99746006B1E17 /* lvm.c */; };
+		76BC9AC214F99746006B1E17 /* lvm.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8914F99746006B1E17 /* lvm.h */; };
+		76BC9AC314F99746006B1E17 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A8A14F99746006B1E17 /* lzio.c */; };
+		76BC9AC414F99746006B1E17 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8B14F99746006B1E17 /* lzio.h */; };
+		76BC9B0714F99761006B1E17 /* OALAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AC714F99761006B1E17 /* OALAction.h */; };
+		76BC9B0814F99761006B1E17 /* OALAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AC814F99761006B1E17 /* OALAction.m */; };
+		76BC9B0914F99761006B1E17 /* OALActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AC914F99761006B1E17 /* OALActionManager.h */; };
+		76BC9B0A14F99761006B1E17 /* OALActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9ACA14F99761006B1E17 /* OALActionManager.m */; };
+		76BC9B0B14F99761006B1E17 /* OALAudioActions.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ACB14F99761006B1E17 /* OALAudioActions.h */; };
+		76BC9B0C14F99761006B1E17 /* OALAudioActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9ACC14F99761006B1E17 /* OALAudioActions.m */; };
+		76BC9B0D14F99761006B1E17 /* OALFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ACD14F99761006B1E17 /* OALFunction.h */; };
+		76BC9B0E14F99761006B1E17 /* OALFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9ACE14F99761006B1E17 /* OALFunction.m */; };
+		76BC9B0F14F99761006B1E17 /* OALUtilityActions.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ACF14F99761006B1E17 /* OALUtilityActions.h */; };
+		76BC9B1014F99761006B1E17 /* OALUtilityActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AD014F99761006B1E17 /* OALUtilityActions.m */; };
+		76BC9B1114F99761006B1E17 /* OALAudioTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AD214F99761006B1E17 /* OALAudioTrack.h */; };
+		76BC9B1214F99761006B1E17 /* OALAudioTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AD314F99761006B1E17 /* OALAudioTrack.m */; };
+		76BC9B1314F99761006B1E17 /* OALAudioTrackNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AD414F99761006B1E17 /* OALAudioTrackNotifications.h */; };
+		76BC9B1414F99761006B1E17 /* OALAudioTrackNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AD514F99761006B1E17 /* OALAudioTrackNotifications.m */; };
+		76BC9B1514F99761006B1E17 /* OALAudioTracks.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AD614F99761006B1E17 /* OALAudioTracks.h */; };
+		76BC9B1614F99761006B1E17 /* OALAudioTracks.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AD714F99761006B1E17 /* OALAudioTracks.m */; };
+		76BC9B1714F99761006B1E17 /* OALSimpleAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AD914F99761006B1E17 /* OALSimpleAudio.h */; };
+		76BC9B1814F99761006B1E17 /* OALSimpleAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9ADA14F99761006B1E17 /* OALSimpleAudio.m */; };
+		76BC9B1914F99761006B1E17 /* ObjectAL.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ADB14F99761006B1E17 /* ObjectAL.h */; };
+		76BC9B1A14F99761006B1E17 /* ObjectALConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ADC14F99761006B1E17 /* ObjectALConfig.h */; };
+		76BC9B1B14F99761006B1E17 /* ALBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9ADE14F99761006B1E17 /* ALBuffer.h */; };
+		76BC9B1C14F99761006B1E17 /* ALBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9ADF14F99761006B1E17 /* ALBuffer.m */; };
+		76BC9B1D14F99761006B1E17 /* ALCaptureDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AE014F99761006B1E17 /* ALCaptureDevice.h */; };
+		76BC9B1E14F99761006B1E17 /* ALCaptureDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AE114F99761006B1E17 /* ALCaptureDevice.m */; };
+		76BC9B1F14F99761006B1E17 /* ALChannelSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AE214F99761006B1E17 /* ALChannelSource.h */; };
+		76BC9B2014F99761006B1E17 /* ALChannelSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AE314F99761006B1E17 /* ALChannelSource.m */; };
+		76BC9B2114F99761006B1E17 /* ALContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AE414F99761006B1E17 /* ALContext.h */; };
+		76BC9B2214F99761006B1E17 /* ALContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AE514F99761006B1E17 /* ALContext.m */; };
+		76BC9B2314F99761006B1E17 /* ALDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AE614F99761006B1E17 /* ALDevice.h */; };
+		76BC9B2414F99761006B1E17 /* ALDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AE714F99761006B1E17 /* ALDevice.m */; };
+		76BC9B2514F99761006B1E17 /* ALListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AE814F99761006B1E17 /* ALListener.h */; };
+		76BC9B2614F99761006B1E17 /* ALListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AE914F99761006B1E17 /* ALListener.m */; };
+		76BC9B2714F99761006B1E17 /* ALSoundSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AEA14F99761006B1E17 /* ALSoundSource.h */; };
+		76BC9B2814F99761006B1E17 /* ALSoundSourcePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AEB14F99761006B1E17 /* ALSoundSourcePool.h */; };
+		76BC9B2914F99761006B1E17 /* ALSoundSourcePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AEC14F99761006B1E17 /* ALSoundSourcePool.m */; };
+		76BC9B2A14F99761006B1E17 /* ALSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AED14F99761006B1E17 /* ALSource.h */; };
+		76BC9B2B14F99761006B1E17 /* ALSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AEE14F99761006B1E17 /* ALSource.m */; };
+		76BC9B2C14F99761006B1E17 /* ALTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AEF14F99761006B1E17 /* ALTypes.h */; };
+		76BC9B2D14F99761006B1E17 /* ALWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AF014F99761006B1E17 /* ALWrapper.h */; };
+		76BC9B2E14F99761006B1E17 /* ALWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AF114F99761006B1E17 /* ALWrapper.m */; };
+		76BC9B2F14F99761006B1E17 /* OpenALManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AF214F99761006B1E17 /* OpenALManager.h */; };
+		76BC9B3014F99761006B1E17 /* OpenALManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AF314F99761006B1E17 /* OpenALManager.m */; };
+		76BC9B3114F99761006B1E17 /* OALAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AF514F99761006B1E17 /* OALAudioSession.h */; };
+		76BC9B3214F99761006B1E17 /* OALAudioSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AF614F99761006B1E17 /* OALAudioSession.m */; };
+		76BC9B3314F99761006B1E17 /* OALSuspendHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AF714F99761006B1E17 /* OALSuspendHandler.h */; };
+		76BC9B3414F99761006B1E17 /* OALSuspendHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AF814F99761006B1E17 /* OALSuspendHandler.m */; };
+		76BC9B3514F99761006B1E17 /* IOSVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AFA14F99761006B1E17 /* IOSVersion.h */; };
+		76BC9B3614F99761006B1E17 /* IOSVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AFB14F99761006B1E17 /* IOSVersion.m */; };
+		76BC9B3714F99761006B1E17 /* mach_timing.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AFC14F99761006B1E17 /* mach_timing.c */; };
+		76BC9B3814F99761006B1E17 /* mach_timing.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AFD14F99761006B1E17 /* mach_timing.h */; };
+		76BC9B3914F99761006B1E17 /* NSMutableArray+WeakReferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9AFE14F99761006B1E17 /* NSMutableArray+WeakReferences.h */; };
+		76BC9B3A14F99761006B1E17 /* NSMutableArray+WeakReferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9AFF14F99761006B1E17 /* NSMutableArray+WeakReferences.m */; };
+		76BC9B3B14F99761006B1E17 /* OALAudioFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B0014F99761006B1E17 /* OALAudioFile.h */; };
+		76BC9B3C14F99761006B1E17 /* OALAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B0114F99761006B1E17 /* OALAudioFile.m */; };
+		76BC9B3D14F99761006B1E17 /* OALNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B0214F99761006B1E17 /* OALNotifications.h */; };
+		76BC9B3E14F99761006B1E17 /* OALTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B0314F99761006B1E17 /* OALTools.h */; };
+		76BC9B3F14F99761006B1E17 /* OALTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B0414F99761006B1E17 /* OALTools.m */; };
+		76BC9B4014F99761006B1E17 /* ObjectALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B0514F99761006B1E17 /* ObjectALMacros.h */; };
+		76BC9B4114F99761006B1E17 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B0614F99761006B1E17 /* SynthesizeSingleton.h */; };
+		76BC9B4E14F9B923006B1E17 /* GeminiEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */; };
+		76BC9B4F14F9B923006B1E17 /* GeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */; };
+		76BC9B5014F9B923006B1E17 /* GeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */; };
+		76BC9B5414F9BF3B006B1E17 /* GeminiObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */; };
+		76BC9B5514F9BF3B006B1E17 /* GeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */; };
+		76BC9B5614F9BF3B006B1E17 /* GeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */; };
+		76BC9B9314F9C733006B1E17 /* LGeminiObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B9114F9C733006B1E17 /* LGeminiObject.h */; };
+		76BC9B9414F9C733006B1E17 /* LGeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9214F9C733006B1E17 /* LGeminiObject.m */; };
+		76BC9B9514F9C733006B1E17 /* LGeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9214F9C733006B1E17 /* LGeminiObject.m */; };
+		76BC9B9914F9CD85006B1E17 /* GeminiGLKViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */; };
+		76BC9B9A14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */; };
+		76BC9B9B14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */; };
+		76BC9B9D14F9CDC1006B1E17 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9B9C14F9CDC1006B1E17 /* GLKit.framework */; };
+		76BC9B9F14F9CDCC006B1E17 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9B9E14F9CDCC006B1E17 /* OpenGLES.framework */; };
+		76BC9BA114F9CDE0006B1E17 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9BA014F9CDE0006B1E17 /* OpenAL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,16 +161,144 @@
 /* Begin PBXFileReference section */
 		76BC9A2814F99687006B1E17 /* libGemini.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGemini.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BC9A2B14F99687006B1E17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
-		76BC9A3014F99687006B1E17 /* Gemini.h */ = {isa = PBXFileReference; path = Gemini.h; sourceTree = "<group>"; };
+		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
+		76BC9A3014F99687006B1E17 /* Gemini.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gemini.h; sourceTree = "<group>"; };
 		76BC9A3114F99687006B1E17 /* Gemini.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Gemini.m; sourceTree = "<group>"; };
 		76BC9A3814F99687006B1E17 /* GeminiTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeminiTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BC9A3914F99687006B1E17 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		76BC9A3B14F99687006B1E17 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		76BC9A4314F99687006B1E17 /* GeminiTests-Info.plist */ = {isa = PBXFileReference; path = "GeminiTests-Info.plist"; sourceTree = "<group>"; };
+		76BC9A4314F99687006B1E17 /* GeminiTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GeminiTests-Info.plist"; sourceTree = "<group>"; };
 		76BC9A4514F99687006B1E17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		76BC9A4714F99687006B1E17 /* GeminiTests.h */ = {isa = PBXFileReference; path = GeminiTests.h; sourceTree = "<group>"; };
+		76BC9A4714F99687006B1E17 /* GeminiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeminiTests.h; sourceTree = "<group>"; };
 		76BC9A4814F99687006B1E17 /* GeminiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeminiTests.m; sourceTree = "<group>"; };
+		76BC9A5314F99746006B1E17 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
+		76BC9A5414F99746006B1E17 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
+		76BC9A5514F99746006B1E17 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
+		76BC9A5614F99746006B1E17 /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
+		76BC9A5714F99746006B1E17 /* lbaselib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lbaselib.c; sourceTree = "<group>"; };
+		76BC9A5814F99746006B1E17 /* lbitlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lbitlib.c; sourceTree = "<group>"; };
+		76BC9A5914F99746006B1E17 /* lcode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcode.c; sourceTree = "<group>"; };
+		76BC9A5A14F99746006B1E17 /* lcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcode.h; sourceTree = "<group>"; };
+		76BC9A5B14F99746006B1E17 /* lcorolib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcorolib.c; sourceTree = "<group>"; };
+		76BC9A5C14F99746006B1E17 /* lctype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lctype.c; sourceTree = "<group>"; };
+		76BC9A5D14F99746006B1E17 /* lctype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lctype.h; sourceTree = "<group>"; };
+		76BC9A5E14F99746006B1E17 /* ldblib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldblib.c; sourceTree = "<group>"; };
+		76BC9A5F14F99746006B1E17 /* ldebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldebug.c; sourceTree = "<group>"; };
+		76BC9A6014F99746006B1E17 /* ldebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldebug.h; sourceTree = "<group>"; };
+		76BC9A6114F99746006B1E17 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
+		76BC9A6214F99746006B1E17 /* ldo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldo.h; sourceTree = "<group>"; };
+		76BC9A6314F99746006B1E17 /* ldump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldump.c; sourceTree = "<group>"; };
+		76BC9A6414F99746006B1E17 /* lfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfunc.c; sourceTree = "<group>"; };
+		76BC9A6514F99746006B1E17 /* lfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfunc.h; sourceTree = "<group>"; };
+		76BC9A6614F99746006B1E17 /* lgc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lgc.c; sourceTree = "<group>"; };
+		76BC9A6714F99746006B1E17 /* lgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lgc.h; sourceTree = "<group>"; };
+		76BC9A6814F99746006B1E17 /* linit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linit.c; sourceTree = "<group>"; };
+		76BC9A6914F99746006B1E17 /* liolib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = liolib.c; sourceTree = "<group>"; };
+		76BC9A6A14F99746006B1E17 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
+		76BC9A6B14F99746006B1E17 /* llex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llex.h; sourceTree = "<group>"; };
+		76BC9A6C14F99746006B1E17 /* llimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = llimits.h; sourceTree = "<group>"; };
+		76BC9A6D14F99746006B1E17 /* lmathlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmathlib.c; sourceTree = "<group>"; };
+		76BC9A6E14F99746006B1E17 /* lmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmem.c; sourceTree = "<group>"; };
+		76BC9A6F14F99746006B1E17 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
+		76BC9A7014F99746006B1E17 /* loadlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadlib.c; sourceTree = "<group>"; };
+		76BC9A7114F99746006B1E17 /* lobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lobject.c; sourceTree = "<group>"; };
+		76BC9A7214F99746006B1E17 /* lobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lobject.h; sourceTree = "<group>"; };
+		76BC9A7314F99746006B1E17 /* lopcodes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lopcodes.c; sourceTree = "<group>"; };
+		76BC9A7414F99746006B1E17 /* lopcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lopcodes.h; sourceTree = "<group>"; };
+		76BC9A7514F99746006B1E17 /* loslib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loslib.c; sourceTree = "<group>"; };
+		76BC9A7614F99746006B1E17 /* lparser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lparser.c; sourceTree = "<group>"; };
+		76BC9A7714F99746006B1E17 /* lparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lparser.h; sourceTree = "<group>"; };
+		76BC9A7814F99746006B1E17 /* lstate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstate.c; sourceTree = "<group>"; };
+		76BC9A7914F99746006B1E17 /* lstate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lstate.h; sourceTree = "<group>"; };
+		76BC9A7A14F99746006B1E17 /* lstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstring.c; sourceTree = "<group>"; };
+		76BC9A7B14F99746006B1E17 /* lstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lstring.h; sourceTree = "<group>"; };
+		76BC9A7C14F99746006B1E17 /* lstrlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstrlib.c; sourceTree = "<group>"; };
+		76BC9A7D14F99746006B1E17 /* ltable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltable.c; sourceTree = "<group>"; };
+		76BC9A7E14F99746006B1E17 /* ltable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ltable.h; sourceTree = "<group>"; };
+		76BC9A7F14F99746006B1E17 /* ltablib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltablib.c; sourceTree = "<group>"; };
+		76BC9A8014F99746006B1E17 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
+		76BC9A8114F99746006B1E17 /* ltm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ltm.h; sourceTree = "<group>"; };
+		76BC9A8214F99746006B1E17 /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
+		76BC9A8314F99746006B1E17 /* lua.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua.hpp; sourceTree = "<group>"; };
+		76BC9A8414F99746006B1E17 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
+		76BC9A8514F99746006B1E17 /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
+		76BC9A8614F99746006B1E17 /* lundump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lundump.c; sourceTree = "<group>"; };
+		76BC9A8714F99746006B1E17 /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
+		76BC9A8814F99746006B1E17 /* lvm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lvm.c; sourceTree = "<group>"; };
+		76BC9A8914F99746006B1E17 /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
+		76BC9A8A14F99746006B1E17 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
+		76BC9A8B14F99746006B1E17 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
+		76BC9AC714F99761006B1E17 /* OALAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAction.h; sourceTree = "<group>"; };
+		76BC9AC814F99761006B1E17 /* OALAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAction.m; sourceTree = "<group>"; };
+		76BC9AC914F99761006B1E17 /* OALActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALActionManager.h; sourceTree = "<group>"; };
+		76BC9ACA14F99761006B1E17 /* OALActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALActionManager.m; sourceTree = "<group>"; };
+		76BC9ACB14F99761006B1E17 /* OALAudioActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioActions.h; sourceTree = "<group>"; };
+		76BC9ACC14F99761006B1E17 /* OALAudioActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioActions.m; sourceTree = "<group>"; };
+		76BC9ACD14F99761006B1E17 /* OALFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALFunction.h; sourceTree = "<group>"; };
+		76BC9ACE14F99761006B1E17 /* OALFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALFunction.m; sourceTree = "<group>"; };
+		76BC9ACF14F99761006B1E17 /* OALUtilityActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALUtilityActions.h; sourceTree = "<group>"; };
+		76BC9AD014F99761006B1E17 /* OALUtilityActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALUtilityActions.m; sourceTree = "<group>"; };
+		76BC9AD214F99761006B1E17 /* OALAudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioTrack.h; sourceTree = "<group>"; };
+		76BC9AD314F99761006B1E17 /* OALAudioTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioTrack.m; sourceTree = "<group>"; };
+		76BC9AD414F99761006B1E17 /* OALAudioTrackNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioTrackNotifications.h; sourceTree = "<group>"; };
+		76BC9AD514F99761006B1E17 /* OALAudioTrackNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioTrackNotifications.m; sourceTree = "<group>"; };
+		76BC9AD614F99761006B1E17 /* OALAudioTracks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioTracks.h; sourceTree = "<group>"; };
+		76BC9AD714F99761006B1E17 /* OALAudioTracks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioTracks.m; sourceTree = "<group>"; };
+		76BC9AD814F99761006B1E17 /* LICENSE.ObjectAL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.ObjectAL.txt; sourceTree = "<group>"; };
+		76BC9AD914F99761006B1E17 /* OALSimpleAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALSimpleAudio.h; sourceTree = "<group>"; };
+		76BC9ADA14F99761006B1E17 /* OALSimpleAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALSimpleAudio.m; sourceTree = "<group>"; };
+		76BC9ADB14F99761006B1E17 /* ObjectAL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectAL.h; sourceTree = "<group>"; };
+		76BC9ADC14F99761006B1E17 /* ObjectALConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectALConfig.h; sourceTree = "<group>"; };
+		76BC9ADE14F99761006B1E17 /* ALBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALBuffer.h; sourceTree = "<group>"; };
+		76BC9ADF14F99761006B1E17 /* ALBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALBuffer.m; sourceTree = "<group>"; };
+		76BC9AE014F99761006B1E17 /* ALCaptureDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALCaptureDevice.h; sourceTree = "<group>"; };
+		76BC9AE114F99761006B1E17 /* ALCaptureDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALCaptureDevice.m; sourceTree = "<group>"; };
+		76BC9AE214F99761006B1E17 /* ALChannelSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALChannelSource.h; sourceTree = "<group>"; };
+		76BC9AE314F99761006B1E17 /* ALChannelSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALChannelSource.m; sourceTree = "<group>"; };
+		76BC9AE414F99761006B1E17 /* ALContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALContext.h; sourceTree = "<group>"; };
+		76BC9AE514F99761006B1E17 /* ALContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALContext.m; sourceTree = "<group>"; };
+		76BC9AE614F99761006B1E17 /* ALDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALDevice.h; sourceTree = "<group>"; };
+		76BC9AE714F99761006B1E17 /* ALDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALDevice.m; sourceTree = "<group>"; };
+		76BC9AE814F99761006B1E17 /* ALListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALListener.h; sourceTree = "<group>"; };
+		76BC9AE914F99761006B1E17 /* ALListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALListener.m; sourceTree = "<group>"; };
+		76BC9AEA14F99761006B1E17 /* ALSoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSoundSource.h; sourceTree = "<group>"; };
+		76BC9AEB14F99761006B1E17 /* ALSoundSourcePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSoundSourcePool.h; sourceTree = "<group>"; };
+		76BC9AEC14F99761006B1E17 /* ALSoundSourcePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSoundSourcePool.m; sourceTree = "<group>"; };
+		76BC9AED14F99761006B1E17 /* ALSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSource.h; sourceTree = "<group>"; };
+		76BC9AEE14F99761006B1E17 /* ALSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSource.m; sourceTree = "<group>"; };
+		76BC9AEF14F99761006B1E17 /* ALTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTypes.h; sourceTree = "<group>"; };
+		76BC9AF014F99761006B1E17 /* ALWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWrapper.h; sourceTree = "<group>"; };
+		76BC9AF114F99761006B1E17 /* ALWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWrapper.m; sourceTree = "<group>"; };
+		76BC9AF214F99761006B1E17 /* OpenALManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenALManager.h; sourceTree = "<group>"; };
+		76BC9AF314F99761006B1E17 /* OpenALManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenALManager.m; sourceTree = "<group>"; };
+		76BC9AF514F99761006B1E17 /* OALAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioSession.h; sourceTree = "<group>"; };
+		76BC9AF614F99761006B1E17 /* OALAudioSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioSession.m; sourceTree = "<group>"; };
+		76BC9AF714F99761006B1E17 /* OALSuspendHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALSuspendHandler.h; sourceTree = "<group>"; };
+		76BC9AF814F99761006B1E17 /* OALSuspendHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALSuspendHandler.m; sourceTree = "<group>"; };
+		76BC9AFA14F99761006B1E17 /* IOSVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSVersion.h; sourceTree = "<group>"; };
+		76BC9AFB14F99761006B1E17 /* IOSVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOSVersion.m; sourceTree = "<group>"; };
+		76BC9AFC14F99761006B1E17 /* mach_timing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mach_timing.c; sourceTree = "<group>"; };
+		76BC9AFD14F99761006B1E17 /* mach_timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mach_timing.h; sourceTree = "<group>"; };
+		76BC9AFE14F99761006B1E17 /* NSMutableArray+WeakReferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WeakReferences.h"; sourceTree = "<group>"; };
+		76BC9AFF14F99761006B1E17 /* NSMutableArray+WeakReferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WeakReferences.m"; sourceTree = "<group>"; };
+		76BC9B0014F99761006B1E17 /* OALAudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioFile.h; sourceTree = "<group>"; };
+		76BC9B0114F99761006B1E17 /* OALAudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioFile.m; sourceTree = "<group>"; };
+		76BC9B0214F99761006B1E17 /* OALNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALNotifications.h; sourceTree = "<group>"; };
+		76BC9B0314F99761006B1E17 /* OALTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALTools.h; sourceTree = "<group>"; };
+		76BC9B0414F99761006B1E17 /* OALTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALTools.m; sourceTree = "<group>"; };
+		76BC9B0514F99761006B1E17 /* ObjectALMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectALMacros.h; sourceTree = "<group>"; };
+		76BC9B0614F99761006B1E17 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiEvent.h; sourceTree = "<group>"; };
+		76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiEvent.m; sourceTree = "<group>"; };
+		76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiObject.h; sourceTree = "<group>"; };
+		76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiObject.m; sourceTree = "<group>"; };
+		76BC9B9114F9C733006B1E17 /* LGeminiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiObject.h; sourceTree = "<group>"; };
+		76BC9B9214F9C733006B1E17 /* LGeminiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiObject.m; sourceTree = "<group>"; };
+		76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiGLKViewController.h; sourceTree = "<group>"; };
+		76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiGLKViewController.m; sourceTree = "<group>"; };
+		76BC9B9C14F9CDC1006B1E17 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		76BC9B9E14F9CDCC006B1E17 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		76BC9BA014F9CDE0006B1E17 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +306,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BC9BA114F9CDE0006B1E17 /* OpenAL.framework in Frameworks */,
+				76BC9B9F14F9CDCC006B1E17 /* OpenGLES.framework in Frameworks */,
+				76BC9B9D14F9CDC1006B1E17 /* GLKit.framework in Frameworks */,
 				76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +330,9 @@
 		76BC9A1D14F99687006B1E17 = {
 			isa = PBXGroup;
 			children = (
+				76BC9BA014F9CDE0006B1E17 /* OpenAL.framework */,
+				76BC9B9E14F9CDCC006B1E17 /* OpenGLES.framework */,
+				76BC9B9C14F9CDC1006B1E17 /* GLKit.framework */,
 				76BC9A2D14F99687006B1E17 /* Gemini */,
 				76BC9A4114F99687006B1E17 /* GeminiTests */,
 				76BC9A2A14F99687006B1E17 /* Frameworks */,
@@ -97,9 +362,19 @@
 		76BC9A2D14F99687006B1E17 /* Gemini */ = {
 			isa = PBXGroup;
 			children = (
+				76BC9AC514F99761006B1E17 /* ObjectAL */,
+				76BC9A5214F99746006B1E17 /* lua */,
 				76BC9A3014F99687006B1E17 /* Gemini.h */,
 				76BC9A3114F99687006B1E17 /* Gemini.m */,
 				76BC9A2E14F99687006B1E17 /* Supporting Files */,
+				76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */,
+				76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */,
+				76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */,
+				76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */,
+				76BC9B9114F9C733006B1E17 /* LGeminiObject.h */,
+				76BC9B9214F9C733006B1E17 /* LGeminiObject.m */,
+				76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */,
+				76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -131,6 +406,177 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		76BC9A5214F99746006B1E17 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9A5314F99746006B1E17 /* lapi.c */,
+				76BC9A5414F99746006B1E17 /* lapi.h */,
+				76BC9A5514F99746006B1E17 /* lauxlib.c */,
+				76BC9A5614F99746006B1E17 /* lauxlib.h */,
+				76BC9A5714F99746006B1E17 /* lbaselib.c */,
+				76BC9A5814F99746006B1E17 /* lbitlib.c */,
+				76BC9A5914F99746006B1E17 /* lcode.c */,
+				76BC9A5A14F99746006B1E17 /* lcode.h */,
+				76BC9A5B14F99746006B1E17 /* lcorolib.c */,
+				76BC9A5C14F99746006B1E17 /* lctype.c */,
+				76BC9A5D14F99746006B1E17 /* lctype.h */,
+				76BC9A5E14F99746006B1E17 /* ldblib.c */,
+				76BC9A5F14F99746006B1E17 /* ldebug.c */,
+				76BC9A6014F99746006B1E17 /* ldebug.h */,
+				76BC9A6114F99746006B1E17 /* ldo.c */,
+				76BC9A6214F99746006B1E17 /* ldo.h */,
+				76BC9A6314F99746006B1E17 /* ldump.c */,
+				76BC9A6414F99746006B1E17 /* lfunc.c */,
+				76BC9A6514F99746006B1E17 /* lfunc.h */,
+				76BC9A6614F99746006B1E17 /* lgc.c */,
+				76BC9A6714F99746006B1E17 /* lgc.h */,
+				76BC9A6814F99746006B1E17 /* linit.c */,
+				76BC9A6914F99746006B1E17 /* liolib.c */,
+				76BC9A6A14F99746006B1E17 /* llex.c */,
+				76BC9A6B14F99746006B1E17 /* llex.h */,
+				76BC9A6C14F99746006B1E17 /* llimits.h */,
+				76BC9A6D14F99746006B1E17 /* lmathlib.c */,
+				76BC9A6E14F99746006B1E17 /* lmem.c */,
+				76BC9A6F14F99746006B1E17 /* lmem.h */,
+				76BC9A7014F99746006B1E17 /* loadlib.c */,
+				76BC9A7114F99746006B1E17 /* lobject.c */,
+				76BC9A7214F99746006B1E17 /* lobject.h */,
+				76BC9A7314F99746006B1E17 /* lopcodes.c */,
+				76BC9A7414F99746006B1E17 /* lopcodes.h */,
+				76BC9A7514F99746006B1E17 /* loslib.c */,
+				76BC9A7614F99746006B1E17 /* lparser.c */,
+				76BC9A7714F99746006B1E17 /* lparser.h */,
+				76BC9A7814F99746006B1E17 /* lstate.c */,
+				76BC9A7914F99746006B1E17 /* lstate.h */,
+				76BC9A7A14F99746006B1E17 /* lstring.c */,
+				76BC9A7B14F99746006B1E17 /* lstring.h */,
+				76BC9A7C14F99746006B1E17 /* lstrlib.c */,
+				76BC9A7D14F99746006B1E17 /* ltable.c */,
+				76BC9A7E14F99746006B1E17 /* ltable.h */,
+				76BC9A7F14F99746006B1E17 /* ltablib.c */,
+				76BC9A8014F99746006B1E17 /* ltm.c */,
+				76BC9A8114F99746006B1E17 /* ltm.h */,
+				76BC9A8214F99746006B1E17 /* lua.h */,
+				76BC9A8314F99746006B1E17 /* lua.hpp */,
+				76BC9A8414F99746006B1E17 /* luaconf.h */,
+				76BC9A8514F99746006B1E17 /* lualib.h */,
+				76BC9A8614F99746006B1E17 /* lundump.c */,
+				76BC9A8714F99746006B1E17 /* lundump.h */,
+				76BC9A8814F99746006B1E17 /* lvm.c */,
+				76BC9A8914F99746006B1E17 /* lvm.h */,
+				76BC9A8A14F99746006B1E17 /* lzio.c */,
+				76BC9A8B14F99746006B1E17 /* lzio.h */,
+			);
+			path = lua;
+			sourceTree = "<group>";
+		};
+		76BC9AC514F99761006B1E17 /* ObjectAL */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9AC614F99761006B1E17 /* Actions */,
+				76BC9AD114F99761006B1E17 /* AudioTrack */,
+				76BC9AD814F99761006B1E17 /* LICENSE.ObjectAL.txt */,
+				76BC9AD914F99761006B1E17 /* OALSimpleAudio.h */,
+				76BC9ADA14F99761006B1E17 /* OALSimpleAudio.m */,
+				76BC9ADB14F99761006B1E17 /* ObjectAL.h */,
+				76BC9ADC14F99761006B1E17 /* ObjectALConfig.h */,
+				76BC9ADD14F99761006B1E17 /* OpenAL */,
+				76BC9AF414F99761006B1E17 /* Session */,
+				76BC9AF914F99761006B1E17 /* Support */,
+			);
+			path = ObjectAL;
+			sourceTree = "<group>";
+		};
+		76BC9AC614F99761006B1E17 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9AC714F99761006B1E17 /* OALAction.h */,
+				76BC9AC814F99761006B1E17 /* OALAction.m */,
+				76BC9AC914F99761006B1E17 /* OALActionManager.h */,
+				76BC9ACA14F99761006B1E17 /* OALActionManager.m */,
+				76BC9ACB14F99761006B1E17 /* OALAudioActions.h */,
+				76BC9ACC14F99761006B1E17 /* OALAudioActions.m */,
+				76BC9ACD14F99761006B1E17 /* OALFunction.h */,
+				76BC9ACE14F99761006B1E17 /* OALFunction.m */,
+				76BC9ACF14F99761006B1E17 /* OALUtilityActions.h */,
+				76BC9AD014F99761006B1E17 /* OALUtilityActions.m */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		76BC9AD114F99761006B1E17 /* AudioTrack */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9AD214F99761006B1E17 /* OALAudioTrack.h */,
+				76BC9AD314F99761006B1E17 /* OALAudioTrack.m */,
+				76BC9AD414F99761006B1E17 /* OALAudioTrackNotifications.h */,
+				76BC9AD514F99761006B1E17 /* OALAudioTrackNotifications.m */,
+				76BC9AD614F99761006B1E17 /* OALAudioTracks.h */,
+				76BC9AD714F99761006B1E17 /* OALAudioTracks.m */,
+			);
+			path = AudioTrack;
+			sourceTree = "<group>";
+		};
+		76BC9ADD14F99761006B1E17 /* OpenAL */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9ADE14F99761006B1E17 /* ALBuffer.h */,
+				76BC9ADF14F99761006B1E17 /* ALBuffer.m */,
+				76BC9AE014F99761006B1E17 /* ALCaptureDevice.h */,
+				76BC9AE114F99761006B1E17 /* ALCaptureDevice.m */,
+				76BC9AE214F99761006B1E17 /* ALChannelSource.h */,
+				76BC9AE314F99761006B1E17 /* ALChannelSource.m */,
+				76BC9AE414F99761006B1E17 /* ALContext.h */,
+				76BC9AE514F99761006B1E17 /* ALContext.m */,
+				76BC9AE614F99761006B1E17 /* ALDevice.h */,
+				76BC9AE714F99761006B1E17 /* ALDevice.m */,
+				76BC9AE814F99761006B1E17 /* ALListener.h */,
+				76BC9AE914F99761006B1E17 /* ALListener.m */,
+				76BC9AEA14F99761006B1E17 /* ALSoundSource.h */,
+				76BC9AEB14F99761006B1E17 /* ALSoundSourcePool.h */,
+				76BC9AEC14F99761006B1E17 /* ALSoundSourcePool.m */,
+				76BC9AED14F99761006B1E17 /* ALSource.h */,
+				76BC9AEE14F99761006B1E17 /* ALSource.m */,
+				76BC9AEF14F99761006B1E17 /* ALTypes.h */,
+				76BC9AF014F99761006B1E17 /* ALWrapper.h */,
+				76BC9AF114F99761006B1E17 /* ALWrapper.m */,
+				76BC9AF214F99761006B1E17 /* OpenALManager.h */,
+				76BC9AF314F99761006B1E17 /* OpenALManager.m */,
+			);
+			path = OpenAL;
+			sourceTree = "<group>";
+		};
+		76BC9AF414F99761006B1E17 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9AF514F99761006B1E17 /* OALAudioSession.h */,
+				76BC9AF614F99761006B1E17 /* OALAudioSession.m */,
+				76BC9AF714F99761006B1E17 /* OALSuspendHandler.h */,
+				76BC9AF814F99761006B1E17 /* OALSuspendHandler.m */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		76BC9AF914F99761006B1E17 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				76BC9AFA14F99761006B1E17 /* IOSVersion.h */,
+				76BC9AFB14F99761006B1E17 /* IOSVersion.m */,
+				76BC9AFC14F99761006B1E17 /* mach_timing.c */,
+				76BC9AFD14F99761006B1E17 /* mach_timing.h */,
+				76BC9AFE14F99761006B1E17 /* NSMutableArray+WeakReferences.h */,
+				76BC9AFF14F99761006B1E17 /* NSMutableArray+WeakReferences.m */,
+				76BC9B0014F99761006B1E17 /* OALAudioFile.h */,
+				76BC9B0114F99761006B1E17 /* OALAudioFile.m */,
+				76BC9B0214F99761006B1E17 /* OALNotifications.h */,
+				76BC9B0314F99761006B1E17 /* OALTools.h */,
+				76BC9B0414F99761006B1E17 /* OALTools.m */,
+				76BC9B0514F99761006B1E17 /* ObjectALMacros.h */,
+				76BC9B0614F99761006B1E17 /* SynthesizeSingleton.h */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -138,6 +584,68 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BC9A8D14F99746006B1E17 /* lapi.h in Headers */,
+				76BC9A8F14F99746006B1E17 /* lauxlib.h in Headers */,
+				76BC9A9314F99746006B1E17 /* lcode.h in Headers */,
+				76BC9A9614F99746006B1E17 /* lctype.h in Headers */,
+				76BC9A9914F99746006B1E17 /* ldebug.h in Headers */,
+				76BC9A9B14F99746006B1E17 /* ldo.h in Headers */,
+				76BC9A9E14F99746006B1E17 /* lfunc.h in Headers */,
+				76BC9AA014F99746006B1E17 /* lgc.h in Headers */,
+				76BC9AA414F99746006B1E17 /* llex.h in Headers */,
+				76BC9AA514F99746006B1E17 /* llimits.h in Headers */,
+				76BC9AA814F99746006B1E17 /* lmem.h in Headers */,
+				76BC9AAB14F99746006B1E17 /* lobject.h in Headers */,
+				76BC9AAD14F99746006B1E17 /* lopcodes.h in Headers */,
+				76BC9AB014F99746006B1E17 /* lparser.h in Headers */,
+				76BC9AB214F99746006B1E17 /* lstate.h in Headers */,
+				76BC9AB414F99746006B1E17 /* lstring.h in Headers */,
+				76BC9AB714F99746006B1E17 /* ltable.h in Headers */,
+				76BC9ABA14F99746006B1E17 /* ltm.h in Headers */,
+				76BC9ABB14F99746006B1E17 /* lua.h in Headers */,
+				76BC9ABC14F99746006B1E17 /* lua.hpp in Headers */,
+				76BC9ABD14F99746006B1E17 /* luaconf.h in Headers */,
+				76BC9ABE14F99746006B1E17 /* lualib.h in Headers */,
+				76BC9AC014F99746006B1E17 /* lundump.h in Headers */,
+				76BC9AC214F99746006B1E17 /* lvm.h in Headers */,
+				76BC9AC414F99746006B1E17 /* lzio.h in Headers */,
+				76BC9B0714F99761006B1E17 /* OALAction.h in Headers */,
+				76BC9B0914F99761006B1E17 /* OALActionManager.h in Headers */,
+				76BC9B0B14F99761006B1E17 /* OALAudioActions.h in Headers */,
+				76BC9B0D14F99761006B1E17 /* OALFunction.h in Headers */,
+				76BC9B0F14F99761006B1E17 /* OALUtilityActions.h in Headers */,
+				76BC9B1114F99761006B1E17 /* OALAudioTrack.h in Headers */,
+				76BC9B1314F99761006B1E17 /* OALAudioTrackNotifications.h in Headers */,
+				76BC9B1514F99761006B1E17 /* OALAudioTracks.h in Headers */,
+				76BC9B1714F99761006B1E17 /* OALSimpleAudio.h in Headers */,
+				76BC9B1914F99761006B1E17 /* ObjectAL.h in Headers */,
+				76BC9B1A14F99761006B1E17 /* ObjectALConfig.h in Headers */,
+				76BC9B1B14F99761006B1E17 /* ALBuffer.h in Headers */,
+				76BC9B1D14F99761006B1E17 /* ALCaptureDevice.h in Headers */,
+				76BC9B1F14F99761006B1E17 /* ALChannelSource.h in Headers */,
+				76BC9B2114F99761006B1E17 /* ALContext.h in Headers */,
+				76BC9B2314F99761006B1E17 /* ALDevice.h in Headers */,
+				76BC9B2514F99761006B1E17 /* ALListener.h in Headers */,
+				76BC9B2714F99761006B1E17 /* ALSoundSource.h in Headers */,
+				76BC9B2814F99761006B1E17 /* ALSoundSourcePool.h in Headers */,
+				76BC9B2A14F99761006B1E17 /* ALSource.h in Headers */,
+				76BC9B2C14F99761006B1E17 /* ALTypes.h in Headers */,
+				76BC9B2D14F99761006B1E17 /* ALWrapper.h in Headers */,
+				76BC9B2F14F99761006B1E17 /* OpenALManager.h in Headers */,
+				76BC9B3114F99761006B1E17 /* OALAudioSession.h in Headers */,
+				76BC9B3314F99761006B1E17 /* OALSuspendHandler.h in Headers */,
+				76BC9B3514F99761006B1E17 /* IOSVersion.h in Headers */,
+				76BC9B3814F99761006B1E17 /* mach_timing.h in Headers */,
+				76BC9B3914F99761006B1E17 /* NSMutableArray+WeakReferences.h in Headers */,
+				76BC9B3B14F99761006B1E17 /* OALAudioFile.h in Headers */,
+				76BC9B3D14F99761006B1E17 /* OALNotifications.h in Headers */,
+				76BC9B3E14F99761006B1E17 /* OALTools.h in Headers */,
+				76BC9B4014F99761006B1E17 /* ObjectALMacros.h in Headers */,
+				76BC9B4114F99761006B1E17 /* SynthesizeSingleton.h in Headers */,
+				76BC9B4E14F9B923006B1E17 /* GeminiEvent.h in Headers */,
+				76BC9B5414F9BF3B006B1E17 /* GeminiObject.h in Headers */,
+				76BC9B9314F9C733006B1E17 /* LGeminiObject.h in Headers */,
+				76BC9B9914F9CD85006B1E17 /* GeminiGLKViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +747,68 @@
 			buildActionMask = 2147483647;
 			files = (
 				76BC9A3214F99687006B1E17 /* Gemini.m in Sources */,
+				76BC9A8C14F99746006B1E17 /* lapi.c in Sources */,
+				76BC9A8E14F99746006B1E17 /* lauxlib.c in Sources */,
+				76BC9A9014F99746006B1E17 /* lbaselib.c in Sources */,
+				76BC9A9114F99746006B1E17 /* lbitlib.c in Sources */,
+				76BC9A9214F99746006B1E17 /* lcode.c in Sources */,
+				76BC9A9414F99746006B1E17 /* lcorolib.c in Sources */,
+				76BC9A9514F99746006B1E17 /* lctype.c in Sources */,
+				76BC9A9714F99746006B1E17 /* ldblib.c in Sources */,
+				76BC9A9814F99746006B1E17 /* ldebug.c in Sources */,
+				76BC9A9A14F99746006B1E17 /* ldo.c in Sources */,
+				76BC9A9C14F99746006B1E17 /* ldump.c in Sources */,
+				76BC9A9D14F99746006B1E17 /* lfunc.c in Sources */,
+				76BC9A9F14F99746006B1E17 /* lgc.c in Sources */,
+				76BC9AA114F99746006B1E17 /* linit.c in Sources */,
+				76BC9AA214F99746006B1E17 /* liolib.c in Sources */,
+				76BC9AA314F99746006B1E17 /* llex.c in Sources */,
+				76BC9AA614F99746006B1E17 /* lmathlib.c in Sources */,
+				76BC9AA714F99746006B1E17 /* lmem.c in Sources */,
+				76BC9AA914F99746006B1E17 /* loadlib.c in Sources */,
+				76BC9AAA14F99746006B1E17 /* lobject.c in Sources */,
+				76BC9AAC14F99746006B1E17 /* lopcodes.c in Sources */,
+				76BC9AAE14F99746006B1E17 /* loslib.c in Sources */,
+				76BC9AAF14F99746006B1E17 /* lparser.c in Sources */,
+				76BC9AB114F99746006B1E17 /* lstate.c in Sources */,
+				76BC9AB314F99746006B1E17 /* lstring.c in Sources */,
+				76BC9AB514F99746006B1E17 /* lstrlib.c in Sources */,
+				76BC9AB614F99746006B1E17 /* ltable.c in Sources */,
+				76BC9AB814F99746006B1E17 /* ltablib.c in Sources */,
+				76BC9AB914F99746006B1E17 /* ltm.c in Sources */,
+				76BC9ABF14F99746006B1E17 /* lundump.c in Sources */,
+				76BC9AC114F99746006B1E17 /* lvm.c in Sources */,
+				76BC9AC314F99746006B1E17 /* lzio.c in Sources */,
+				76BC9B0814F99761006B1E17 /* OALAction.m in Sources */,
+				76BC9B0A14F99761006B1E17 /* OALActionManager.m in Sources */,
+				76BC9B0C14F99761006B1E17 /* OALAudioActions.m in Sources */,
+				76BC9B0E14F99761006B1E17 /* OALFunction.m in Sources */,
+				76BC9B1014F99761006B1E17 /* OALUtilityActions.m in Sources */,
+				76BC9B1214F99761006B1E17 /* OALAudioTrack.m in Sources */,
+				76BC9B1414F99761006B1E17 /* OALAudioTrackNotifications.m in Sources */,
+				76BC9B1614F99761006B1E17 /* OALAudioTracks.m in Sources */,
+				76BC9B1814F99761006B1E17 /* OALSimpleAudio.m in Sources */,
+				76BC9B1C14F99761006B1E17 /* ALBuffer.m in Sources */,
+				76BC9B1E14F99761006B1E17 /* ALCaptureDevice.m in Sources */,
+				76BC9B2014F99761006B1E17 /* ALChannelSource.m in Sources */,
+				76BC9B2214F99761006B1E17 /* ALContext.m in Sources */,
+				76BC9B2414F99761006B1E17 /* ALDevice.m in Sources */,
+				76BC9B2614F99761006B1E17 /* ALListener.m in Sources */,
+				76BC9B2914F99761006B1E17 /* ALSoundSourcePool.m in Sources */,
+				76BC9B2B14F99761006B1E17 /* ALSource.m in Sources */,
+				76BC9B2E14F99761006B1E17 /* ALWrapper.m in Sources */,
+				76BC9B3014F99761006B1E17 /* OpenALManager.m in Sources */,
+				76BC9B3214F99761006B1E17 /* OALAudioSession.m in Sources */,
+				76BC9B3414F99761006B1E17 /* OALSuspendHandler.m in Sources */,
+				76BC9B3614F99761006B1E17 /* IOSVersion.m in Sources */,
+				76BC9B3714F99761006B1E17 /* mach_timing.c in Sources */,
+				76BC9B3A14F99761006B1E17 /* NSMutableArray+WeakReferences.m in Sources */,
+				76BC9B3C14F99761006B1E17 /* OALAudioFile.m in Sources */,
+				76BC9B3F14F99761006B1E17 /* OALTools.m in Sources */,
+				76BC9B4F14F9B923006B1E17 /* GeminiEvent.m in Sources */,
+				76BC9B5514F9BF3B006B1E17 /* GeminiObject.m in Sources */,
+				76BC9B9414F9C733006B1E17 /* LGeminiObject.m in Sources */,
+				76BC9B9A14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +817,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				76BC9A4914F99687006B1E17 /* GeminiTests.m in Sources */,
+				76BC9B5014F9B923006B1E17 /* GeminiEvent.m in Sources */,
+				76BC9B5614F9BF3B006B1E17 /* GeminiObject.m in Sources */,
+				76BC9B9514F9C733006B1E17 /* LGeminiObject.m in Sources */,
+				76BC9B9B14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +852,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -290,7 +865,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -301,12 +878,15 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -320,6 +900,7 @@
 				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -332,6 +913,7 @@
 				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -385,6 +967,7 @@
 				76BC9A4E14F99687006B1E17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		76BC9A4F14F99687006B1E17 /* Build configuration list for PBXNativeTarget "GeminiTests" */ = {
 			isa = XCConfigurationList;
@@ -393,6 +976,7 @@
 				76BC9A5114F99687006B1E17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
