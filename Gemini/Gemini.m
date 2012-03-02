@@ -42,9 +42,7 @@ Gemini *singleton = nil;
         L = luaL_newstate();
         luaL_openlibs(L);
         
-        x = 4;
-        int y = x * 2;
-        NSLog(@"Checked %d", y);
+        [[OALSimpleAudio sharedInstance] preloadEffect:@"test.wav"];
         
     }
     
