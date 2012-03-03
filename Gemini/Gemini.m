@@ -42,8 +42,6 @@ Gemini *singleton = nil;
         L = luaL_newstate();
         luaL_openlibs(L);
         
-        [[OALSimpleAudio sharedInstance] preloadEffect:@"test.wav"];
-        
     }
     
     return self;

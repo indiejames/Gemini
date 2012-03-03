@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
-#import "ObjectAL.h"
+
 
 @interface Gemini : NSObject
 
