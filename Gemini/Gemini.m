@@ -32,6 +32,9 @@ Gemini *singleton = nil;
 @synthesize geminiObjects;
 @synthesize viewController;
 
+int setLuaPath(lua_State *L, NSString* path );
+
+
 - (id)init
 {
     self = [super init];
@@ -68,6 +71,8 @@ Gemini *singleton = nil;
 	lua_settop(L, 0);
     
     NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"lua"];
+  
+    setLuaPath(L, [luaFilePath stringByDeletingLastPathComponent]);
     
     err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 	
@@ -104,6 +109,24 @@ Gemini *singleton = nil;
     [ge release];
     
     return NO;
+}
+
+int setLuaPath(lua_State *L, NSString* path )  
+{
+    lua_getglobal( L, "package" );
+    lua_getfield( L, -1, "path" ); // get field "path" from table at top of stack (-1)
+    NSString * cur_path = [NSString stringWithUTF8String:lua_tostring( L, -1 )]; // grab path string from top of stack
+    cur_path = [cur_path stringByAppendingString:@";"]; // do your path magic here
+    cur_path = [cur_path stringByAppendingString:path];
+    cur_path = [cur_path stringByAppendingString:@"/?.lua"];
+    cur_path = [cur_path stringByAppendingString:@";"];
+    cur_path = [cur_path stringByAppendingString:path];
+    cur_path = [cur_path stringByAppendingString:@"/?"];
+    lua_pop( L, 1 ); // get rid of the string on the stack we just pushed on line 5
+    lua_pushstring( L, [cur_path UTF8String]); // push the new one
+    lua_setfield( L, -2, "path" ); // set the field "path" in table at -2 with value at top of stack
+    lua_pop( L, 1 ); // get rid of package table from top of stack
+    return 0; // all done!
 }
 
 

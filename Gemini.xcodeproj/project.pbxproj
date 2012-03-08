@@ -242,6 +242,15 @@
 		76BF971C1501AC67009D51FD /* ObjectAL-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 76BF96DE1501AC67009D51FD /* ObjectAL-Prefix.pch */; };
 		76BF971D1501AC67009D51FD /* ObjectAL.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF96DF1501AC67009D51FD /* ObjectAL.h */; };
 		76BF971E1501AC67009D51FD /* ObjectAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF96E01501AC67009D51FD /* ObjectAL.m */; };
+		76BF97211501B419009D51FD /* GeminiSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF971F1501B418009D51FD /* GeminiSprite.h */; };
+		76BF97221501B419009D51FD /* GeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GeminiSprite.m */; };
+		76BF97231501B419009D51FD /* GeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GeminiSprite.m */; };
+		76BF9726150450AD009D51FD /* GeminiSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */; };
+		76BF9727150450AD009D51FD /* GeminiSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */; };
+		76BF9728150450AD009D51FD /* GeminiSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */; };
+		76BF972B1504520A009D51FD /* LGeminiSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF97291504520A009D51FD /* LGeminiSprite.h */; };
+		76BF972C1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
+		76BF972D1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -495,6 +504,12 @@
 		76BF96DE1501AC67009D51FD /* ObjectAL-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ObjectAL-Prefix.pch"; sourceTree = "<group>"; };
 		76BF96DF1501AC67009D51FD /* ObjectAL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectAL.h; sourceTree = "<group>"; };
 		76BF96E01501AC67009D51FD /* ObjectAL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectAL.m; sourceTree = "<group>"; };
+		76BF971F1501B418009D51FD /* GeminiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSprite.h; sourceTree = "<group>"; };
+		76BF97201501B418009D51FD /* GeminiSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSprite.m; sourceTree = "<group>"; };
+		76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteSheet.h; sourceTree = "<group>"; };
+		76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSheet.m; sourceTree = "<group>"; };
+		76BF97291504520A009D51FD /* LGeminiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiSprite.h; sourceTree = "<group>"; };
+		76BF972A1504520A009D51FD /* LGeminiSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiSprite.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,6 +589,12 @@
 				76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */,
 				76BF968915018940009D51FD /* LGeminiSound.m */,
 				76BF968B1501898E009D51FD /* LGeminiSound.h */,
+				76BF97291504520A009D51FD /* LGeminiSprite.h */,
+				76BF972A1504520A009D51FD /* LGeminiSprite.m */,
+				76BF971F1501B418009D51FD /* GeminiSprite.h */,
+				76BF97201501B418009D51FD /* GeminiSprite.m */,
+				76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */,
+				76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1072,6 +1093,9 @@
 				76BF971B1501AC67009D51FD /* SynthesizeSingleton.h in Headers */,
 				76BF971C1501AC67009D51FD /* ObjectAL-Prefix.pch in Headers */,
 				76BF971D1501AC67009D51FD /* ObjectAL.h in Headers */,
+				76BF97211501B419009D51FD /* GeminiSprite.h in Headers */,
+				76BF9726150450AD009D51FD /* GeminiSpriteSheet.h in Headers */,
+				76BF972B1504520A009D51FD /* LGeminiSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1282,6 +1306,9 @@
 				76BF97161501AC67009D51FD /* OALAudioFile.m in Sources */,
 				76BF97191501AC67009D51FD /* OALTools.m in Sources */,
 				76BF971E1501AC67009D51FD /* ObjectAL.m in Sources */,
+				76BF97221501B419009D51FD /* GeminiSprite.m in Sources */,
+				76BF9727150450AD009D51FD /* GeminiSpriteSheet.m in Sources */,
+				76BF972C1504520A009D51FD /* LGeminiSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1294,6 +1321,9 @@
 				76BC9B5614F9BF3B006B1E17 /* GeminiObject.m in Sources */,
 				76BC9B9514F9C733006B1E17 /* LGeminiObject.m in Sources */,
 				76BC9B9B14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */,
+				76BF97231501B419009D51FD /* GeminiSprite.m in Sources */,
+				76BF9728150450AD009D51FD /* GeminiSpriteSheet.m in Sources */,
+				76BF972D1504520A009D51FD /* LGeminiSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

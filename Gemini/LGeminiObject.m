@@ -35,6 +35,8 @@ static int geminiObjectGC (lua_State *L){
     [*go release];
     NSLog(@"GeminiObject released");
     
+    // TODO - remove from global object list
+    
     return 0;
 }
 

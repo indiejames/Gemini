@@ -25,6 +25,7 @@
 //extern int luaopen_soundlib (lua_State *L);
 extern int luaopen_geminiObjectLib (lua_State *L);
 extern int luaopen_soundlib (lua_State *L);
+extern int luaopen_spritelib (lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -52,6 +53,7 @@ static const luaL_Reg preloadedlibs[] = {
     // {"sound_effect", luaopen_soundlib},
     {"gemini", luaopen_geminiObjectLib},
     {"sound", luaopen_soundlib},
+    {"sprite", luaopen_spritelib},
   {NULL, NULL}
 };
 
