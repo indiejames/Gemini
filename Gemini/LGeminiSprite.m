@@ -9,9 +9,129 @@
 #import "LGeminiSprite.h"
 #import "GeminiSprite.h"
 #import "GeminiSpriteSheet.h"
+#import "GeminiSpriteSet.h"
+#import "GeminiSpriteAnimation.h"
 
+// prototype for library init function
 int luaopen_spritelib (lua_State *L);
 
+////////// Sprites //////////////////////
+static int newSprite(lua_State *L){
+    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    GeminiSprite *sprite = [[GeminiSprite alloc] initWithSpriteSet:*ss];
+    GeminiSprite **lSprite = (GeminiSprite **)lua_newuserdata(L, sizeof(GeminiSprite *));
+    *lSprite = sprite;
+    
+    luaL_getmetatable(L, GEMINI_SPRITE_LUA_KEY);
+    lua_setmetatable(L, -2);
+    
+    // append a lua table to this user data to allow the user to store values in it
+    lua_newtable(L);
+    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
+    // store a reference to this table so our sprite methods can access it
+    sprite.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    // set the table as the user value for the Lua object
+    lua_setuservalue(L, -2);
+    
+    return 1;
+}
+
+static int spriteGC (lua_State *L){
+    GeminiSprite  **s = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    
+    [*s release];
+    
+    return 0;
+}
+
+static int spriteIndex( lua_State* L )
+{
+    NSLog(@"Calling spriteIndex()");
+    /* object, key */
+    /* first check the environment */ 
+    lua_getuservalue( L, -2 );
+    if(lua_isnil(L,-1)){
+        NSLog(@"user value for user data is nil");
+    }
+    lua_pushvalue( L, -2 );
+    
+    lua_rawget( L, -2 );
+    if( lua_isnoneornil( L, -1 ) == 0 )
+    {
+        return 1;
+    }
+    
+    lua_pop( L, 2 );
+    
+    /* second check the metatable */    
+    lua_getmetatable( L, -2 );
+    lua_pushvalue( L, -2 );
+    lua_rawget( L, -2 );
+    
+    /* nil or otherwise, we return here */
+    return 1;
+}
+
+// this function gets called with the table on the bottom of the stack, the index to assign to next,
+// and the value to be assigned on top
+static int spriteNewIndex( lua_State* L )
+{
+    NSLog(@"Calling spriteNewIndex()");
+    int top = lua_gettop(L);
+    NSLog(@"stack has %d values", top);
+    lua_getuservalue( L, -3 ); 
+    /* object, key, value */
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
+    //}
+    
+    return 0;
+}
+
+
+
+////////// Sprite Sets //////////////////
+
+static int newSpriteSet(lua_State *L){
+    GeminiSpriteSheet **ss = (GeminiSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
+    int startFrame = luaL_checkint(L, 2);
+    int frameCount = luaL_checkint(L, 3);
+    GeminiSpriteSet *spriteSet = [[GeminiSpriteSet alloc] initWithSpriteSheet:*ss StartFrame:startFrame NumFrames:frameCount];
+    
+    GeminiSpriteSet **lSet = (GeminiSpriteSet **)lua_newuserdata(L, sizeof(GeminiSpriteSet *));
+    *lSet = spriteSet;
+    
+    luaL_getmetatable(L, GEMINI_SPRITE_SET_LUA_KEY);
+    lua_setmetatable(L, -2);
+    
+    return 1;
+    
+}
+
+// this is a library method not a sprite set object method
+static int addAnimation (lua_State *L){
+    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    const char *name = luaL_checkstring(L, 2);
+    int startFrame = luaL_checkint(L, 3);
+    int frameCount = luaL_checkint(L, 4);
+    double duration = luaL_checknumber(L, 5);
+    int loopCount = luaL_checkint(L, 6);
+    
+    [*ss addAnimation:[NSString stringWithFormat:@"%s",name] WithStartFrame:startFrame NumFrames:frameCount FrameDuration:duration LoopCount:loopCount];
+    
+    return 1;
+}
+
+static int spriteSetGC (lua_State *L){
+    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    
+    [*ss release];
+    
+    return 0;
+}
+
+///////// Sprite Sheets //////////////////
 
 static int newSpriteSheet(lua_State *L){
     const char *fileName = luaL_checkstring(L, 1);
@@ -118,35 +238,71 @@ static int spriteSheetGC (lua_State *L){
     return 0;
 }
 
-
-static const struct luaL_Reg spriteSheet_f [] = {
+// the mappings for the library functions
+static const struct luaL_Reg spriteLib_f [] = {
     {"newSpriteSheet", newSpriteSheet},
     {"newSpriteSheetFromData", newSpriteSheetFromData},
+    {"newSpriteSet", newSpriteSet},
+    {"newSprite", newSprite},
+    {"add", addAnimation},
     {NULL, NULL}
 };
 
+// mappings for the sprite sheet methods
 static const struct luaL_Reg spriteSheet_m [] = {
     {"frameCount", spriteSheetFrameCount},
+    {"__gc", spriteSheetGC},
     {NULL, NULL}
 };
 
+// mappings for the sprite set methods
+static const struct luaL_Reg spriteSet_m [] = {
+    {"__gc", spriteSetGC},
+    {NULL, NULL}
+};
+
+// mappings for the sprite methods
+static const struct luaL_Reg sprite_m [] = {
+    {"__gc", spriteGC},
+    {"__index", spriteIndex},
+    {"__newindex", spriteNewIndex},
+};
+
+
 int luaopen_spritelib (lua_State *L){
-    // create meta tables for our various types
+    // create meta tables for our various types /////////
     
     // sprite sheets
     luaL_newmetatable(L, GEMINI_SPRITE_SHEET_LUA_KEY);
     
     lua_pushvalue(L, -1); // duplicates the metatable
     
-    lua_setfield(L, -2, "__index");
+    lua_setfield(L, -2, "__index"); // make the metatable use itself for __index
+    
     luaL_setfuncs(L, spriteSheet_m, 0);
+
     
-    lua_pushstring(L,"__gc");
-    lua_pushcfunction(L, spriteSheetGC);
-    lua_settable(L, -3);
+    // sprite sets
+    luaL_newmetatable(L, GEMINI_SPRITE_SET_LUA_KEY);
+    lua_pushvalue(L, -1); // duplicates the metatable
     
-    // create the table for this library
-    luaL_newlib(L, spriteSheet_f);
+    lua_setfield(L, -2, "__index"); // make the metatable use itself for __index
+    luaL_setfuncs(L, spriteSet_m, 0);
+    
+    //lua_pushstring(L,"__gc");
+    //lua_pushcfunction(L, spriteSetGC);
+    //lua_settable(L, -3);
+    
+    // sprites
+    luaL_newmetatable(L, GEMINI_SPRITE_LUA_KEY);
+    lua_pushvalue(L, -1);
+    
+    luaL_setfuncs(L, sprite_m, 0);
+    
+    /////// finished with metatables ///////////
+    
+    // create the table for this library and popuplate it with our functions
+    luaL_newlib(L, spriteLib_f);
     
     return 1;
 }

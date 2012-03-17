@@ -127,6 +127,8 @@ int luaopen_soundlib (lua_State *L){
     // Unload all sound effects and bg music so that it doesn't fill
     // memory unnecessarily.
     [[OALSimpleAudio sharedInstance] unloadAllEffects];
+    
+    [super dealloc];
 }
 
 @end

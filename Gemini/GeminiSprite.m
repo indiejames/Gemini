@@ -9,14 +9,15 @@
 #import "GeminiSprite.h"
 #import <GLKit/GLKit.h>
 
+
 @implementation GeminiSprite
 
 
--(id)initWithTexture:(GLuint)texId dataSheet:(NSString *)dataSheet {
+-(id)initWithSpriteSet:(GeminiSpriteSet *)spSet {
     self = [super init];
     
     if (self) {
-        
+        spriteSet = [spSet retain];
     }
     
     return self;

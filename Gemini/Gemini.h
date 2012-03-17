@@ -10,10 +10,13 @@
 #import <GLKit/GLKit.h>
 
 
+
 @interface Gemini : NSObject
 
+//@property (readonly) lua_State *L;
 @property (readonly) NSMutableArray *geminiObjects;
 @property (readonly) GLKViewController *viewController;
+@property (readonly) double initTime;
 
 -(void)execute:(NSString *)filename;
 -(BOOL)handleEvent:(NSString *)event;

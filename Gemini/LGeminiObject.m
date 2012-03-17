@@ -21,6 +21,9 @@ static int newGeminiObject(lua_State *L){
     luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
     lua_setmetatable(L, -2);
     
+    lua_newtable(L);
+    lua_setuservalue(L, -2);
+    
     NSLog(@"New GeminiObject created");
     
     // add this new object to the globall list of objects
@@ -52,15 +55,7 @@ static int addEventListener(lua_State *L){
     return 0;
 }
 
-static const struct luaL_Reg geminiObjectLib_f [] = {
-    {"new", newGeminiObject},
-    {NULL, NULL}
-};
 
-static const struct luaL_Reg geminiObjectLib_m [] = {
-    {"addEventListener", addEventListener},
-    {NULL, NULL}
-};
 
 static int l_irc_index( lua_State* L )
 {
@@ -90,6 +85,9 @@ static int l_irc_index( lua_State* L )
     return 1;
 }
 
+// this function gets called with the table on the bottom of the stack, the index to assign to next,
+// and the value to be assigned on top
+// TODO - set the underlying GeminiObject properties to match the lua table value
 static int l_irc_newindex( lua_State* L )
 {
     NSLog(@"Calling l_irc_newindex()");
@@ -97,11 +95,11 @@ static int l_irc_newindex( lua_State* L )
     NSLog(@"stack has %d values", top);
     /* object, key, value */
     
-    lua_getuservalue( L, -3 );
-    BOOL newtable = NO;
+    lua_getuservalue( L, -3 );  // table attached is attached to objects via user value
+    /*BOOL newtable = NO;
     if (lua_isnil(L, -1)) {
-        NSLog(@"No data table for lua data");
-        // this object has no lua object associated with it yes, so create a table and set it
+        NSLog(@"No data table for lua object");
+        // this object has no lua table associated with it yes, so create a table and set it
         lua_newtable(L);
         newtable = YES;
     }
@@ -110,14 +108,27 @@ static int l_irc_newindex( lua_State* L )
         lua_pushvalue( L, -4 );
         lua_rawset( L, -3 );
         lua_setuservalue(L, -5);
-    } else {
+    } else {*/
         lua_pushvalue(L, -3);
         lua_pushvalue(L,-3);
         lua_rawset( L, -3 );
-    }
+    //}
     
     return 0;
 }
+
+static const struct luaL_Reg geminiObjectLib_f [] = {
+    {"new", newGeminiObject},
+    {NULL, NULL}
+};
+
+static const struct luaL_Reg geminiObjectLib_m [] = {
+    {"addEventListener", addEventListener},
+    {"__gc", geminiObjectGC},
+    {"__index", l_irc_index},
+    {"__newindex", l_irc_newindex},
+    {NULL, NULL}
+};
 
 int luaopen_geminiObjectLib (lua_State *L){
     // create the metatable and put it into the registry
@@ -125,10 +136,10 @@ int luaopen_geminiObjectLib (lua_State *L){
     
     lua_pushvalue(L, -1); // duplicates the metatable
     
-    //lua_setfield(L, -2, "__index");
+    
     luaL_setfuncs(L, geminiObjectLib_m, 0);
     
-    lua_pushstring(L,"__gc");
+    /*lua_pushstring(L,"__gc");
     lua_pushcfunction(L, geminiObjectGC);
     lua_settable(L, -3);
     
@@ -138,7 +149,7 @@ int luaopen_geminiObjectLib (lua_State *L){
     
     lua_pushstring(L,"__newindex");
     lua_pushcfunction(L,l_irc_newindex);
-    lua_settable(L,-3);
+    lua_settable(L,-3);*/
     
     // create a table/library to hold the functions
     luaL_newlib(L, geminiObjectLib_f);

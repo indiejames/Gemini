@@ -8,13 +8,12 @@
 
 #import "Gemini.h"
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
+
 #import "ObjectAL.h"
 #import "GeminiEvent.h"
 #import "GeminiObject.h"
 #import "GeminiGLKViewController.h"
+#import "GeminiDisplayObject.h"
 
 Gemini *singleton = nil;
 
@@ -23,23 +22,35 @@ Gemini *singleton = nil;
     lua_State *L;
     GeminiGLKViewController *viewController;
     int x;
+    double initTime;
 }
 @end
 
 
 @implementation Gemini
 
+//@synthesize L;
 @synthesize geminiObjects;
 @synthesize viewController;
+@synthesize initTime;
 
 int setLuaPath(lua_State *L, NSString* path );
 
 
 - (id)init
 {
+    
+    GeminiDisplayObject *dob = [[GeminiDisplayObject alloc] init];
+    dob.x = 10.0;
+    dob.y = 10.0;
+    dob.rotation = M_PI / 2.0;
+    GLKVector4 vec = GLKVector4Make(dob.x, dob.y, 0, 1.0);
+    GLKVector4 vec2 = GLKMatrix4MultiplyVector4(dob.transform, vec);
+    NSLog(@"vec2 = (%f,%f,%f)", vec2.x,vec2.y,vec2.z);
+    
     self = [super init];
     if (self) {
-        NSLog(@"Start");
+        initTime = [NSDate timeIntervalSinceReferenceDate];
         geminiObjects = [[NSMutableArray alloc] initWithCapacity:1];
         viewController = [[GeminiGLKViewController alloc] init];
         L = luaL_newstate();

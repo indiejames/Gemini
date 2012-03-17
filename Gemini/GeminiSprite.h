@@ -6,10 +6,13 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <GLKit/GLKit.h>
+#import "GeminiDisplayObject.h"
+#import "GeminiSpriteSet.h"
 
-@interface GeminiSprite : NSObject
+@interface GeminiSprite : GeminiDisplayObject {
+    GeminiSpriteSet *spriteSet;
+}
 
+-(id) initWithSpriteSet:(GeminiSpriteSet *)ss;
 
 @end
