@@ -8,39 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#import "GeminiObject.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
-@interface GeminiDisplayObject : NSObject {
-    int propertyTableRef;
-    GLfloat alpha;
-    GLfloat height;
-    GLfloat width;
-    BOOL isHitTestMasked;
-    BOOL isHetTestable;
-    BOOL isVisible;
-    GLfloat maskRotation;
-    GLfloat maskScaleX;
-    GLfloat maskScaleY;
-    GLfloat maskX;
-    GLfloat maskY;
+@interface GeminiDisplayObject : GeminiObject {
     GeminiDisplayObject *parent;
-    GLfloat rotation; // radians
-    GLfloat x;
-    GLfloat y;
-    GLfloat xOrigin;
-    GLfloat yOrigin;
-    GLfloat xReference;
-    GLfloat yReference;
-    GLfloat xScale;
-    GLfloat yScale;
-    
 }
 
-@property (nonatomic) int propertyTableRef;
 @property (nonatomic) GLfloat alpha;
 @property (nonatomic) GLfloat height;
 @property (nonatomic) GLfloat width;
 @property (nonatomic) BOOL isHitTestMasked;
-@property (nonatomic) BOOL isHetTestable;
+@property (nonatomic) BOOL isHitTestable;
 @property (nonatomic) BOOL isVisible;
 @property (nonatomic) GLfloat maskRotation;
 @property (nonatomic) GLfloat maskScaleX;

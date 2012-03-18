@@ -10,6 +10,9 @@
 
 @implementation GeminiObject
 
+@synthesize selfRef;
+@synthesize propertyTableRef;
+
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
     if (self) {
@@ -33,6 +36,80 @@
     
     [super dealloc];
 }
+
+// methods to support storing attributes in Lau table
+
+-(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_gettable(L, -2);
+    if (lua_isnil(L, -1)) {
+        return dflt;
+    }
+    
+    return lua_toboolean(L, -1);
+}
+
+-(double)getDoubleForKey:(const char*) key withDefault:(double)dflt {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_gettable(L, -2);
+    if (lua_isnil(L, -1)) {
+        return dflt;
+    }
+    return lua_tonumber(L, -1);
+}
+
+-(int)getIntForKey:(const char*) key withDefault:(int)dflt{
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_gettable(L, -2);
+    if (lua_isnil(L, -1)) {
+        return dflt;
+    }
+    return lua_tointeger(L, -1);
+}
+
+-(NSString *)getStringForKey:(const char*) key withDefault:(NSString *)dflt{
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_gettable(L, -2);
+    if (lua_isnil(L, -1)) {
+        return dflt;
+    }
+    const char* val = lua_tostring(L, -1);
+    return [NSString stringWithFormat:@"%s",val];
+}
+
+-(void)setBOOL:(BOOL)val forKey:(const char*) key {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_pushboolean(L, val);
+    lua_settable(L, -3);
+}
+
+-(void)setDouble:(double)val forKey:(const char*) key {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_pushnumber(L, val);
+    lua_settable(L, -3);
+}
+
+-(void)setInt:(int)val forKey:(const char*) key {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    lua_pushinteger(L, val);
+    lua_settable(L, -3);
+}
+
+-(void)setString:(NSString *)val forKey:(const char*) key {
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    lua_pushstring(L, key);
+    const char *sval = [val cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    lua_pushstring(L, sval);
+    lua_settable(L, -3);
+}
+
 
 -(BOOL)handleEvent:(GeminiEvent *)event {
     NSLog(@"GeminiObject checking for event handelr");

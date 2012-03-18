@@ -33,6 +33,9 @@ static int newSprite(lua_State *L){
     // set the table as the user value for the Lua object
     lua_setuservalue(L, -2);
     
+    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
+    sprite.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    
     return 1;
 }
 
@@ -85,6 +88,20 @@ static int spriteNewIndex( lua_State* L )
     lua_pushvalue(L,-3);
     lua_rawset( L, -3 );
     //}
+    
+    return 0;
+}
+
+static int printXValue(lua_State *L){
+    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    int propertTableRef = (*sprite).propertyTableRef;
+    // get the property table for this user data
+    lua_rawgeti(L, LUA_REGISTRYINDEX, propertTableRef);
+    // now get the x value
+    lua_pushstring(L, "x");
+    lua_gettable(L, -2);
+    double x = lua_tonumber(L, -1);
+    NSLog(@"x == %f", x);
     
     return 0;
 }
@@ -266,6 +283,8 @@ static const struct luaL_Reg sprite_m [] = {
     {"__gc", spriteGC},
     {"__index", spriteIndex},
     {"__newindex", spriteNewIndex},
+    {"printx", printXValue},
+    {NULL, NULL}
 };
 
 
