@@ -8,8 +8,8 @@
 
 #import "GeminiGLKViewController.h"
 
-NSString *spriteFragmentShaderStr = @"uniform sampler2D texture; // texture sampler\nuniform highp float alpha; // alpha value for image\nvarying highp vec2 vTexCoord; // texture coordinates\nvoid main()\n{\nhighp vec4 texVal = texture2D(texture, vTexCoord);\ngl_FragColor = texVal;\n}";
-
+//NSString *spriteFragmentShaderStr = @"uniform sampler2D texture; // texture sampler\nuniform highp float alpha; // alpha value for image\nvarying highp vec2 vTexCoord; // texture coordinates\nvoid main()\n{\nhighp vec4 texVal = texture2D(texture, vTexCoord);\ngl_FragColor = texVal;\n}";
+NSString *spriteFragmentShaderStr = @"void main(){\ngl_FragColor = vec4(1.0,1.0,1.0,1.0);\n}";
 NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 texCoord;\nvarying vec2 vTexCoord;\nuniform mat4 proj;\nuniform mat4 rot;\nvoid main()\n{\ngl_Position = proj * rot * position;\nvTexCoord = texCoord;\n}";
 
 // Uniform index.
@@ -76,20 +76,6 @@ enum {
     return self;
 }
 
--(void) loadView {
-    self.preferredFramesPerSecond = 60;
-    
-    context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    GLKView *glView = [[GLKView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    glView.context = context;
-    glView.delegate = self;
-    
-    self.view = glView;
-    self.delegate = self;
-
-    
-    [self setupGL];
-}
 
 -(void) viewDidLoad {
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -101,7 +87,8 @@ enum {
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     //view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    //view.drawableMultisample = GLKViewDrawableMultisample4X;
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
+    view.contentScaleFactor = 1.0;
     
     self.preferredFramesPerSecond = 60;
     
@@ -125,21 +112,21 @@ enum {
     // combined position and tex coord
     GLfloat quadVerts[] = {
         50.0, 50.0, 0.0, 0.0,
-        300.0, 50.0, 1.0, 0.0,
-        50.0, 300.0, 0.0, 1.0,
-        300.0, 300.0, 1.0, 1.0
+        200.0, 50.0, 1.0, 0.0,
+        50.0, 200.0, 0.0, 1.0,
+        200.0, 250.0, 1.0, 1.0
     };
     
     
     GLuint quadIndex[] = {
-        0, 1, 2, 2, 1, 3  
+        0, 1, 3, 2, 1, 3, 0  
     };
     
     [EAGLContext setCurrentContext:self.context];
     
     [self loadShaders];
     
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     
     /*// planet
      glGenBuffers(1, &planetVertexBuffer);
@@ -161,6 +148,7 @@ enum {
     glBufferData(GL_ARRAY_BUFFER, 4*4*sizeof(GLfloat), quadVerts, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIndexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLuint), quadIndex, GL_STATIC_DRAW);
+    
 }
 
 
@@ -179,38 +167,26 @@ enum {
 
 - (void)update
 {
-    
-    float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
-    
-    
-    // planet
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -4.0f);
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 0.0f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, -0.2, 0.0, 0.0, 1.0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, 0.2, 1.0, 0.0, 0.0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
-    modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, 0.5, 0.5, 0.5);
-    modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
-    // _normalMatrix = GLKMatrix4GetMatrix3(GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL));
-    
-    planetNormalMatrix =  GLKMatrix4GetMatrix3(GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL));
-    planetModelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
+    //NSLog(@"update()");
+    double scale = [UIScreen mainScreen].scale;
     
     
-    _rotation += self.timeSinceLastUpdate * 0.5f;
+    GLint width;
+    GLint height;
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    
+    NSLog(@"width = %d", width);
+    NSLog(@"height = %d", height);
+    NSLog(@"main screen scale = %f", scale);
 }
 
 - (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause {
     
 }
 
-- (void)glkViewControllerUpdate:(GLKViewController *)controller {
-    NSLog(@"Updating...");
-}
-
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
-    
+    //NSLog(@"Drawing");
     glClearColor(0, 0.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -222,8 +198,49 @@ enum {
     
     // do our thing
     
+    GLint width;
+    GLint height;
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
     
-    // call ghe post render method
+    
+    glUseProgram(program);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIndexBuffer);
+    
+    GLfloat left = 0;
+    GLfloat right = width;
+    GLfloat bottom = 0;
+    GLfloat top = height;
+    
+    //planetModelViewProjectionMatrix = GLKMatrix4MakeTranslation(0, 0, 0);
+    planetModelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-2.0,0,-1.0,-1.0,-1.0,1.0);
+    
+    glUniformMatrix4fv(uniforms[UNIFORM_PROJECTION], 1, 0, planetModelViewProjectionMatrix.m);
+    
+    glEnableVertexAttribArray(ATTRIB_VERTEX);
+    //glEnableVertexAttribArray(ATTRIB_TEXCOORD);
+    
+    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), 0);
+    //glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), (const GLvoid *)(2*sizeof(GLfloat)));
+    
+    //glEnable(GL_TEXTURE_2D);
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE0, planTexture);
+    //glUniform1i(uniforms[UNIFORM_TEXTURE_0], 0);
+    //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glLineWidth(5.0);
+    glDrawElements(GL_LINE_STRIP, 7, GL_UNSIGNED_INT, 0);
+    
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    
+    //////////////////////////////
+    
+    
+    // call the post render method
     if (postRenderCallback) {
         [self performSelector:postRenderCallback];
     }
@@ -259,7 +276,21 @@ enum {
     program = glCreateProgram();
     
     // Create and compile vertex shader.
-    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER source:spriteVertexShaderStr])
+    NSString *vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"vsh"];
+    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER source:vertShaderPathname]) {
+        NSLog(@"Failed to compile vertex shader");
+        return NO;
+    }
+    
+    // Create and compile fragment shader.
+    NSString *fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"fsh"];
+    if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER source:fragShaderPathname]) {
+        NSLog(@"Failed to compile fragment shader");
+        return NO;
+    }
+    
+    // Create and compile vertex shader.
+   /* if (![self compileShader:&vertShader type:GL_VERTEX_SHADER source:spriteVertexShaderStr])
     {
         NSLog(@"Failed to compile vertex shader");
         return FALSE;
@@ -270,7 +301,7 @@ enum {
     {
         NSLog(@"Failed to compile fragment shader");
         return FALSE;
-    }
+    }*/
     
     // Attach vertex shader to program.
     glAttachShader(program, vertShader);
@@ -281,7 +312,7 @@ enum {
     // Bind attribute locations.
     // This needs to be done prior to linking.
     glBindAttribLocation(program, ATTRIB_VERTEX, "position");
-    glBindAttribLocation(program, ATTRIB_TEXCOORD, "texCoord");
+    //glBindAttribLocation(program, ATTRIB_TEXCOORD, "texCoord");
     
     // Link program.
     if (![self linkProgram:program])
@@ -308,8 +339,8 @@ enum {
     }
     
     // Get uniform locations.
-    uniforms[UNIFORM_PROJECTION] = glGetUniformLocation(program, "proj");
-    uniforms[UNIFORM_ROTATION] = glGetUniformLocation(program, "rot");
+    uniforms[UNIFORM_PROJECTION] = glGetUniformLocation(program, "modelViewProjectionMatrix");
+    //uniforms[UNIFORM_ROTATION] = glGetUniformLocation(program, "rot");
     
     
     // Release vertex and fragment shaders.
@@ -326,7 +357,9 @@ enum {
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type source:(NSString *)shaderSource
 {
     GLint status;
-    const GLchar *source = [shaderSource UTF8String];
+    //const GLchar *source = [shaderSource UTF8String];
+    
+    const GLchar *source = (GLchar *)[[NSString stringWithContentsOfFile:shaderSource encoding:NSUTF8StringEncoding error:nil] UTF8String];
     
     
     if (!source) {

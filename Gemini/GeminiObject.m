@@ -26,11 +26,11 @@
 }
 
 -(void) dealloc {
-    NSArray *keys = [eventHandlers allKeys];
+   /* NSArray *keys = [eventHandlers allKeys];
     for (NSString *key in keys) {
         NSArray *callbacks = (NSArray *)[eventHandlers objectForKey:key];
         [callbacks release];
-    }
+    }*/
     
     [eventHandlers release];
     

@@ -11,7 +11,7 @@
 
 
 
-@interface GeminiGLKViewController : GLKViewController <GLKViewControllerDelegate>{
+@interface GeminiGLKViewController : GLKViewController {
     EAGLContext *context;
     SEL preRenderCallback;
     SEL postRenderCallback;

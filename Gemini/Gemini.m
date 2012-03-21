@@ -106,7 +106,7 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 -(BOOL)handleEvent:(NSString *)event {
-    NSLog(@"Gemini hangline event %@", event);
+    NSLog(@"Gemini handling event %@", event);
     GeminiEvent *ge = [[GeminiEvent alloc] init];
     ge.name = event;
     
@@ -122,6 +122,7 @@ int setLuaPath(lua_State *L, NSString* path );
     return NO;
 }
 
+// makes it possible for Lua to load files on iOS
 int setLuaPath(lua_State *L, NSString* path )  
 {
     lua_getglobal( L, "package" );
