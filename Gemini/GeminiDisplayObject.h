@@ -13,8 +13,10 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
+@class GeminiDisplayGroup;
+
 @interface GeminiDisplayObject : GeminiObject {
-    GeminiDisplayObject *parent;
+    GeminiDisplayGroup *parent;
 }
 
 @property (nonatomic) GLfloat alpha;
@@ -28,7 +30,7 @@
 @property (nonatomic) GLfloat maskScaleY;
 @property (nonatomic) GLfloat maskX;
 @property (nonatomic) GLfloat maskY;
-@property (nonatomic, retain) GeminiDisplayObject *parent;
+@property (nonatomic, retain) GeminiDisplayGroup *parent;
 @property (nonatomic) GLfloat rotation;
 @property (nonatomic) GLfloat x;
 @property (nonatomic) GLfloat y;

@@ -10,7 +10,6 @@
 #import <GLKit/GLKit.h>
 
 
-
 @interface Gemini : NSObject
 
 //@property (readonly) lua_State *L;

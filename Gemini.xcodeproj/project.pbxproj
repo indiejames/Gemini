@@ -24,6 +24,18 @@
 		767CA05915154358001C94CA /* LGeminiDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA05715154357001C94CA /* LGeminiDisplay.h */; };
 		767CA05A15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
 		767CA05B15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
+		7692566A1522982800BEEF0C /* GeminiRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 769256681522982700BEEF0C /* GeminiRenderer.h */; };
+		7692566B1522982800BEEF0C /* GeminiRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GeminiRenderer.m */; };
+		7692566C1522982800BEEF0C /* GeminiRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GeminiRenderer.m */; };
+		7692567A15278D4D00BEEF0C /* GeminiShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567815278D4C00BEEF0C /* GeminiShaderManager.h */; };
+		7692567B15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GeminiShaderManager.m */; };
+		7692567C15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GeminiShaderManager.m */; };
+		7692567F15278EAE00BEEF0C /* GeminiSpriteShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */; };
+		7692568015278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */; };
+		7692568115278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */; };
+		7692568415278F4000BEEF0C /* GeminiLineShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */; };
+		7692568515278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */; };
+		7692568615278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */; };
 		76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2B14F99687006B1E17 /* Foundation.framework */; };
 		76BC9A3214F99687006B1E17 /* Gemini.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A3114F99687006B1E17 /* Gemini.m */; };
 		76BC9A3A14F99687006B1E17 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A3914F99687006B1E17 /* SenTestingKit.framework */; };
@@ -268,6 +280,8 @@
 		76BF972B1504520A009D51FD /* LGeminiSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF97291504520A009D51FD /* LGeminiSprite.h */; };
 		76BF972C1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
 		76BF972D1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
+		76F95F4D151AB649003E3526 /* GeminiLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F95F4B151AB649003E3526 /* GeminiLine.h */; };
+		76F95F4E151AB649003E3526 /* GeminiLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F95F4C151AB649003E3526 /* GeminiLine.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +307,14 @@
 		767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiDisplayGroup.m; sourceTree = "<group>"; };
 		767CA05715154357001C94CA /* LGeminiDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiDisplay.h; sourceTree = "<group>"; };
 		767CA05815154357001C94CA /* LGeminiDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiDisplay.m; sourceTree = "<group>"; };
+		769256681522982700BEEF0C /* GeminiRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRenderer.h; sourceTree = "<group>"; };
+		769256691522982700BEEF0C /* GeminiRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRenderer.m; sourceTree = "<group>"; };
+		7692567815278D4C00BEEF0C /* GeminiShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiShaderManager.h; sourceTree = "<group>"; };
+		7692567915278D4D00BEEF0C /* GeminiShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiShaderManager.m; sourceTree = "<group>"; };
+		7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteShaderManager.h; sourceTree = "<group>"; };
+		7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteShaderManager.m; sourceTree = "<group>"; };
+		7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLineShaderManager.h; sourceTree = "<group>"; };
+		7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLineShaderManager.m; sourceTree = "<group>"; };
 		76BC9A2814F99687006B1E17 /* libGemini.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGemini.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BC9A2B14F99687006B1E17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
@@ -539,6 +561,8 @@
 		76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSheet.m; sourceTree = "<group>"; };
 		76BF97291504520A009D51FD /* LGeminiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiSprite.h; sourceTree = "<group>"; };
 		76BF972A1504520A009D51FD /* LGeminiSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiSprite.m; sourceTree = "<group>"; };
+		76F95F4B151AB649003E3526 /* GeminiLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLine.h; sourceTree = "<group>"; };
+		76F95F4C151AB649003E3526 /* GeminiLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLine.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -636,6 +660,16 @@
 				767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */,
 				767CA05715154357001C94CA /* LGeminiDisplay.h */,
 				767CA05815154357001C94CA /* LGeminiDisplay.m */,
+				76F95F4B151AB649003E3526 /* GeminiLine.h */,
+				76F95F4C151AB649003E3526 /* GeminiLine.m */,
+				769256681522982700BEEF0C /* GeminiRenderer.h */,
+				769256691522982700BEEF0C /* GeminiRenderer.m */,
+				7692567815278D4C00BEEF0C /* GeminiShaderManager.h */,
+				7692567915278D4D00BEEF0C /* GeminiShaderManager.m */,
+				7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */,
+				7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */,
+				7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */,
+				7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1143,6 +1177,11 @@
 				767CA04F150C518D001C94CA /* GeminiDisplayObject.h in Headers */,
 				767CA054150ED6D5001C94CA /* GeminiDisplayGroup.h in Headers */,
 				767CA05915154358001C94CA /* LGeminiDisplay.h in Headers */,
+				76F95F4D151AB649003E3526 /* GeminiLine.h in Headers */,
+				7692566A1522982800BEEF0C /* GeminiRenderer.h in Headers */,
+				7692567A15278D4D00BEEF0C /* GeminiShaderManager.h in Headers */,
+				7692567F15278EAE00BEEF0C /* GeminiSpriteShaderManager.h in Headers */,
+				7692568415278F4000BEEF0C /* GeminiLineShaderManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,6 +1401,11 @@
 				767CA050150C518D001C94CA /* GeminiDisplayObject.m in Sources */,
 				767CA055150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */,
 				767CA05A15154358001C94CA /* LGeminiDisplay.m in Sources */,
+				76F95F4E151AB649003E3526 /* GeminiLine.m in Sources */,
+				7692566B1522982800BEEF0C /* GeminiRenderer.m in Sources */,
+				7692567B15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
+				7692568015278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
+				7692568515278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,6 +1426,10 @@
 				767CA051150C518D001C94CA /* GeminiDisplayObject.m in Sources */,
 				767CA056150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */,
 				767CA05B15154358001C94CA /* LGeminiDisplay.m in Sources */,
+				7692566C1522982800BEEF0C /* GeminiRenderer.m in Sources */,
+				7692567C15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
+				7692568115278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
+				7692568615278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

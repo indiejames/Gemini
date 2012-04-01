@@ -42,6 +42,7 @@
 }
 
 -(GLfloat) width {
+    NSLog(@"GeminiDisplayObject width");
     return [super getDoubleForKey:"width" withDefault:0];
 }
 
@@ -186,7 +187,7 @@
 }
 
 -(GLKMatrix4) transform {
-    GLKMatrix4 rval = [parent transform];
+    GLKMatrix4 rval = GLKMatrix4Identity;
     
     if (self.xScale != 1.0 || self.yScale != 1.0) {
         rval = GLKMatrix4Scale(rval, self.xScale, self.yScale, 1.0);

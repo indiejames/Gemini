@@ -10,14 +10,13 @@
 
 @implementation GeminiDisplayGroup
 
-@synthesize layer;
 @synthesize objects;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
     if (self) {
         objects = [[NSMutableArray alloc] initWithCapacity:1];
-        layer = 0;
+        
     }
     
     return self;

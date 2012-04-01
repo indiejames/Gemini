@@ -13,8 +13,8 @@
 @implementation GeminiSprite
 
 
--(id)initWithSpriteSet:(GeminiSpriteSet *)spSet {
-    self = [super init];
+-(id)initWithLuaState:(lua_State *)luaState SpriteSet:(GeminiSpriteSet *)spSet {
+    self = [super initWithLuaState:luaState];
     
     if (self) {
         spriteSet = [spSet retain];

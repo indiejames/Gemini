@@ -20,6 +20,7 @@ Gemini *singleton = nil;
 @interface Gemini () {
 @private
     lua_State *L;
+    NSDictionary *config;
     GeminiGLKViewController *viewController;
     int x;
     double initTime;
@@ -51,6 +52,7 @@ int setLuaPath(lua_State *L, NSString* path );
     self = [super init];
     if (self) {
         initTime = [NSDate timeIntervalSinceReferenceDate];
+        config = [self readPlist:@"gemini"];
         geminiObjects = [[NSMutableArray alloc] initWithCapacity:1];
         viewController = [[GeminiGLKViewController alloc] init];
         L = luaL_newstate();
@@ -69,6 +71,26 @@ int setLuaPath(lua_State *L, NSString* path );
     
     return singleton;
 }
+
+
+- (id)readPlist:(NSString *)fileName {  
+    NSData *plistData;  
+    NSString *error;  
+    NSPropertyListFormat format;  
+    NSDictionary *plist;  
+    
+    NSString *localizedPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];  
+    plistData = [NSData dataWithContentsOfFile:localizedPath];   
+    
+    plist = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListImmutable format:&format errorDescription:&error];  
+    if (!plist) {  
+        NSLog(@"Error reading plist from file '%s', error = '%s'", [localizedPath UTF8String], [error UTF8String]);  
+        [error release];  
+    }  
+    
+    return plist;  
+}  
+
 
 -(void)fireTimer {
     GeminiEvent *event = [[GeminiEvent alloc] init];

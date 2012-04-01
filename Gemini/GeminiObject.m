@@ -12,6 +12,7 @@
 
 @synthesize selfRef;
 @synthesize propertyTableRef;
+@synthesize L;
 
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
@@ -51,6 +52,7 @@
 }
 
 -(double)getDoubleForKey:(const char*) key withDefault:(double)dflt {
+    NSLog(@"GeminiObject getting double for key %s", key);
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
     lua_pushstring(L, key);
     lua_gettable(L, -2);

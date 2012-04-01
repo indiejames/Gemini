@@ -21,6 +21,7 @@
 
 @property (nonatomic) int selfRef;
 @property (nonatomic) int propertyTableRef;
+@property(readonly) lua_State *L;
 
 -(id) initWithLuaState:(lua_State *)luaState;
 -(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;

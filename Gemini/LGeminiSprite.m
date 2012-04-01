@@ -18,7 +18,7 @@ int luaopen_spritelib (lua_State *L);
 ////////// Sprites //////////////////////
 static int newSprite(lua_State *L){
     GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
-    GeminiSprite *sprite = [[GeminiSprite alloc] initWithSpriteSet:*ss];
+    GeminiSprite *sprite = [[GeminiSprite alloc] initWithLuaState:L SpriteSet:*ss];
     GeminiSprite **lSprite = (GeminiSprite **)lua_newuserdata(L, sizeof(GeminiSprite *));
     *lSprite = sprite;
     

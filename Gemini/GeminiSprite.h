@@ -13,6 +13,6 @@
     GeminiSpriteSet *spriteSet;
 }
 
--(id) initWithSpriteSet:(GeminiSpriteSet *)ss;
+-(id) initWithLuaState:(lua_State *)luaState SpriteSet:(GeminiSpriteSet *)ss;
 
 @end
