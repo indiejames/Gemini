@@ -42,12 +42,14 @@
 // methods to support storing attributes in Lau table
 
 -(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt {
+    BOOL rval = dflt;
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
-    lua_pushstring(L, key);
-    lua_gettable(L, -2);
-    if (lua_isnil(L, -1)) {
-        return dflt;
+    lua_getfield(L, -1, key);
+    if (!lua_isnil(L, -1)) {
+        rval = lua_toboolean(L, -1);
     }
+    
+    lua_pop(L, 2);
     
     return lua_toboolean(L, -1);
 }
@@ -66,25 +68,28 @@
 }
 
 -(int)getIntForKey:(const char*) key withDefault:(int)dflt{
+    int rval = dflt;
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
-    lua_pushstring(L, key);
-    lua_gettable(L, -2);
-    if (lua_isnil(L, -1)) {
-        return dflt;
+    lua_getfield(L, -1, key);
+    if (!lua_isnil(L, -1)) {
+        rval = lua_tointeger(L, -1);
     }
-    return lua_tointeger(L, -1);
+    
+    lua_pop(L, 2);
+    
+    return rval;
 }
 
 -(NSString *)getStringForKey:(const char*) key withDefault:(NSString *)dflt{
+    NSString *rval = dflt;
+    
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
-    luaL_checkstack(L, 1, "GeminiObject.getStringForKey() - Cannot grow stack");
-    lua_pushstring(L, key);
-    lua_gettable(L, -2);
-    if (lua_isnil(L, -1)) {
-        return dflt;
+    lua_getfield(L, -1, key);
+    if (!lua_isnil(L, -1)) {
+        rval = [NSString stringWithFormat:@"%s",lua_tostring(L, -1)];
     }
-    const char* val = lua_tostring(L, -1);
-    return [NSString stringWithFormat:@"%s",val];
+    
+    return rval;
 }
 
 -(void)setBOOL:(BOOL)val forKey:(const char*) key {
@@ -92,6 +97,7 @@
     lua_pushstring(L, key);
     lua_pushboolean(L, val);
     lua_settable(L, -3);
+    lua_pop(L, 1);
 }
 
 -(void)setDouble:(double)val forKey:(const char*) key {
@@ -99,6 +105,7 @@
     lua_pushstring(L, key);
     lua_pushnumber(L, val);
     lua_settable(L, -3);
+    lua_pop(L, 1);
 }
 
 -(void)setInt:(int)val forKey:(const char*) key {
@@ -106,6 +113,7 @@
     lua_pushstring(L, key);
     lua_pushinteger(L, val);
     lua_settable(L, -3);
+    lua_pop(L, 1);
 }
 
 -(void)setString:(NSString *)val forKey:(const char*) key {
@@ -114,6 +122,7 @@
     const char *sval = [val cStringUsingEncoding:[NSString defaultCStringEncoding]];
     lua_pushstring(L, sval);
     lua_settable(L, -3);
+    lua_pop(L, 1);
 }
 
 
