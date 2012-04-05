@@ -123,8 +123,8 @@ int setLuaPath(lua_State *L, NSString* path );
 		return;
 	}
     
-    NSTimer *timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
-    [timer retain];
+   /* NSTimer *timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(fireTimer) userInfo:nil repeats:YES];
+    [timer retain];*/
 }
 
 -(BOOL)handleEvent:(NSString *)event {

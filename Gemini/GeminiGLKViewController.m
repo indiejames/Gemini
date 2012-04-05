@@ -38,6 +38,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
 }
 @property (strong, nonatomic) EAGLContext *context;
+@property (nonatomic) lua_State *L;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -47,6 +48,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 @implementation GeminiGLKViewController
 @synthesize context;
 @synthesize renderer;
+@synthesize L;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super init];
@@ -71,7 +73,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
-    //view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.contentScaleFactor = 1.0;
     
@@ -164,6 +166,11 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     NSLog(@"width = %d", width);
     NSLog(@"height = %d", height);
     NSLog(@"main screen scale = %f", scale);
+    if (L != NULL) {
+        lua_getglobal(L, "update");
+        lua_pcall(L, 0, 0, 0);
+
+    }
 }
 
 - (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause {
@@ -186,38 +193,6 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     [renderer render];
     
-/*    GLint width;
-    GLint height;
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
-    
-    
-    glUseProgram(program);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIndexBuffer);
-    
-    GLfloat left = 0;
-    GLfloat right = width;
-    GLfloat bottom = 0;
-    GLfloat top = height;
-    
-    //planetModelViewProjectionMatrix = GLKMatrix4MakeTranslation(0, 0, 0);
-    planetModelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-2.0,0,-1.0,-1.0,-1.0,1.0);
-    
-    glUniformMatrix4fv(uniforms[UNIFORM_PROJECTION], 1, 0, planetModelViewProjectionMatrix.m);
-    
-    glEnableVertexAttribArray(ATTRIB_VERTEX);
-    //glEnableVertexAttribArray(ATTRIB_TEXCOORD);
-    
-    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), 0);
-    
-    glLineWidth(5.0);
-    glDrawElements(GL_LINE_STRIP, 7, GL_UNSIGNED_INT, 0);
-    
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-  */  
     
     //////////////////////////////
     

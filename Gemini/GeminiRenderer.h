@@ -19,7 +19,7 @@
     
     NSMutableDictionary *stages;
     NSString *activeStage;
-    lua_State *L;
+    //lua_State *L;
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
     GeminiLineShaderManager *lineShaderManager;

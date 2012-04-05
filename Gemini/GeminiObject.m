@@ -32,7 +32,8 @@
         NSArray *callbacks = (NSArray *)[eventHandlers objectForKey:key];
         [callbacks release];
     }*/
-    
+    // release our property table
+    luaL_unref(L, LUA_REGISTRYINDEX, propertyTableRef);
     [eventHandlers release];
     
     [super dealloc];
@@ -52,14 +53,16 @@
 }
 
 -(double)getDoubleForKey:(const char*) key withDefault:(double)dflt {
-    NSLog(@"GeminiObject getting double for key %s", key);
+    double rval = dflt;
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
-    lua_pushstring(L, key);
-    lua_gettable(L, -2);
-    if (lua_isnil(L, -1)) {
-        return dflt;
+    lua_getfield(L, -1, key);
+    if (!lua_isnil(L, -1)) {
+        rval = lua_tonumber(L, -1);
     }
-    return lua_tonumber(L, -1);
+    
+    lua_pop(L, 2);
+    
+    return rval;
 }
 
 -(int)getIntForKey:(const char*) key withDefault:(int)dflt{
@@ -74,6 +77,7 @@
 
 -(NSString *)getStringForKey:(const char*) key withDefault:(NSString *)dflt{
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
+    luaL_checkstack(L, 1, "GeminiObject.getStringForKey() - Cannot grow stack");
     lua_pushstring(L, key);
     lua_gettable(L, -2);
     if (lua_isnil(L, -1)) {

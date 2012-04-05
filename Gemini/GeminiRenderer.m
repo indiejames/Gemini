@@ -18,6 +18,7 @@
 
 -(void)render {
     NSLog(@"GeminiRenderer rendering...");
+    glEnable(GL_DEPTH_TEST);
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
     // sort layers from front (highest number) to back (lowest number)
@@ -106,7 +107,7 @@
         for (unsigned int j=0; j<line.numPoints; j++) {
             verts[j*3] = line.points[j*2];
             verts[j*3+1] = line.points[j*2 + 1];
-            verts[j*3 + 2] = -(GLfloat)layerIndex / 100.0;
+            verts[j*3 + 2] = (GLfloat)layerIndex / 100.0 - 1;
             
             NSLog(@"verts[%d] = %f",j*3,verts[j*3]);
             NSLog(@"verts[%d] = %f",j*3+1,verts[j*3+1]);
@@ -123,7 +124,7 @@
         GLfloat top = height;
         
         //planetModelViewProjectionMatrix = GLKMatrix4MakeTranslation(0, 0, 0);
-        GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-2.0,0,-1.0,-1.0,-1.0,1.0);
+        GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
         
         glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
         
@@ -134,9 +135,10 @@
         //glEnableVertexAttribArray(ATTRIB_TEXCOORD);
         
         glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, 0);
-       // NSLog(@"Line width = %f", line.width);
-        //glLineWidth(line.width);
-        glLineWidth(3.0);
+        double linewidth = line.width;
+        NSLog(@"Line width = %f", linewidth);
+        glLineWidth(linewidth);
+        //glLineWidth(7.0);
         //glDrawElements(GL_LINE_STRIP, line.numPoints, GL_UNSIGNED_INT, 0);
         glDrawArrays(GL_LINE_STRIP, 0, line.numPoints);
                 
@@ -162,7 +164,7 @@
     NSLog(@"GeminiRenderer found layer");
     if (layerGroup == nil) {
         NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[GeminiDisplayGroup alloc] initWithLuaState:L];
+        layerGroup = [[GeminiDisplayGroup alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
         NSLog(@"GeminiRenderer created new layer");
         [stage setObject:layerGroup forKey:[NSNumber numberWithInt:layer]];
     }
@@ -188,7 +190,7 @@
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
     if (self) {
-        L = luaState;
+        //L = luaState;
         stages = [[NSMutableDictionary alloc] initWithCapacity:1];
         // add a default stage
         NSMutableDictionary *defaultStage = [[NSMutableDictionary alloc] initWithCapacity:1];

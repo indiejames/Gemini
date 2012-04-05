@@ -124,6 +124,7 @@ static int newDisplayGroup(lua_State *L){
     GeminiDisplayGroup *group = [[GeminiDisplayGroup alloc] initWithLuaState:L];
     GeminiDisplayGroup **lGroup = (GeminiDisplayGroup **)lua_newuserdata(L, sizeof(GeminiDisplayGroup *));
     *lGroup = group;
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group toLayer:0];
     
     luaL_getmetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY);
     lua_setmetatable(L, -2);
@@ -138,6 +139,15 @@ static int displayGroupGC (lua_State *L){
     
     [*group release];
     
+    return 0;
+}
+
+static int displayGroupSetLayer(lua_State *L){
+    NSLog(@"Calling displayGroupSetLayer()");
+    GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+    int layer = luaL_checkinteger(L, 2);
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:*group toLayer:layer];
+
     return 0;
 }
 
@@ -172,7 +182,6 @@ static int displayGroupIndex( lua_State* L )
         
     }
     
-    
     return 1;
 }
 
@@ -186,6 +195,7 @@ static const struct luaL_Reg displayLib_f [] = {
 // mappings for the display group methods
 static const struct luaL_Reg displayGroup_m [] = {
     {"insert", displayGroupInsert},
+    {"setLayer", displayGroupSetLayer},
     {"__gc", displayGroupGC},
     {"__index", displayGroupIndex},
     {NULL, NULL}
