@@ -127,10 +127,10 @@
 
 
 -(BOOL)handleEvent:(GeminiEvent *)event {
-    NSLog(@"GeminiObject checking for event handelr");
+    //NSLog(@"GeminiObject checking for event handler");
     NSArray *callbacks = (NSMutableArray *)[eventHandlers objectForKey:event.name];
     int count = [callbacks count];
-    NSLog(@"Found %d callbacks", count);
+    //NSLog(@"Found %d callbacks", count);
     
     if ([callbacks count] > 0) {
         for (int i=0; i<[callbacks count]; i++) {
@@ -140,15 +140,15 @@
             lua_rawgeti(L, LUA_REGISTRYINDEX, registryKey);
             
             if (lua_isfunction(L, -1)) {
-                NSLog(@"Event handler is a function");
+                //NSLog(@"Event handler is a function");
                 lua_pcall(L, 0, 0, 0);
                 
             } else { // table or user data
                 const char *ename = [event.name UTF8String];
-                NSLog(@"Event handler is a table");
+                //NSLog(@"Event handler is a table");
                 lua_getfield(L, -1, ename);
                 if(lua_isnil(L, -1)){
-                    NSLog(@"lua_getfield for %s returned nil", ename);
+                    //NSLog(@"lua_getfield for %s returned nil", ename);
                 }
                 lua_insert(L, -2);
                 // TODO: we should insert the event as an argument here
@@ -157,7 +157,7 @@
             
             
         }
-        NSLog(@"GemniObject handled event %@", event.name);
+        //NSLog(@"GemniObject handled event %@", event.name);
         return YES;
     }
     

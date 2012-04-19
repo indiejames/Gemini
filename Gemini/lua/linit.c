@@ -44,7 +44,8 @@ static const luaL_Reg loadedlibs[] = {
   {LUA_BITLIBNAME, luaopen_bit32},
   {LUA_MATHLIBNAME, luaopen_math},
   {LUA_DBLIBNAME, luaopen_debug},
-    {"system", luaopen_system_lib},
+  {"gemini", luaopen_geminiObjectLib},
+  {"system", luaopen_system_lib},
   {NULL, NULL}
 };
 
@@ -54,7 +55,6 @@ static const luaL_Reg loadedlibs[] = {
 */
 static const luaL_Reg preloadedlibs[] = {
     // {"sound_effect", luaopen_soundlib},
-    {"gemini", luaopen_geminiObjectLib},
     {"sound", luaopen_soundlib},
     {"sprite", luaopen_spritelib},
     {"display", luaopen_display_lib},

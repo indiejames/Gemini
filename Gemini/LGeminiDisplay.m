@@ -12,6 +12,20 @@
 #import "GeminiLine.h"
 #import "GeminiGLKViewController.h"
 
+// used to set common defaults for all display objects
+// this function expects a table to be the top item on the stack
+static void setDefaultValues(lua_State *L) {
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_pushstring(L, "x");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+
+    lua_pushstring(L, "y");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+    
+}
+
 ///////////// lines ///////////////////////////
 static int newLine(lua_State *L){
     NSLog(@"Creating new line...");
@@ -33,6 +47,10 @@ static int newLine(lua_State *L){
     lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
     // store a reference to this table so our sprite methods can access it
     line.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    
+    // add in some default values
+    setDefaultValues(L);
+    
     // set the table as the user value for the Lua object
     lua_setuservalue(L, -2);
     
@@ -76,12 +94,12 @@ static int lineSetColor(lua_State *L){
 
 static int lineIndex( lua_State* L )
 {
-    NSLog(@"Calling lineIndex()");
+    //NSLog(@"Calling lineIndex()");
     /* object, key */
     /* first check the environment */ 
     lua_getuservalue( L, -2 );
     if(lua_isnil(L,-1)){
-        NSLog(@"user value for user data is nil");
+       // NSLog(@"user value for user data is nil");
     }
     lua_pushvalue( L, -2 );
     
@@ -106,9 +124,9 @@ static int lineIndex( lua_State* L )
 // and the value to be assigned on top
 static int lineNewIndex( lua_State* L )
 {
-    NSLog(@"Calling lineNewIndex()");
+    //NSLog(@"Calling lineNewIndex()");
     int top = lua_gettop(L);
-    NSLog(@"stack has %d values", top);
+    //NSLog(@"stack has %d values", top);
     lua_getuservalue( L, -3 ); 
     /* object, key, value */
     lua_pushvalue(L, -3);
@@ -163,7 +181,7 @@ static int displayGroupInsert(lua_State *L){
 // this index uses the meta table itself to handle string keys and the attached display group object for integer keys
 static int displayGroupIndex( lua_State* L )
 {
-    NSLog(@"Calling displayGroupIndex()");
+    //NSLog(@"Calling displayGroupIndex()");
     GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);    
     
     

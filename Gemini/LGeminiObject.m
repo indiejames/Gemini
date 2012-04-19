@@ -22,7 +22,13 @@ static int newGeminiObject(lua_State *L){
     lua_setmetatable(L, -2);
     
     lua_newtable(L);
+    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
+    // store a reference to this table so our sprite methods can access it
+    go.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
     lua_setuservalue(L, -2);
+    
+    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
+    go.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
     
     NSLog(@"New GeminiObject created");
     
@@ -138,18 +144,6 @@ int luaopen_geminiObjectLib (lua_State *L){
     
     
     luaL_setfuncs(L, geminiObjectLib_m, 0);
-    
-    /*lua_pushstring(L,"__gc");
-    lua_pushcfunction(L, geminiObjectGC);
-    lua_settable(L, -3);
-    
-    lua_pushstring(L,"__index");
-    lua_pushcfunction(L,l_irc_index);
-    lua_settable(L,-3);
-    
-    lua_pushstring(L,"__newindex");
-    lua_pushcfunction(L,l_irc_newindex);
-    lua_settable(L,-3);*/
     
     // create a table/library to hold the functions
     luaL_newlib(L, geminiObjectLib_f);

@@ -42,8 +42,7 @@
 }
 
 -(GLfloat) width {
-    NSLog(@"GeminiDisplayObject width");
-    return [super getDoubleForKey:"width" withDefault:0];
+    return [super getDoubleForKey:"width" withDefault:1.0];
 }
 
 -(void)setWidth:(GLfloat)width {

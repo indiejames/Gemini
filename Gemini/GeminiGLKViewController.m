@@ -34,7 +34,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     lua_State *L;
     
-    
+    double frameRenderTime;
+    double frameCount;
     
 }
 @property (strong, nonatomic) EAGLContext *context;
@@ -58,6 +59,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
         preRenderCallback = nil;
         postRenderCallback = nil;
         L = luaState;
+        frameCount = 0;
+        frameRenderTime = 0;
     }
     
     return self;
@@ -74,7 +77,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    view.drawableMultisample = GLKViewDrawableMultisample4X;
+   // view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.contentScaleFactor = 1.0;
     
     self.preferredFramesPerSecond = 60;
@@ -96,46 +99,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 
 - (void)setupGL
 {
-    // combined position and tex coord
-    GLfloat quadVerts[] = {
-        50.0, 50.0, 0.0, 0.0,
-        200.0, 50.0, 1.0, 0.0,
-        50.0, 200.0, 0.0, 1.0,
-        200.0, 250.0, 1.0, 1.0
-    };
-    
-    
-    GLuint quadIndex[] = {
-        0, 1, 3, 2, 1, 3, 0  
-    };
-    
+        
     [EAGLContext setCurrentContext:self.context];
-    
-    
-
-    
-    //glEnable(GL_DEPTH_TEST);
-    
-    /*// planet
-     glGenBuffers(1, &planetVertexBuffer);
-     glGenBuffers(1, &planetIndexBuffer);
-     // bind buffer object for verts
-     glBindBuffer(GL_ARRAY_BUFFER, planetVertexBuffer);
-     glBufferData(GL_ARRAY_BUFFER, planet.numVerts * 3 * sizeof(GLfloat), 
-     planet.verts, GL_STATIC_DRAW);
-     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planetIndexBuffer);
-     glBufferData(GL_ELEMENT_ARRAY_BUFFER, planet.numIndices*sizeof(GLuint), planet.indices, GL_STATIC_DRAW);
-     
-     glEnableVertexAttribArray(PLANET_ATTRIB_VERTEX);
-     glVertexAttribPointer(PLANET_ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), 0);*/
-    
-    // quad
-    glGenBuffers(1, &quadVertexBuffer);
-    glGenBuffers(1, &quadIndexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 4*4*sizeof(GLfloat), quadVerts, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIndexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLuint), quadIndex, GL_STATIC_DRAW);
     
     // load the renderer
     renderer = [[GeminiRenderer alloc] initWithLuaState:L];
@@ -163,14 +128,12 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
     
-    NSLog(@"width = %d", width);
+    /*NSLog(@"width = %d", width);
     NSLog(@"height = %d", height);
-    NSLog(@"main screen scale = %f", scale);
-    if (L != NULL) {
-        lua_getglobal(L, "update");
-        lua_pcall(L, 0, 0, 0);
-
-    }
+    NSLog(@"main screen scale = %f", scale);*/
+    
+    
+    [[Gemini shared] update:self.timeSinceLastUpdate];
 }
 
 - (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause {
@@ -178,9 +141,22 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+    glDepthMask(GL_TRUE);
+    
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // compute frame rate
+    frameRenderTime += self.timeSinceLastDraw;
+    frameCount += 1;
+    if (frameCount == 60) {
+        double frameRate = (double)frameCount / frameRenderTime;
+        frameCount = 0;
+        frameRenderTime = 0;
+        NSLog(@"frame rate = %d", (int)frameRate);
+    }
     //NSLog(@"Drawing");
-    glClearColor(0, 0.0, 1.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+   // glClearColor(0, 0.0, 1.0, 1.0);
+    //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
      // call the pre render method
     if (preRenderCallback) {
@@ -201,6 +177,9 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     if (postRenderCallback) {
         [self performSelector:postRenderCallback];
     }
+    
+    const GLenum discards[]  = {GL_DEPTH_ATTACHMENT};
+    glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
     
 }
 

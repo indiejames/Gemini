@@ -14,6 +14,7 @@
 #import "GeminiObject.h"
 #import "GeminiGLKViewController.h"
 #import "GeminiDisplayObject.h"
+#import "LGeminiObject.h"
 
 Gemini *singleton = nil;
 
@@ -24,6 +25,7 @@ Gemini *singleton = nil;
     GeminiGLKViewController *viewController;
     int x;
     double initTime;
+    GeminiObject *runtime;
 }
 @end
 
@@ -36,6 +38,34 @@ Gemini *singleton = nil;
 @synthesize initTime;
 
 int setLuaPath(lua_State *L, NSString* path );
+
+-(void) addRuntimeObject {
+    
+    runtime = [[GeminiObject alloc] initWithLuaState:L];
+    
+    GeminiObject **lgo = (GeminiObject **)lua_newuserdata(L, sizeof(GeminiObject *));
+    *lgo = runtime;
+    
+    luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
+    lua_setmetatable(L, -2);
+    
+    lua_newtable(L);
+    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
+    // store a reference to this table so our sprite methods can access it
+    runtime.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    lua_setuservalue(L, -2);
+    
+    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
+    runtime.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    
+    // create an entry in the global table
+    lua_setglobal(L, "Runtime");
+    
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
+    
+}
+
 
 
 - (id)init
@@ -58,19 +88,22 @@ int setLuaPath(lua_State *L, NSString* path );
         L = luaL_newstate();
         luaL_openlibs(L);
         
+        
     }
     
     return self;
 }
 
 +(Gemini *)shared {
-    NSLog(@"Shared");
+    
     if (singleton == nil) {
         singleton = [[Gemini alloc] init];
+        [singleton addRuntimeObject];
     }
     
     return singleton;
 }
+
 
 
 - (id)readPlist:(NSString *)fileName {  
@@ -142,6 +175,15 @@ int setLuaPath(lua_State *L, NSString* path );
     [ge release];
     
     return NO;
+}
+
+// the global update method - called from the GeminiGLKViewController update method
+-(void) update:(double)deltaT {
+    GeminiEvent *enterFrameEvent = [[GeminiEvent alloc] init];
+    enterFrameEvent.name = @"enterFrame";
+    [runtime handleEvent:enterFrameEvent];
+    [enterFrameEvent release];
+    
 }
 
 // makes it possible for Lua to load files on iOS

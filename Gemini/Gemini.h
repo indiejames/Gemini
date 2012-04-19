@@ -19,6 +19,7 @@
 
 -(void)execute:(NSString *)filename;
 -(BOOL)handleEvent:(NSString *)event;
+-(void)update:(double)deltaT;
 +(Gemini *)shared;
 
 @end
