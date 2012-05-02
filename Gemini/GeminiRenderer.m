@@ -66,6 +66,7 @@ GLuint lineCount = 0;
 }
 
 -(void)render {
+    glBindVertexArrayOES(vao);
     lineCount = 0;
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
@@ -100,7 +101,7 @@ GLuint lineCount = 0;
         }
     }
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, lineBufferStart * 3 * sizeof(GLfloat), lineBuffer);
     
     GLuint offset = 0;
@@ -122,7 +123,7 @@ GLuint lineCount = 0;
     }
     
     free(lineBuffer);
-    
+    glBindVertexArrayOES(0);
 }
 
 -(void)renderLayer:(GeminiDisplayGroup *)layer atOffset:(GLuint *) offset {
@@ -225,6 +226,36 @@ GLuint lineCount = 0;
     activeStage = [stage retain];
 }
 
+-(void)setupGL {
+    glGenVertexArraysOES(1, &vao);
+    glBindVertexArrayOES(vao);
+    
+    lineShaderManager = [[GeminiLineShaderManager alloc] init];
+    [lineShaderManager loadShaders];
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    //glBufferData(GL_ARRAY_BUFFER, 3*maxPointCount*sizeof(GLfloat), NULL, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 100000*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glUseProgram(lineShaderManager.program);
+    GLfloat width = 320;
+    GLfloat height = 480;
+    
+    GLfloat left = 0;
+    GLfloat right = width;
+    GLfloat bottom = 0;
+    GLfloat top = height;
+    
+    
+    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
+    glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
+    glEnableVertexAttribArray(ATTRIB_VERTEX_LINE);
+    glEnable(GL_DEPTH_TEST);
+    
+    
+    
+    glBindVertexArrayOES(0);
+}
+
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
     if (self) {
@@ -235,26 +266,7 @@ GLuint lineCount = 0;
         [stages setObject:defaultStage forKey:DEFAULT_STAGE_NAME];
         [self setActiveStage:DEFAULT_STAGE_NAME];
         
-        lineShaderManager = [[GeminiLineShaderManager alloc] init];
-        [lineShaderManager loadShaders];
-        glGenBuffers(1, &vertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-        //glBufferData(GL_ARRAY_BUFFER, 3*maxPointCount*sizeof(GLfloat), NULL, GL_STATIC_DRAW);
-        glBufferData(GL_ARRAY_BUFFER, 100000*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
-        glUseProgram(lineShaderManager.program);
-        GLfloat width = 320;
-        GLfloat height = 480;
-        
-        GLfloat left = 0;
-        GLfloat right = width;
-        GLfloat bottom = 0;
-        GLfloat top = height;
-        
-        
-        GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
-        glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
-        glEnableVertexAttribArray(ATTRIB_VERTEX_LINE);
-        glEnable(GL_DEPTH_TEST);
+        [self setupGL];
     }
     
     return self;
