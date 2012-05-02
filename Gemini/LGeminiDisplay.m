@@ -92,6 +92,26 @@ static int lineSetColor(lua_State *L){
     return 0;
 }
 
+static int lineAppendPoints(lua_State *L){
+    NSLog(@"Appending points to line");
+    int numargs = lua_gettop(L);
+    
+    GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    
+    GLfloat *newPoints = (GLfloat *)malloc((numargs - 1)*sizeof(GLfloat));
+    
+    for (int i=0; i<(numargs - 1)/2; i++) {
+        *(newPoints + i*2) = luaL_checknumber(L, i*2 + 2);
+        *(newPoints + i*2 + 1) = luaL_checknumber(L, i*2 + 3);
+    }
+    
+    [*line append:(numargs - 1)/2 Points:newPoints];
+    
+    free(newPoints);
+    
+    return 0;
+}
+
 static int lineIndex( lua_State* L )
 {
     //NSLog(@"Calling lineIndex()");
@@ -225,6 +245,7 @@ static const struct luaL_Reg line_m [] = {
     {"__index", lineIndex},
     {"__newindex", lineNewIndex},
     {"setColor", lineSetColor},
+    {"append", lineAppendPoints},
     {NULL, NULL}
 };
 

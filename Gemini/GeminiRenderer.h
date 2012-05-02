@@ -22,6 +22,7 @@
     //lua_State *L;
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
+    GLuint vao;
     GeminiLineShaderManager *lineShaderManager;
     GeminiSpriteShaderManager *spriteShaderManager;
     

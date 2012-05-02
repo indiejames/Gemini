@@ -16,24 +16,24 @@
 
 GLuint vertexBuffer = 0;
 BOOL bufferCreated = NO;
+GLfloat lineWidth[512];
+GLuint lineCount = 0;
 
 @implementation GeminiRenderer
 
 -(GLuint)makeLineVertBuffer:(GLfloat **)buffer fromGroup:(GeminiDisplayGroup *)group bufferStartIndex:(GLuint *) startIndex bufferSize:(GLuint) bufferSize forLayer:(int)layerIndex {
     
-    if ([group.objects count] > 0) {
-        // make the buffer bigger with a big chunk at first
-        bufferSize += LINE_BUFFER_CHUNK_SIZE;
-        *buffer = (GLfloat *)realloc(*buffer, bufferSize);
-    }
     for (int i=0; i<[group.objects count]; i++) {
         
         GeminiDisplayObject *gemObj = (GeminiDisplayObject *)[group.objects objectAtIndex:i];
         if (gemObj.class == GeminiDisplayGroup.class) {
             // recursion
-            [self makeLineVertBuffer:buffer fromGroup:(GeminiDisplayGroup *)gemObj bufferStartIndex:startIndex bufferSize:bufferSize forLayer:layerIndex];
+            bufferSize = [self makeLineVertBuffer:buffer fromGroup:(GeminiDisplayGroup *)gemObj bufferStartIndex:startIndex bufferSize:bufferSize forLayer:layerIndex];
         } else if(gemObj.class == GeminiLine.class){
             GeminiLine *line = (GeminiLine *)gemObj;
+            lineWidth[lineCount] = line.width;
+            lineCount += 1;
+            
             // make the buffer bigger if need be
             GLuint newByteCount = (line.numPoints * 3 * sizeof(GLfloat));
             while (*startIndex * 3 * sizeof(GLfloat) + newByteCount > bufferSize) {
@@ -42,14 +42,15 @@ BOOL bufferCreated = NO;
             }
             
             for (unsigned int j=0; j<line.numPoints; j++) {
-                *buffer[*startIndex + j*3] = line.points[j*2] + [line getDoubleForKey:"x" withDefault:0];
-                *buffer[*startIndex + j*3+1] = line.points[j*2 + 1] + [line getDoubleForKey:"y" withDefault:0];
                 
-                *buffer[*startIndex + j*3 + 2] = (GLfloat)layerIndex / 100.0 - 1;
+                *(*buffer + *startIndex * 3 + j*3)  = line.points[j*2] + [line getDoubleForKey:"x" withDefault:0];
+                *(*buffer + *startIndex * 3 + j*3+1) = line.points[j*2 + 1] + [line getDoubleForKey:"y" withDefault:0];
+                
+                *(*buffer + *startIndex * 3 + j*3 + 2) = (GLfloat)layerIndex / 100.0 - 1;
                                 
             }
             
-            startIndex += line.numPoints;
+            *startIndex += line.numPoints;
 
             
         } else if(gemObj.class == GeminiSprite.class){
@@ -65,7 +66,7 @@ BOOL bufferCreated = NO;
 }
 
 -(void)render {
-        
+    lineCount = 0;
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
     // sort layers from front (highest number) to back (lowest number)
@@ -78,9 +79,12 @@ BOOL bufferCreated = NO;
     // register callbacks for rendering particular layers - some layers will be rendered here
     // while other will defer to client code directly
     
+    // fill up a buffer with tall the vertex data
     GLuint lineBufferSize = 0;
-    
-  /*  for (int i=0; i<[layers count]; i++) {
+    GLuint lineBufferStart = 0;
+    GLfloat *lineBuffer = NULL;
+
+    for (int i=0; i<[layers count]; i++) {
         NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
         NSObject *obj = [stage objectForKey:layerIndex];
         
@@ -90,11 +94,17 @@ BOOL bufferCreated = NO;
         } else {
             // a display group 
             GeminiDisplayGroup *layer = (GeminiDisplayGroup *)obj;
-           
+        
+            lineBufferSize = [self makeLineVertBuffer:&lineBuffer fromGroup:layer bufferStartIndex:&lineBufferStart bufferSize:lineBufferSize forLayer:[layerIndex intValue]];
             
         }
-    }*/
+    }
     
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, lineBufferStart * 3 * sizeof(GLfloat), lineBuffer);
+    
+    GLuint offset = 0;
+    lineCount = 0;
     
     for (int i=0; i<[layers count]; i++) {
         NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
@@ -106,24 +116,28 @@ BOOL bufferCreated = NO;
         } else {
             // a display group 
             GeminiDisplayGroup *layer = (GeminiDisplayGroup *)obj;
-            [self renderLayer:layer atIndex:[layerIndex intValue]];
+            [self renderLayer:layer atOffset:&offset];
         }
        
     }
     
+    free(lineBuffer);
+    
 }
 
--(void)renderLayer:(GeminiDisplayGroup *)layer atIndex:(int) index {
+-(void)renderLayer:(GeminiDisplayGroup *)layer atOffset:(GLuint *) offset {
     //NSLog(@"GeminiRenderer rendering layer %d", index);
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
-    NSMutableDictionary *spriteBatch = [NSMutableDictionary dictionaryWithCapacity:1];
+   // NSMutableDictionary *spriteBatch = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    
     
     for (int i=0; i<[layer.objects count]; i++) {
         
         GeminiDisplayObject *gemObj = (GeminiDisplayObject *)[layer.objects objectAtIndex:i];
         if (gemObj.class == GeminiDisplayGroup.class) {
             // recursion
-            [self renderLayer:(GeminiDisplayGroup *)gemObj atIndex:index];
+            [self renderLayer:(GeminiDisplayGroup *)gemObj atOffset:offset];
         } else if(gemObj.class == GeminiLine.class){
             // TODO - sort all lines by line properties so they can be batched
             [lines addObject:gemObj];
@@ -132,74 +146,46 @@ BOOL bufferCreated = NO;
             
         }
             
+        *offset = [self renderLines:lines withBufferOffset:*offset];
+        
         
     }
     
-    [self renderLines:lines forLayerIndex:index];
+    
 }
 
--(void)renderLines:(NSArray *)lines forLayerIndex:(int)layerIndex {
+-(GLuint)renderLines:(NSArray *)lines withBufferOffset:(GLuint)offset {
    // NSLog(@"GeminiRenderer rendering %d lines...", [lines count]);
+   
     glUseProgram(lineShaderManager.program);
     
-    
-    unsigned int maxPointCount = 0;
-    for (int i=0; i<[lines count]; i++) {
-        GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
-        if (line.numPoints > maxPointCount) {
-            maxPointCount = line.numPoints;
-        }
-    }
     
     //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
        
     for (int i=0; i<[lines count]; i++) {
         GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
-        GLfloat *verts = (GLfloat *)malloc(line.numPoints * 3 * sizeof(GLfloat));
-        
-        for (unsigned int j=0; j<line.numPoints; j++) {
-            verts[j*3] = line.points[j*2] + [line getDoubleForKey:"x" withDefault:0];
-            verts[j*3+1] = line.points[j*2 + 1] + [line getDoubleForKey:"y" withDefault:0];
-            //verts[j*3] = x;
-            //verts[j*3 + 1] = y;
-            verts[j*3 + 2] = (GLfloat)layerIndex / 100.0 - 1;
-            //x += 10;
-            //y += 10;
             
-        }
-                
-        //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, 3*line.numPoints*sizeof(GLfloat), verts);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, 6*sizeof(GLfloat), verts);
-        
-                
-        //planetModelViewProjectionMatrix = GLKMatrix4MakeTranslation(0, 0, 0);
-        
-        
-                
         //NSLog(@"Line color: (%f,%f,%f,%f)", line.color.r,line.color.g,line.color.b,line.color.a);
         glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a);
         
+        glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
+        //double linewidth = line.width;
+        //double linewidth = 3.0;
         
-        //glEnableVertexAttribArray(ATTRIB_TEXCOORD);
-        
-        glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        double linewidth = line.width;
-        //NSLog(@"Line width = %f", linewidth);
-        glLineWidth(linewidth);
+        glLineWidth(lineWidth[lineCount]);
+        lineCount += 1;
         //glLineWidth(7.0);
         //glDrawElements(GL_LINE_STRIP, line.numPoints, GL_UNSIGNED_INT, 0);
         
         
         
-        glDrawArrays(GL_LINE_STRIP, 0, line.numPoints);
-                
-        free(verts);
+        glDrawArrays(GL_LINE_STRIP, offset, line.numPoints);
         
+        offset += line.numPoints;
+               
     }
     
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    return offset;
     
 }
 
@@ -286,6 +272,9 @@ BOOL bufferCreated = NO;
     [super dealloc];
     
 }
+
+// vector functions
+
 
 
 @end

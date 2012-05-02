@@ -77,7 +77,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-   // view.drawableMultisample = GLKViewDrawableMultisample4X;
+    //view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.contentScaleFactor = 1.0;
     
     self.preferredFramesPerSecond = 60;
