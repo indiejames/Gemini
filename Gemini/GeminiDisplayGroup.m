@@ -28,7 +28,7 @@
 }
 
 -(void)insert:(GeminiDisplayObject *)obj {
-    NSLog(@"Calling insert for GeminiDisplayObject");
+    NSLog(@"Calling insert for GeminiDisplayGroup");
     if (obj.parent != nil) {
         [(GeminiDisplayGroup *)(obj.parent) remove:obj];
     }
@@ -37,7 +37,7 @@
 }
 
 -(void)remove:(GeminiDisplayObject *)obj {
-    NSLog(@"Calling remove for GeminiDisplayObject");
+    NSLog(@"Calling remove for GeminiDisplayGroup");
     [objects removeObject:obj];
     obj.parent = nil;
 }

@@ -28,7 +28,6 @@
         numPoints = 2;
         verts = NULL;
         vertIndex = NULL;
-        //[self computeVertices];
     }
     
     return self;
@@ -67,20 +66,21 @@
     numPoints = numPoints + count;
 }
 
--(void)computeVertices {
-    verts = realloc(verts, 2*2*numPoints*sizeof(GLfloat));
-    vertIndex = realloc(vertIndex, 6*(numPoints - 1));
+-(void)computeVertices:(int)layerIndex {
+    GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
+    verts = realloc(verts, 2*3*numPoints*sizeof(GLfloat));
+    vertIndex = realloc(vertIndex, 6*(numPoints - 1)*sizeof(GLushort));
     GLfloat halfWidth = [self getDoubleForKey:"width" withDefault:1.0] / 2.0;
     
     for (int i=0; i<numPoints; i++) {
         
         if (i != 0){
-            vertIndex[(i-1)*4] = (i-1)*2;
-            vertIndex[(i-1)*4+1] = (i-1)*2+1;
-            vertIndex[(i-1)*4+2] = (i-1)*2+2;
-            vertIndex[(i-1)*4+3] = (i-1)*2+1;
-            vertIndex[(i-1)*4+4] = (i-1)*2+3;
-            vertIndex[(i-1)*4+5] = (i-1)*2+2;
+            vertIndex[(i-1)*6] = (i-1)*2;
+            vertIndex[(i-1)*6+1] = (i-1)*2+1;
+            vertIndex[(i-1)*6+2] = (i-1)*2+2;
+            vertIndex[(i-1)*6+3] = (i-1)*2+1;
+            vertIndex[(i-1)*6+4] = (i-1)*2+3;
+            vertIndex[(i-1)*6+5] = (i-1)*2+2;
             
         }
         
@@ -95,22 +95,26 @@
             GLKVector2 vecA1 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(vecABhat.y, -vecABhat.x), halfWidth), vecA);
             verts[0] = vecA0.x;
             verts[1] = vecA0.y;
-            verts[2] = vecA1.x;
-            verts[3] = vecA1.y;
+            verts[2] = z;
+            verts[3] = vecA1.x;
+            verts[4] = vecA1.y;
+            verts[5] = z;
             
         } else if(i == numPoints - 1) { // last point            
             
             // compute adjacent points
-            GLKVector2 vecA = GLKVector2Make(points[i*2], points[i*2+1]);
+            GLKVector2 vecC = GLKVector2Make(points[i*2], points[i*2+1]);
             GLKVector2 vecB = GLKVector2Make(points[(i-1)*2], points[(i-1)*2+1]);
-            GLKVector2 vecAB = GLKVector2Subtract(vecB, vecA);
-            GLKVector2 vecABhat = GLKVector2Normalize(vecAB);
-            GLKVector2 vecA0 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(vecABhat.y, -vecABhat.x), halfWidth), vecA);
-            GLKVector2 vecA1 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(-vecABhat.y, vecABhat.x), halfWidth), vecA);
-            verts[i*4] = vecA0.x;
-            verts[i*4+1] = vecA0.y;
-            verts[i*4+2] = vecA1.x;
-            verts[i*4+3] = vecA1.y;
+            GLKVector2 vecBC = GLKVector2Subtract(vecC, vecB);
+            GLKVector2 vecBChat = GLKVector2Normalize(vecBC);
+            GLKVector2 vecC0 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(-vecBChat.y, vecBChat.x), halfWidth), vecC);
+            GLKVector2 vecC1 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(vecBChat.y, -vecBChat.x), halfWidth), vecC);
+            verts[i*6] = vecC0.x;
+            verts[i*6+1] = vecC0.y;
+            verts[i*6+2] = z;
+            verts[i*6+3] = vecC1.x;
+            verts[i*6+4] = vecC1.y;
+            verts[i*6+5] = z;
             
             
         } else {
@@ -120,22 +124,22 @@
             GLKVector2 vecB = GLKVector2Make(points[i*2], points[i*2+1]);
             GLKVector2 vecC = GLKVector2Make(points[(i+1)*2], points[(i+1)*2+1]);
             
-            GLKVector2 vecA0 = GLKVector2Make(verts[(i-1)*4], verts[(i-1)*4+1]);
-            GLKVector2 vecA1 = GLKVector2Make(verts[(i-1)*4+2], verts[(i-1)*4+3]);
+            GLKVector2 vecA0 = GLKVector2Make(verts[(i-1)*6], verts[(i-1)*6+1]);
+            GLKVector2 vecA1 = GLKVector2Make(verts[(i-1)*6+3], verts[(i-1)*6+4]);
             
             GLKVector2 vecAB = GLKVector2Subtract(vecB, vecA);
-            GLKVector2 vecCB = GLKVector2Subtract(vecC, vecB);
-            GLKVector2 vecCBhat = GLKVector2Normalize(vecCB);
+            GLKVector2 vecBC = GLKVector2Subtract(vecC, vecB);
+            GLKVector2 vecBChat = GLKVector2Normalize(vecBC);
             
-            GLKVector2 vecC1 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(vecCBhat.y, -vecCBhat.x), halfWidth), vecA);
-            GLKVector2 vecC0 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(-vecCBhat.y, vecCBhat.x), halfWidth), vecA);
+            GLKVector2 vecC0 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(-vecBChat.y, vecBChat.x), halfWidth), vecC);
+            GLKVector2 vecC1 = GLKVector2Add(GLKVector2MultiplyScalar(GLKVector2Make(vecBChat.y, -vecBChat.x), halfWidth), vecC);
            
             
             // find the lines parallel to AB throug A0 and A1 and lines parallel to CB though
             // C0 and C1 - handle infinte slope cases
             if (vecAB.x == 0) {
                 // infite slope from A to B
-                if (vecCB.x == 0) {
+                if (vecBC.x == 0) {
                     // infinite slope from B to C
                     // point B is in the middle of a vertical segment so just offset x for adjacent
                     // points B0 and B1
@@ -153,12 +157,29 @@
                         B1x = vecB.x + halfWidth;
                     }
                     
-                    verts[i*4] = B0x;
-                    verts[i*4+1] = B0y;
-                    verts[i*4+2] = B1x;
-                    verts[i*4+3] = B1y;
+                    verts[i*6] = B0x;
+                    verts[i*6+1] = B0y;
+                    verts[i*6+2] = z;
+                    verts[i*6+3] = B1x;
+                    verts[i*6+4] = B1y;
+                    verts[i*6+5] = z;
                     
                 } else {
+                    // find equations of lines BC0 and BC1 and use x=A0x,A1x to find intercepts
+                    GLfloat slopeBC = vecBC.y / vecBC.x;
+                    GLfloat bC0 = vecC0.y - slopeBC * vecC0.x;
+                    GLfloat bC1 = vecC1.y - slopeBC * vecC1.x;
+                    GLfloat B0x = vecA0.x;
+                    GLfloat B1x = vecA1.x;
+                    GLfloat B0y = slopeBC * B0x + bC0;
+                    GLfloat B1y = slopeBC * B1x + bC1;
+                    
+                    verts[i*6] = B0x;
+                    verts[i*6+1] = B0y;
+                    verts[i*6+2] = z;
+                    verts[i*6+3] = B1x;
+                    verts[i*6+4] = B1y;
+                    verts[i*6+5] = z;
                     
                 }
                 
@@ -166,19 +187,20 @@
                 GLfloat slopeAB = vecAB.y / vecAB.x;
                 GLfloat bA0 = vecA0.y - slopeAB * vecA0.x;
                 GLfloat bA1 = vecA1.y - slopeAB * vecA1.x;
-                if (vecCB.x == 0) {
-                    // infinite slope from B to C
-                   /* if (vecC.y < vecB.y) {
-                        C0x = vecC.x + halfWidth;
-                        C1x = vecC.x - halfWidth;
-                    } else {
-                        C0x = vecC.x - halfWidth;
-                        C1x = vecC.x + halfWidth;                        
-                    }
+                if (vecBC.x == 0) {
+                    // infinite slope from B to C - use equations of lines A0B, A1B and C0x,C1x
+                    GLfloat B0x = vecC0.x;
+                    GLfloat B1x = vecC1.x;
+                    GLfloat B0y = slopeAB * B0x + bA0;
+                    GLfloat B1y = slopeAB * B1x + bA1;
                     
-                    C0y = vecC.y;
-                    C1y = vecC.y;
-                    */
+                    verts[i*6] = B0x;
+                    verts[i*6+1] = B0y;
+                    verts[i*6+2] = z;
+                    verts[i*6+3] = B1x;
+                    verts[i*6+4] = B1y;
+                    verts[i*6+5] = z;
+
                     
                     
                 } else {
@@ -187,21 +209,27 @@
                     C0y = vecCBhat.x;
                     C1x = vecCBhat.y;
                     C1y = -vecCBhat.x;*/
-                    GLfloat slopeBC = -vecCB.y / vecCB.x;
+                    GLfloat slopeBC = vecBC.y / vecBC.x;
                     GLfloat bC0 = vecC0.y - slopeBC * vecC0.x;
                     GLfloat bC1 = vecC1.y - slopeBC * vecC1.x;
                     
                     // now find intersection
-                    GLfloat B0y = slopeAB*(bA0-bC0)/(slopeAB - slopeBC) + bA0;
+                    
                     GLfloat B0x = (bC0 - bA0)/(slopeAB - slopeBC);
+                    GLfloat B0y = slopeAB * B0x + bA0;
                     
-                    GLfloat B1y = slopeAB*(bA1-bC1)/(slopeAB - slopeBC) + bA1;
+                    
                     GLfloat B1x = (bC1 - bA1)/(slopeAB - slopeBC);
+                    GLfloat B1y = slopeAB * B1x + bA1;
                     
-                    verts[i*4] = B0x;
-                    verts[i*4+1] = B0y;
-                    verts[i*4+2] = B1x;
-                    verts[i*4+3] = B1y;
+                    verts[i*6] = B0x;
+                    verts[i*6+1] = B0y;
+                    verts[i*6+2] = z;
+                    verts[i*6+3] = B1x;
+                    verts[i*6+4] = B1y;
+                    verts[i*6+5] = z;
+                    
+                    
                 }
    
             }

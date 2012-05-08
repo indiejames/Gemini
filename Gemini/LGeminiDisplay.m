@@ -9,8 +9,10 @@
 #import "LGeminiDisplay.h"
 #import "Gemini.h"
 #import "GeminiDisplayGroup.h"
+#import "GeminiLayer.h"
 #import "GeminiLine.h"
 #import "GeminiGLKViewController.h"
+
 
 // used to set common defaults for all display objects
 // this function expects a table to be the top item on the stack
@@ -26,6 +28,28 @@ static void setDefaultValues(lua_State *L) {
     
 }
 
+// generic init method
+static void setupObject(lua_State *L, const char *luaKey, GeminiDisplayObject *obj){
+    
+    luaL_getmetatable(L, luaKey);
+    lua_setmetatable(L, -2);
+    
+    // append a lua table to this user data to allow the user to store values in it
+    lua_newtable(L);
+    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
+    // store a reference to this table so our sprite methods can access it
+    obj.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    
+    // add in some default values
+    setDefaultValues(L);
+    
+    // set the table as the user value for the Lua object
+    lua_setuservalue(L, -2);
+    
+    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
+    obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+}
+
 ///////////// lines ///////////////////////////
 static int newLine(lua_State *L){
     NSLog(@"Creating new line...");
@@ -35,30 +59,12 @@ static int newLine(lua_State *L){
     GLfloat y2 = luaL_checknumber(L, 4);
     NSLog(@"(x1,y1,x2,y2)=(%f,%f,%f,%f)",x1,y1,x2,y2);
     GeminiLine *line = [[GeminiLine alloc] initWithLuaState:L X1:x1 Y1:y1 X2:x2 Y2:y2];
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:line toLayer:0];
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:line];
     GeminiLine **lLine = (GeminiLine **)lua_newuserdata(L, sizeof(GeminiLine *)); 
     *lLine = line;
     
-    luaL_getmetatable(L, GEMINI_LINE_LUA_KEY);
-    lua_setmetatable(L, -2);
+    setupObject(L, GEMINI_LINE_LUA_KEY, line);
     
-    // append a lua table to this user data to allow the user to store values in it
-    lua_newtable(L);
-    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
-    // store a reference to this table so our sprite methods can access it
-    line.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-    
-    // add in some default values
-    setDefaultValues(L);
-    
-    // set the table as the user value for the Lua object
-    lua_setuservalue(L, -2);
-    
-    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
-    line.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
-    
-    return 1;
-
     
     NSLog(@"New line created.");
     
@@ -70,6 +76,15 @@ static int lineGC (lua_State *L){
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     // TODO - need to remove this from it's layer/display group
     [*line release];
+    
+    return 0;
+}
+
+static int lineSetLayer(lua_State *L){
+    GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    
+    int layer = luaL_checkinteger(L, 2);
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:*line toLayer:layer];
     
     return 0;
 }
@@ -144,8 +159,6 @@ static int lineIndex( lua_State* L )
 // and the value to be assigned on top
 static int lineNewIndex( lua_State* L )
 {
-    //NSLog(@"Calling lineNewIndex()");
-    int top = lua_gettop(L);
     //NSLog(@"stack has %d values", top);
     lua_getuservalue( L, -3 ); 
     /* object, key, value */
@@ -156,18 +169,80 @@ static int lineNewIndex( lua_State* L )
     return 0;
 }
 
+///////////// layers //////////////////
+static int newLayer(lua_State *L){
+    int index = luaL_checkinteger(L, 1);
+    
+    GeminiLayer *layer = [[GeminiLayer alloc] initWithLuaState:L];
+    layer.index = index;
+    GeminiLayer **lLayer = (GeminiLayer **)lua_newuserdata(L, sizeof(GeminiLayer *));
+    *lLayer = layer;
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addLayer:layer];
+
+    setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
+    
+    return 1;
+}
+
+static int layerGC (lua_State *L){
+    GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
+    
+    [*layer release];
+    
+    return 0;
+}
+
+// this index uses the meta table itself to handle string keys and the attached display group object for integer keys
+static int layerIndex( lua_State* L )
+{
+    //NSLog(@"Calling displayGroupIndex()");
+    GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
+    
+    int index = lua_tonumber(L, 2) - 1;
+    if (index > -1) {
+        GeminiObject *obj = (GeminiObject *)[(*layer).objects objectAtIndex:index];
+        lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
+        
+    } else {
+        // not a valid index must be a method name so use the metatable to look it up
+        lua_getmetatable(L, 1);
+        lua_pushvalue(L, -2);
+        lua_gettable(L, -2);
+                
+    }
+    
+    return 1;
+}
+
+
+static int layerInsert(lua_State *L){
+    NSLog(@"Calling layerInsert()");
+    GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
+    GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 2);
+    [*layer insert:*displayObj];
+    
+    return 0;
+}
+
+static int layerSetBlendFunc(lua_State *L){
+    NSLog(@"Calling layerSetBlendFunc()");
+    GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
+    GLenum srcBlend = luaL_checkinteger(L, 2);
+    GLenum destBlend = luaL_checkinteger(L, 3);
+    [*layer setBlendFuncSource:srcBlend Dest:destBlend];
+    
+    return 0;
+}
 
 ///////////// display groups //////////////////
 static int newDisplayGroup(lua_State *L){
     GeminiDisplayGroup *group = [[GeminiDisplayGroup alloc] initWithLuaState:L];
     GeminiDisplayGroup **lGroup = (GeminiDisplayGroup **)lua_newuserdata(L, sizeof(GeminiDisplayGroup *));
     *lGroup = group;
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group toLayer:0];
-    
-    luaL_getmetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY);
-    lua_setmetatable(L, -2);
-    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
-    group.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    //[((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group toLayer:0];
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
+
+    setupObject(L, GEMINI_DISPLAY_GROUP_LUA_KEY, group);
     
     return 1;
 }
@@ -225,8 +300,18 @@ static int displayGroupIndex( lua_State* L )
 
 // the mappings for the library functions
 static const struct luaL_Reg displayLib_f [] = {
+    {"newLayer", newLayer},
     {"newGroup", newDisplayGroup},
     {"newLine", newLine},
+    {NULL, NULL}
+};
+
+// mappings for the layer methods
+static const struct luaL_Reg layer_m [] = {
+    {"insert", layerInsert},
+    {"setBlendFunc", layerSetBlendFunc},
+    {"__gc", layerGC},
+    {"__index", layerIndex},
     {NULL, NULL}
 };
 
@@ -250,13 +335,23 @@ static const struct luaL_Reg line_m [] = {
 };
 
 
+static void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs){
+    luaL_newmetatable(L, key);    
+    lua_pushvalue(L, -1); // duplicates the metatable
+    luaL_setfuncs(L, funcs, 0);
+}
+
 int luaopen_display_lib (lua_State *L){
     // create meta tables for our various types /////////
     
+    // layers
+    createMetatable(L, GEMINI_LAYER_LUA_KEY, layer_m);
+    
     // display groups
-    luaL_newmetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY);    
+    createMetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY, displayGroup_m);
+   /* luaL_newmetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY);    
     lua_pushvalue(L, -1); // duplicates the metatable
-    luaL_setfuncs(L, displayGroup_m, 0);
+    luaL_setfuncs(L, displayGroup_m, 0);*/
     
     // lines
     luaL_newmetatable(L, GEMINI_LINE_LUA_KEY);

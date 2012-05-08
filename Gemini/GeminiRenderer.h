@@ -22,7 +22,9 @@
     //lua_State *L;
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
-    GLuint vao;
+    GLuint vertexBuffer;
+    GLuint indexBuffer;
+    GLuint lineVAO;
     GeminiLineShaderManager *lineShaderManager;
     GeminiSpriteShaderManager *spriteShaderManager;
     
@@ -33,6 +35,8 @@
 -(void)render;
 
 -(void)setActiveStage:(NSString *)stage;
+-(void)addLayer:(GeminiLayer *)layer;
+-(void)addObject:(GeminiDisplayObject *)obj;
 -(void)addObject:(GeminiDisplayObject *)obj toLayer:(int)layer;
 -(void)addCallback:(void (*)(void))callback forLayer:(int)layer;
 

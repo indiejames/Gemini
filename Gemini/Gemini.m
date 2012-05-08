@@ -39,6 +39,7 @@ Gemini *singleton = nil;
 
 int setLuaPath(lua_State *L, NSString* path );
 
+// add a global Runtime object
 -(void) addRuntimeObject {
     
     runtime = [[GeminiObject alloc] initWithLuaState:L];
@@ -66,7 +67,18 @@ int setLuaPath(lua_State *L, NSString* path );
     
 }
 
-
+// setup global constants related to rendering
+-(void) setupGlobalConstants {
+    // GL blending constants
+    lua_pushinteger(L, GL_SRC_ALPHA);
+    lua_setglobal(L, "GL_SRC_ALPHA");
+    lua_pushinteger(L, GL_ONE_MINUS_SRC_ALPHA);
+    lua_setglobal(L, "GL_ONE_MINUS_SRC_ALPHA");
+    lua_pushinteger(L, GL_ONE);
+    lua_setglobal(L, "GL_ONE");
+    lua_pushinteger(L, GL_ZERO);
+    lua_setglobal(L, "GL_ZERO");
+}
 
 - (id)init
 {
@@ -99,6 +111,7 @@ int setLuaPath(lua_State *L, NSString* path );
     if (singleton == nil) {
         singleton = [[Gemini alloc] init];
         [singleton addRuntimeObject];
+        [singleton setupGlobalConstants];
     }
     
     return singleton;

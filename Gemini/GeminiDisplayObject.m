@@ -13,7 +13,7 @@
 
 
 @synthesize parent;
-
+@synthesize layer;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];

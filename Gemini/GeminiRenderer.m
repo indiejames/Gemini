@@ -10,11 +10,11 @@
 #import "Gemini.h"
 #import "GeminiLine.h"
 #import "GeminiSprite.h"
+#import "GeminiLayer.h"
 
 #define LINE_BUFFER_CHUNK_SIZE (512)
 
 
-GLuint vertexBuffer = 0;
 BOOL bufferCreated = NO;
 GLfloat lineWidth[512];
 GLuint lineCount = 0;
@@ -65,68 +65,109 @@ GLuint lineCount = 0;
     return bufferSize;
 }
 
--(void)render {
-    glBindVertexArrayOES(vao);
-    lineCount = 0;
+
+// render layers from front to back to minimize overdraw
+-(NSArray *)renderUnblendedLayers {
+    glDisable(GL_BLEND);
+    
+    NSMutableArray *blendedLayers = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
+    
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
     // sort layers from front (highest number) to back (lowest number)
     [layers sortUsingComparator:(NSComparator)^(NSNumber *layer1, NSNumber *layer2) {
         return [layer2 compare:layer1];
     }];
-    //NSLog(@"GeminiRenderer found %d layers", [layers count]);
-    // TODO - Add breaks in here to call client render methods before and after layer 0 to allow
-    // client code to draw under or on top of some Lau objects - better yet, let the client
-    // register callbacks for rendering particular layers - some layers will be rendered here
-    // while other will defer to client code directly
-    
-    // fill up a buffer with tall the vertex data
-    GLuint lineBufferSize = 0;
-    GLuint lineBufferStart = 0;
-    GLfloat *lineBuffer = NULL;
-
-    for (int i=0; i<[layers count]; i++) {
-        NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
-        NSObject *obj = [stage objectForKey:layerIndex];
-        
-        if (obj.class == NSValue.class) {
-            // this is a callback
-           
-        } else {
-            // a display group 
-            GeminiDisplayGroup *layer = (GeminiDisplayGroup *)obj;
-        
-            lineBufferSize = [self makeLineVertBuffer:&lineBuffer fromGroup:layer bufferStartIndex:&lineBufferStart bufferSize:lineBufferSize forLayer:[layerIndex intValue]];
-            
-        }
-    }
-    
-    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, lineBufferStart * 3 * sizeof(GLfloat), lineBuffer);
-    
-    GLuint offset = 0;
     lineCount = 0;
     
     for (int i=0; i<[layers count]; i++) {
         NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
+        
         NSObject *obj = [stage objectForKey:layerIndex];
         if (obj.class == NSValue.class) {
-            // this is a callback
+            // this is a callback layer
             void(*callback)(void) = (void (*)(void))[(NSValue *)obj pointerValue];
             callback();
         } else {
-            // a display group 
-            GeminiDisplayGroup *layer = (GeminiDisplayGroup *)obj;
-            [self renderLayer:layer atOffset:&offset];
+            // a display group layer 
+            GeminiLayer *layer = (GeminiLayer *)obj;
+            if (layer.isBLendingLayer) {
+                [blendedLayers insertObject:layer atIndex:0];
+            } else {
+                [self renderDisplayGroup:layer forLayer:[layerIndex intValue]];
+            }
+            
         }
-       
+        
     }
+
     
-    free(lineBuffer);
-    glBindVertexArrayOES(0);
+    
+    return blendedLayers;
+    
 }
 
--(void)renderLayer:(GeminiDisplayGroup *)layer atOffset:(GLuint *) offset {
+// render layers from back to front to support blending
+-(void)renderBlendedLayers:(NSArray *)layers {
+    glEnable(GL_BLEND);
+    
+    for (int i=0; i<[layers count]; i++) {
+        
+        NSObject *obj = [layers objectAtIndex:i];
+        if (obj.class == NSValue.class) {
+            // this is a callback layer
+            void(*callback)(void) = (void (*)(void))[(NSValue *)obj pointerValue];
+            callback();
+        } else {
+            // a display group layer
+            GeminiLayer *layer = (GeminiLayer *)obj;
+            
+            glBlendFunc(layer.sourceBlend, layer.destBlend);
+            
+            [self renderDisplayGroup:layer forLayer:layer.index];
+        }
+        
+    }
+}
+
+
+-(void)render {
+    NSArray *blendedLayers = [self renderUnblendedLayers];
+    [self renderBlendedLayers:blendedLayers];
+     glBindVertexArrayOES(0);
+}
+
+-(void)renderDisplayGroup:(GeminiDisplayGroup *)group forLayer:(int)layer {
+    NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
+    // NSMutableDictionary *spriteBatch = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    NSLog(@"Rendering layer %d", layer);
+    NSLog(@"DisplayGroup has %d objects", [group.objects count]);
+    
+    for (int i=0; i<[group.objects count]; i++) {
+        
+        GeminiDisplayObject *gemObj = (GeminiDisplayObject *)[group.objects objectAtIndex:i];
+        if (gemObj.class == GeminiDisplayGroup.class) {
+            // recursion
+            [self renderDisplayGroup:(GeminiDisplayGroup *)gemObj forLayer:layer];
+            
+        } else if(gemObj.class == GeminiLine.class){
+            // TODO - sort all lines by line properties so they can be batched
+            [lines addObject:gemObj];
+            
+        } else if(gemObj.class == GeminiSprite.class){
+            
+        }
+        
+    }
+
+    [self renderLines:lines layerIndex:layer];
+
+}
+
+
+
+-(void)renderLayer:(GeminiDisplayGroup *)layer atOffset:(GLuint *) offset withIndex:(int)layerIndex{
     //NSLog(@"GeminiRenderer rendering layer %d", index);
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
    // NSMutableDictionary *spriteBatch = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -138,7 +179,7 @@ GLuint lineCount = 0;
         GeminiDisplayObject *gemObj = (GeminiDisplayObject *)[layer.objects objectAtIndex:i];
         if (gemObj.class == GeminiDisplayGroup.class) {
             // recursion
-            [self renderLayer:(GeminiDisplayGroup *)gemObj atOffset:offset];
+            [self renderLayer:(GeminiDisplayGroup *)gemObj atOffset:offset withIndex:layerIndex];
         } else if(gemObj.class == GeminiLine.class){
             // TODO - sort all lines by line properties so they can be batched
             [lines addObject:gemObj];
@@ -147,7 +188,7 @@ GLuint lineCount = 0;
             
         }
             
-        *offset = [self renderLines:lines withBufferOffset:*offset];
+        *offset = [self renderLines:lines withBufferOffset:*offset layerIndex:layerIndex];
         
         
     }
@@ -155,34 +196,33 @@ GLuint lineCount = 0;
     
 }
 
--(GLuint)renderLines:(NSArray *)lines withBufferOffset:(GLuint)offset {
+-(void)renderLine:(GeminiLine *)line withLayer:(int)layerIndex {
+    NSLog(@"Rendering line...");
+    [line computeVertices:layerIndex];
+        
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), line.verts);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, (line.numPoints - 1)*6*sizeof(GLushort), line.vertIndex);
+
+    glDrawElements(GL_TRIANGLES,(line.numPoints - 1)*6,GL_UNSIGNED_SHORT, (void*)0);
+}
+
+-(GLuint)renderLines:(NSArray *)lines withBufferOffset:(GLuint)offset layerIndex:(int)layerIndex {
    // NSLog(@"GeminiRenderer rendering %d lines...", [lines count]);
-   
-    glUseProgram(lineShaderManager.program);
-    
-    
-    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindVertexArrayOES(lineVAO);
+    //glUseProgram(lineShaderManager.program);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
        
     for (int i=0; i<[lines count]; i++) {
         GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
             
         //NSLog(@"Line color: (%f,%f,%f,%f)", line.color.r,line.color.g,line.color.b,line.color.a);
         glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a);
-        
-        glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
-        //double linewidth = line.width;
-        //double linewidth = 3.0;
-        
-        glLineWidth(lineWidth[lineCount]);
-        lineCount += 1;
-        //glLineWidth(7.0);
-        //glDrawElements(GL_LINE_STRIP, line.numPoints, GL_UNSIGNED_INT, 0);
-        
-        
-        
-        glDrawArrays(GL_LINE_STRIP, offset, line.numPoints);
-        
         offset += line.numPoints;
+    
+        [self renderLine:line withLayer:layerIndex];
                
     }
     
@@ -190,6 +230,55 @@ GLuint lineCount = 0;
     
 }
 
+
+-(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex {
+    
+    glBindVertexArrayOES(lineVAO);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    for (int i=0; i<[lines count]; i++) {
+        GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
+        
+        glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a);
+       
+        [self renderLine:line withLayer:layerIndex];
+        
+    }
+}
+
+
+// add a new layer
+-(void)addLayer:(GeminiLayer *)layer {
+    NSLog(@"GeminiRenderer adding layer");
+    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
+    [stage setObject:layer forKey:[NSNumber numberWithInt:layer.index]];
+}
+
+
+// add a display object to the default layer (layer 0)
+-(void)addObject:(GeminiDisplayObject *)obj {
+    NSLog(@"GeminiRenderer adding object");
+    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
+    NSLog(@"GeminiRenderer found stage");
+    // get the default layer on the stage
+    NSNumber *layerIndex = [NSNumber numberWithInt:0];
+    GeminiLayer *layerGroup = (GeminiLayer *)[stage objectForKey:layerIndex];
+    NSLog(@"GeminiRenderer found layer");
+    if (layerGroup == nil) {
+        NSLog(@"GeminiRenderer layer is nil");
+        layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
+        layerGroup.index = 0;
+        NSLog(@"GeminiRenderer created new layer");
+        [stage setObject:layerGroup forKey:layerIndex];
+    }
+    NSLog(@"Inserting object into layer 0");
+    // remove from previous layer (if any) first
+    [obj.layer remove:obj];
+    obj.layer = layerGroup;
+    [layerGroup insert:obj];
+    
+}
 
 
 // add a display object to a given layer of the currently active stage.  create the layer
@@ -199,15 +288,19 @@ GLuint lineCount = 0;
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     NSLog(@"GeminiRenderer found stage");
     // sort the layers from front to back
-    GeminiDisplayGroup *layerGroup = (GeminiDisplayGroup *)[stage objectForKey:[NSNumber numberWithInt:layer]];
+    GeminiLayer *layerGroup = (GeminiLayer *)[stage objectForKey:[NSNumber numberWithInt:layer]];
     NSLog(@"GeminiRenderer found layer");
     if (layerGroup == nil) {
         NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[GeminiDisplayGroup alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
+        layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
+        layerGroup.index = layer;
         NSLog(@"GeminiRenderer created new layer");
         [stage setObject:layerGroup forKey:[NSNumber numberWithInt:layer]];
     }
     NSLog(@"Inserting object into layer %d", layer);
+    // remove from previous layer (if any) first
+    [obj.layer remove:obj];
+    obj.layer = layerGroup;
     [layerGroup insert:obj];
     
 }
@@ -227,15 +320,22 @@ GLuint lineCount = 0;
 }
 
 -(void)setupGL {
-    glGenVertexArraysOES(1, &vao);
-    glBindVertexArrayOES(vao);
+    
+    
+    glGenVertexArraysOES(1, &lineVAO);
+    glBindVertexArrayOES(lineVAO);
     
     lineShaderManager = [[GeminiLineShaderManager alloc] init];
     [lineShaderManager loadShaders];
+    
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    //glBufferData(GL_ARRAY_BUFFER, 3*maxPointCount*sizeof(GLfloat), NULL, GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, 100000*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
     glUseProgram(lineShaderManager.program);
     GLfloat width = 320;
     GLfloat height = 480;
@@ -245,13 +345,17 @@ GLuint lineCount = 0;
     GLfloat bottom = 0;
     GLfloat top = height;
     
+    glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
+    
     
     GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
     glEnableVertexAttribArray(ATTRIB_VERTEX_LINE);
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
     
-    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glBindVertexArrayOES(0);
 }

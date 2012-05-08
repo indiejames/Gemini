@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E215C15574BAC004B6EA3 /* GeminiLayer.h */; };
+		766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
+		766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
 		767198891508620000448706 /* GeminiSpriteSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 767198871508620000448706 /* GeminiSpriteSet.h */; };
 		7671988A1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
 		7671988B1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
@@ -295,6 +298,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		766E215C15574BAC004B6EA3 /* GeminiLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLayer.h; sourceTree = "<group>"; };
+		766E215D15574BAC004B6EA3 /* GeminiLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLayer.m; sourceTree = "<group>"; };
 		767198871508620000448706 /* GeminiSpriteSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteSet.h; sourceTree = "<group>"; };
 		767198881508620000448706 /* GeminiSpriteSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSet.m; sourceTree = "<group>"; };
 		7671988D1508698000448706 /* GeminiSpriteAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteAnimation.h; sourceTree = "<group>"; };
@@ -670,6 +675,8 @@
 				7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */,
 				7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */,
 				7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */,
+				766E215C15574BAC004B6EA3 /* GeminiLayer.h */,
+				766E215D15574BAC004B6EA3 /* GeminiLayer.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1182,6 +1189,7 @@
 				7692567A15278D4D00BEEF0C /* GeminiShaderManager.h in Headers */,
 				7692567F15278EAE00BEEF0C /* GeminiSpriteShaderManager.h in Headers */,
 				7692568415278F4000BEEF0C /* GeminiLineShaderManager.h in Headers */,
+				766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,7 +1238,7 @@
 		76BC9A1F14F99687006B1E17 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 76BC9A2214F99687006B1E17 /* Build configuration list for PBXProject "Gemini" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1406,6 +1414,7 @@
 				7692567B15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
 				7692568015278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
 				7692568515278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
+				766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1430,6 +1439,7 @@
 				7692567C15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
 				7692568115278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
 				7692568615278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
+				766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

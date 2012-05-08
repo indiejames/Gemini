@@ -14,6 +14,7 @@
 #include "lauxlib.h"
 
 @class GeminiDisplayGroup;
+@class GeminiLayer;
 
 @interface GeminiDisplayObject : GeminiObject {
     GeminiDisplayGroup *parent;
@@ -31,6 +32,7 @@
 @property (nonatomic) GLfloat maskX;
 @property (nonatomic) GLfloat maskY;
 @property (nonatomic, retain) GeminiDisplayGroup *parent;
+@property (nonatomic, retain) GeminiLayer *layer;
 @property (nonatomic) GLfloat rotation;
 @property (nonatomic) GLfloat x;
 @property (nonatomic) GLfloat y;
