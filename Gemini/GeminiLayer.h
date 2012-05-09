@@ -14,6 +14,7 @@
     GLenum sourceBlend;
     GLenum destBlend;
     BOOL isBLendingLayer;
+    GLfloat _alpha;
 }
 
 @property (nonatomic) int index;

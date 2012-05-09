@@ -36,4 +36,23 @@
     }
 }
 
+// layers are not instantiated via lua, so we have to override the getters/setters
+-(GLfloat) x{
+    return 0;
+}
+-(GLfloat) y{
+    return 0;
+}
+-(GLKMatrix4) transform {
+    return GLKMatrix4Identity;
+}
+
+-(GLfloat) alpha {
+    return _alpha;
+}
+
+-(void)setAlpha:(GLfloat)alpha {
+    _alpha = alpha;
+}
+
 @end

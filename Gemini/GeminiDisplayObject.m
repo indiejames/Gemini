@@ -127,6 +127,10 @@
 
 -(void)setX:(GLfloat)x {
     [super setDouble:x forKey:"x"];
+    GLfloat xRef = self.xReference;
+    GLfloat xOrig = x - xRef;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:xOrig forKey:"xOriginal"];
 }
 
 -(GLfloat)y {
@@ -135,6 +139,10 @@
 
 -(void)setY:(GLfloat)y {
     [super setDouble:y forKey:"y"];
+    GLfloat yRef = self.yReference;
+    GLfloat yOrig = y - yRef;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:yOrig forKey:"yOriginal"];
 }
 
 -(GLfloat)xOrigin {
@@ -143,6 +151,9 @@
 
 -(void)setXOrigin:(GLfloat)xOrigin {
     [super setDouble:xOrigin forKey:"xOrigin"];
+    GLfloat x = xOrigin + self.xReference;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yOrigin {
@@ -151,6 +162,9 @@
 
 -(void)setYOrigin:(GLfloat)yOrigin {
     [super setDouble:yOrigin forKey:"yOrigin"];
+    GLfloat y = yOrigin + self.yReference;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:y forKey:"y"];
 }
 
 -(GLfloat)xReference {
@@ -159,6 +173,9 @@
 
 -(void)setXReference:(GLfloat)xReference {
     [super setDouble:xReference forKey:"xReference"];
+    GLfloat x = self.xOrigin + xReference;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yReference {
@@ -167,6 +184,9 @@
 
 -(void)setYReference:(GLfloat)yReference {
     [super setDouble:yReference forKey:"yReference"];
+    GLfloat y = self.yOrigin + yReference;
+    // must bypass property setter to avoid infinite recursion
+    [self setDouble:y forKey:"y"];
 }
 
 -(GLfloat)xScale {
@@ -188,13 +208,22 @@
 -(GLKMatrix4) transform {
     GLKMatrix4 rval = GLKMatrix4Identity;
     
+    GLfloat refX = self.xOrigin + self.xReference;
+    GLfloat refY = self.yOrigin + self.yReference;
+    
+    // need to translate reference point to origin for proper rotation scaling about it
+    rval = GLKMatrix4Translate(rval, refX, refY, 0);
+    
     if (self.xScale != 1.0 || self.yScale != 1.0) {
         rval = GLKMatrix4Scale(rval, self.xScale, self.yScale, 1.0);
     }
     
     if (self.rotation != 0) {
-        rval = GLKMatrix4Rotate(rval, self.rotation, 0, 0, 1.0);
+        rval = GLKMatrix4RotateZ(rval, GLKMathDegreesToRadians(self.rotation));
     }
+    
+    // now translate back
+    rval = GLKMatrix4Translate(rval, -refX, -refY, 0);
     
     return rval;
 }

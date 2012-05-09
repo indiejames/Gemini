@@ -11,6 +11,7 @@
 #import "GeminiDisplayGroup.h"
 #import "GeminiLayer.h"
 #import "GeminiLine.h"
+#import "GeminiRectangle.h"
 #import "GeminiGLKViewController.h"
 
 
@@ -23,6 +24,22 @@ static void setDefaultValues(lua_State *L) {
     lua_settable(L, -3);
 
     lua_pushstring(L, "y");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+    
+    lua_pushstring(L, "xOrigin");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+    
+    lua_pushstring(L, "yOrigin");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+    
+    lua_pushstring(L, "xReference");
+    lua_pushnumber(L, 0);
+    lua_settable(L, -3);
+    
+    lua_pushstring(L, "yReference");
     lua_pushnumber(L, 0);
     lua_settable(L, -3);
     
@@ -50,6 +67,81 @@ static void setupObject(lua_State *L, const char *luaKey, GeminiDisplayObject *o
     obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
+// generic index method for userdata types
+static int genericIndex(lua_State *L){
+    /* first check the environment */ 
+    lua_getuservalue( L, -2 );
+    if(lua_isnil(L,-1)){
+        // NSLog(@"user value for user data is nil");
+    }
+    lua_pushvalue( L, -2 );
+    
+    lua_rawget( L, -2 );
+    if( lua_isnoneornil( L, -1 ) == 0 )
+    {
+        return 1;
+    }
+    
+    lua_pop( L, 2 );
+    
+    /* second check the metatable */    
+    lua_getmetatable( L, -2 );
+    lua_pushvalue( L, -2 );
+    lua_rawget( L, -2 );
+    
+    /* nil or otherwise, we return here */
+    return 1;
+
+}
+
+
+///////////// rectangles //////////////////////
+static int newRectangle(lua_State *L){
+    NSLog(@"Creating new rectangle");
+    GLfloat x = luaL_checknumber(L, 1);
+    GLfloat y = luaL_checknumber(L, 2);
+    GLfloat width = luaL_checknumber(L, 3);
+    GLfloat height = luaL_checknumber(L, 4);
+
+    GeminiRectangle *rect = [[GeminiRectangle alloc] initWithLuaState:L X:x Y:y Width:width Height:height];
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:rect];
+    GeminiRectangle **lRect = (GeminiRectangle **)lua_newuserdata(L, sizeof(GeminiRectangle *));
+    *lRect = rect;
+    
+    setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
+    
+    rect.x = width / 2.0;
+    rect.y = height / 2.0;
+    rect.width = width;
+    rect.height = height;
+    
+    return 1;
+}
+
+static int rectangleGC (lua_State *L){
+    NSLog(@"rectangleGC called");
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    [(*rect).parent remove:*rect];
+    //[*rect release];
+    
+    return 0;
+}
+
+
+// this function gets called with the table on the bottom of the stack, the index to assign to next,
+// and the value to be assigned on top
+static int rectangleNewIndex( lua_State* L )
+{
+    //NSLog(@"stack has %d values", top);
+    lua_getuservalue( L, -3 ); 
+    /* object, key, value */
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
+    
+    return 0;
+}
+
 ///////////// lines ///////////////////////////
 static int newLine(lua_State *L){
     NSLog(@"Creating new line...");
@@ -65,8 +157,9 @@ static int newLine(lua_State *L){
     
     setupObject(L, GEMINI_LINE_LUA_KEY, line);
     
-    
-    NSLog(@"New line created.");
+    line.xOrigin = x1;
+    line.yOrigin = y1;
+
     
     return 1;
 }
@@ -74,8 +167,8 @@ static int newLine(lua_State *L){
 static int lineGC (lua_State *L){
     NSLog(@"lineGC called");
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
-    // TODO - need to remove this from it's layer/display group
-    [*line release];
+    [(*line).parent remove:*line];
+    //[*line release];
     
     return 0;
 }
@@ -125,34 +218,6 @@ static int lineAppendPoints(lua_State *L){
     free(newPoints);
     
     return 0;
-}
-
-static int lineIndex( lua_State* L )
-{
-    //NSLog(@"Calling lineIndex()");
-    /* object, key */
-    /* first check the environment */ 
-    lua_getuservalue( L, -2 );
-    if(lua_isnil(L,-1)){
-       // NSLog(@"user value for user data is nil");
-    }
-    lua_pushvalue( L, -2 );
-    
-    lua_rawget( L, -2 );
-    if( lua_isnoneornil( L, -1 ) == 0 )
-    {
-        return 1;
-    }
-    
-    lua_pop( L, 2 );
-    
-    /* second check the metatable */    
-    lua_getmetatable( L, -2 );
-    lua_pushvalue( L, -2 );
-    lua_rawget( L, -2 );
-    
-    /* nil or otherwise, we return here */
-    return 1;
 }
 
 // this function gets called with the table on the bottom of the stack, the index to assign to next,
@@ -303,6 +368,7 @@ static const struct luaL_Reg displayLib_f [] = {
     {"newLayer", newLayer},
     {"newGroup", newDisplayGroup},
     {"newLine", newLine},
+    {"newRect", newRectangle},
     {NULL, NULL}
 };
 
@@ -327,10 +393,17 @@ static const struct luaL_Reg displayGroup_m [] = {
 // mappings for the line methods
 static const struct luaL_Reg line_m [] = {
     {"__gc", lineGC},
-    {"__index", lineIndex},
+    {"__index", genericIndex},
     {"__newindex", lineNewIndex},
     {"setColor", lineSetColor},
     {"append", lineAppendPoints},
+    {NULL, NULL}
+};
+
+// mappings for the rectangle methods
+static const struct luaL_Reg rectangle_m [] = {
+    {"__gc", rectangleGC},
+    {"__index", genericIndex},
     {NULL, NULL}
 };
 
