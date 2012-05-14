@@ -34,19 +34,21 @@
 }
 
 -(GLfloat)height {
-    return [super getDoubleForKey:"height" withDefault:0];
+    return height;
 }
 
 -(void)setHeight:(GLfloat)ht {
-    [super setDouble:ht forKey:"height"];
+    //[super setDouble:ht forKey:"height"];
+    height = ht;
 }
 
 -(GLfloat) width {
-    return [super getDoubleForKey:"width" withDefault:1.0];
+    //return [super getDoubleForKey:"width" withDefault:1.0];
+    return width;
 }
 
--(void)setWidth:(GLfloat)width {
-    [super setDouble:width forKey:"width"];
+-(void)setWidth:(GLfloat)w {
+    width = w;
 }
 
 -(BOOL) isHitTestMasked {
@@ -114,79 +116,92 @@
 }
 
 -(GLfloat)rotation {
-    return [super getDoubleForKey:"rotation" withDefault:0];
+    //return [super getDoubleForKey:"rotation" withDefault:0];
+    return rotation;
 }
 
--(void)setRotation:(GLfloat)rotation {
-    [super setDouble:rotation forKey:"rotation"];
+-(void)setRotation:(GLfloat)rot {
+    //[super setDouble:rotation forKey:"rotation"];
+    rotation = rot;
 }
 
 -(GLfloat)x {
-    return [super getDoubleForKey:"x" withDefault:0];
+    //return [super getDoubleForKey:"x" withDefault:0];
+    return xOrigin + xReference;
 }
 
 -(void)setX:(GLfloat)x {
-    [super setDouble:x forKey:"x"];
-    GLfloat xRef = self.xReference;
-    GLfloat xOrig = x - xRef;
+    //[super setDouble:x forKey:"x"];
+    
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:xOrig forKey:"xOriginal"];
+    xOrigin = x - self.xReference;
+    //[self setDouble:xOrig forKey:"xOriginal"];
 }
 
 -(GLfloat)y {
-    return [super getDoubleForKey:"y" withDefault:0];
+    //return [super getDoubleForKey:"y" withDefault:0];
+    return yOrigin + yReference;
 }
 
 -(void)setY:(GLfloat)y {
-    [super setDouble:y forKey:"y"];
-    GLfloat yRef = self.yReference;
-    GLfloat yOrig = y - yRef;
+    //[super setDouble:y forKey:"y"];
+    //GLfloat yRef = self.yReference;
+    
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:yOrig forKey:"yOriginal"];
+    yOrigin = y - self.yReference;
+    //[self setDouble:yOrig forKey:"yOriginal"];
 }
 
 -(GLfloat)xOrigin {
-    return [super getDoubleForKey:"xOrigin" withDefault:0];
+    //return [super getDoubleForKey:"xOrigin" withDefault:0];
+    return xOrigin;
 }
 
--(void)setXOrigin:(GLfloat)xOrigin {
-    [super setDouble:xOrigin forKey:"xOrigin"];
-    GLfloat x = xOrigin + self.xReference;
+-(void)setXOrigin:(GLfloat)xOrig {
+    xOrigin = xOrig;
+    //[super setDouble:xOrigin forKey:"xOrigin"];
+    //GLfloat x = xOrigin + self.xReference;
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:x forKey:"x"];
+    //[self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yOrigin {
-    return [super getDoubleForKey:"yOrigin" withDefault:0];
+    //return [super getDoubleForKey:"yOrigin" withDefault:0];
+    return yOrigin;
 }
 
--(void)setYOrigin:(GLfloat)yOrigin {
-    [super setDouble:yOrigin forKey:"yOrigin"];
-    GLfloat y = yOrigin + self.yReference;
+-(void)setYOrigin:(GLfloat)yOrig {
+    //[super setDouble:yOrigin forKey:"yOrigin"];
+    //GLfloat y = yOrigin + self.yReference;
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:y forKey:"y"];
+    //[self setDouble:y forKey:"y"];
+    yOrigin = yOrig;
 }
 
 -(GLfloat)xReference {
-    return [super getDoubleForKey:"xReference" withDefault:0];
+    //return [super getDoubleForKey:"xReference" withDefault:0];
+    return xReference;
 }
 
--(void)setXReference:(GLfloat)xReference {
-    [super setDouble:xReference forKey:"xReference"];
-    GLfloat x = self.xOrigin + xReference;
+-(void)setXReference:(GLfloat)xRef{
+    //[super setDouble:xReference forKey:"xReference"];
+    xReference = xRef;
+    //GLfloat x = self.xOrigin + xReference;
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:x forKey:"x"];
+    //[self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yReference {
-    return [super getDoubleForKey:"yReference" withDefault:0];
+    //return [super getDoubleForKey:"yReference" withDefault:0];
+    return yReference;
 }
 
--(void)setYReference:(GLfloat)yReference {
-    [super setDouble:yReference forKey:"yReference"];
-    GLfloat y = self.yOrigin + yReference;
+-(void)setYReference:(GLfloat)yRef {
+    yReference = yRef;
+    //[super setDouble:yReference forKey:"yReference"];
+    //GLfloat y = self.yOrigin + yReference;
     // must bypass property setter to avoid infinite recursion
-    [self setDouble:y forKey:"y"];
+    //[self setDouble:y forKey:"y"];
 }
 
 -(GLfloat)xScale {

@@ -42,6 +42,9 @@
     obj.parent = nil;
 }
 
-
+// compute the height and width of this group based on the object within it
+-(void)recomputeWidthHeight {
+    
+}
 
 @end

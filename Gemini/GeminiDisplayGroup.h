@@ -16,5 +16,6 @@
 
 -(void)insert:(GeminiDisplayObject *) obj;
 -(void)remove:(GeminiDisplayObject *) obj;
+-(void)recomputeWidthHeight;
 
 @end

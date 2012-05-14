@@ -94,6 +94,114 @@ static int genericIndex(lua_State *L){
 
 }
 
+// generic indexing for GeminiObjects
+static int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
+    if (lua_isstring(L, -1)) {
+        
+        
+        const char *key = lua_tostring(L, -1);
+        if (strcmp("xReference", key) == 0) {
+            
+            GLfloat xRef = obj.xReference;
+            lua_pushnumber(L, xRef);
+            return 1;
+        } else if (strcmp("yReference", key) == 0) {
+            
+            GLfloat yref = obj.yReference;
+            lua_pushnumber(L, yref);
+            return 1;
+            
+        } else if (strcmp("xOrigin", key) == 0) {
+            
+            GLfloat xOrig = obj.xOrigin;
+            lua_pushnumber(L, xOrig);
+            return 1;
+        } else if (strcmp("yOrigin", key) == 0) {
+            
+            GLfloat yOrig = obj.yOrigin;
+            lua_pushnumber(L, yOrig);
+            return 1;
+            
+        } else if (strcmp("x", key) == 0) {
+            
+            GLfloat x = obj.x;
+            lua_pushnumber(L, x);
+            return 1;
+            
+        } else if (strcmp("y", key) == 0) {
+            
+            GLfloat y = obj.y;
+            lua_pushnumber(L, y);
+            return 1;
+            
+        } else if (strcmp("rotation", key) == 0) {
+            
+            GLfloat rot = obj.rotation;
+            lua_pushnumber(L, rot);
+            return 1;
+            
+        } else {
+            return genericIndex(L);
+        }
+        
+    }
+    
+    return 0;
+    
+}
+
+// generic new index method for userdata types
+static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
+    
+    if (lua_isstring(L, -2)) {
+        
+        if (obj != NULL) {
+            const char *key = lua_tostring(L, -2);
+            if (strcmp("xReference", key) == 0) {
+                
+                GLfloat xref = luaL_checknumber(L, 3);
+                [*obj setXReference:xref];
+                return 0;
+                
+            } else if (strcmp("yReference", key) == 0) {
+                
+                GLfloat yref = luaL_checknumber(L, 3);
+                [*obj setYReference:yref];
+                return 0;
+                
+            } else if (strcmp("x", key) == 0) {
+                
+                GLfloat x = luaL_checknumber(L, 3);
+                [*obj setX:x];
+                return 0;
+                
+            } else if (strcmp("y", key) == 0) {
+                
+                GLfloat yref = luaL_checknumber(L, 3);
+                [*obj setYReference:yref];
+                return 0;
+                
+            } else if (strcmp("rotation", key) == 0) {
+                
+                GLfloat rot = luaL_checknumber(L, 3);
+                [*obj setRotation:rot];
+                return 0;
+                
+            }
+            
+        }
+    } 
+    
+    lua_getuservalue( L, -3 );
+    /* object, key, value */
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
+    
+    return 0;
+
+}
+
 
 ///////////// rectangles //////////////////////
 static int newRectangle(lua_State *L){
@@ -110,8 +218,8 @@ static int newRectangle(lua_State *L){
     
     setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
     
-    rect.x = width / 2.0;
-    rect.y = height / 2.0;
+    //rect.x = width / 2.0;
+    //rect.y = height / 2.0;
     rect.width = width;
     rect.height = height;
     
@@ -127,17 +235,105 @@ static int rectangleGC (lua_State *L){
     return 0;
 }
 
+static int rectangleIndex(lua_State *L){
+    int rval = 0;
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    if (rect != NULL) {
+        if (lua_isstring(L, -1)) {
+            
+            
+            const char *key = lua_tostring(L, -1);
+            if (strcmp("strokeWidth", key) == 0) {
+                
+                GLfloat w = (*rect).strokeWidth;
+                lua_pushnumber(L, w);
+                return 1;
+            } else {
+                rval = genericGeminiDisplayObjectIndex(L, *rect);
+            }
+        }
+        
+        
+    }
+    
+    return rval;
+}
 
-// this function gets called with the table on the bottom of the stack, the index to assign to next,
-// and the value to be assigned on top
-static int rectangleNewIndex( lua_State* L )
-{
-    //NSLog(@"stack has %d values", top);
-    lua_getuservalue( L, -3 ); 
-    /* object, key, value */
-    lua_pushvalue(L, -3);
-    lua_pushvalue(L,-3);
-    lua_rawset( L, -3 );
+static int rectangleNewIndex (lua_State *L){
+    int rval = 0;
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    if (rect != NULL) {
+        if (lua_isstring(L, -1)) {
+            
+            
+            const char *key = lua_tostring(L, -1);
+            if (strcmp("strokeWidth", key) != 0) {
+                GLfloat w = luaL_checknumber(L, 3);
+                (*rect).strokeWidth = w;
+                rval = 0;
+            } else {
+                rval = genericNewIndex(L, rect);
+            }
+
+        }
+        
+        
+    }
+    
+    
+    return rval;
+}
+
+static int rectangleSetFillColor(lua_State *L){
+    NSLog(@"Setting rectangle fill color");
+    int numargs = lua_gettop(L);
+    
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    GLfloat red = luaL_checknumber(L, 2);
+    GLfloat green = luaL_checknumber(L, 3);
+    GLfloat blue = luaL_checknumber(L, 4);
+    GLfloat alpha = 1.0;
+    if (numargs == 5) {
+        alpha = luaL_checknumber(L, 5);
+    }
+    
+    (*rect).fillColor = GLKVector4Make(red, green, blue, alpha);
+    
+    
+    return 0;
+}
+
+static int rectangleSetStrokeColor(lua_State *L){
+    NSLog(@"Setting rectangle stroke color");
+    int numargs = lua_gettop(L);
+    
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    GLfloat red = luaL_checknumber(L, 2);
+    GLfloat green = luaL_checknumber(L, 3);
+    GLfloat blue = luaL_checknumber(L, 4);
+    GLfloat alpha = 1.0;
+    if (numargs == 5) {
+        alpha = luaL_checknumber(L, 5);
+    }
+    
+    (*rect).strokeColor = GLKVector4Make(red, green, blue, alpha);
+    
+    
+    return 0;
+}
+
+static int rectangleSetStrokeWidth(lua_State *L){
+    NSLog(@"Setting rectangle stroke width");
+   
+    GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    GLfloat w = luaL_checknumber(L, 2);
+        
+    (*rect).strokeWidth = w;
+    
     
     return 0;
 }
@@ -173,13 +369,21 @@ static int lineGC (lua_State *L){
     return 0;
 }
 
-static int lineSetLayer(lua_State *L){
+static int lineIndex(lua_State *L){
+    int rval = 0;
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    if (line != NULL) {
+        
+        rval = genericGeminiDisplayObjectIndex(L, *line);
+        
+    }
     
-    int layer = luaL_checkinteger(L, 2);
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:*line toLayer:layer];
-    
-    return 0;
+    return rval;
+}
+
+static int lineNewIndex (lua_State *L){
+    GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    return genericNewIndex(L, line);
 }
 
 static int lineSetColor(lua_State *L){
@@ -220,20 +424,6 @@ static int lineAppendPoints(lua_State *L){
     return 0;
 }
 
-// this function gets called with the table on the bottom of the stack, the index to assign to next,
-// and the value to be assigned on top
-static int lineNewIndex( lua_State* L )
-{
-    //NSLog(@"stack has %d values", top);
-    lua_getuservalue( L, -3 ); 
-    /* object, key, value */
-    lua_pushvalue(L, -3);
-    lua_pushvalue(L,-3);
-    lua_rawset( L, -3 );
-    
-    return 0;
-}
-
 ///////////// layers //////////////////
 static int newLayer(lua_State *L){
     int index = luaL_checkinteger(L, 1);
@@ -257,26 +447,9 @@ static int layerGC (lua_State *L){
     return 0;
 }
 
-// this index uses the meta table itself to handle string keys and the attached display group object for integer keys
-static int layerIndex( lua_State* L )
-{
-    //NSLog(@"Calling displayGroupIndex()");
+static int layerNewIndex (lua_State *L){
     GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
-    
-    int index = lua_tonumber(L, 2) - 1;
-    if (index > -1) {
-        GeminiObject *obj = (GeminiObject *)[(*layer).objects objectAtIndex:index];
-        lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
-        
-    } else {
-        // not a valid index must be a method name so use the metatable to look it up
-        lua_getmetatable(L, 1);
-        lua_pushvalue(L, -2);
-        lua_gettable(L, -2);
-                
-    }
-    
-    return 1;
+    return genericNewIndex(L, layer);
 }
 
 
@@ -304,8 +477,7 @@ static int newDisplayGroup(lua_State *L){
     GeminiDisplayGroup *group = [[GeminiDisplayGroup alloc] initWithLuaState:L];
     GeminiDisplayGroup **lGroup = (GeminiDisplayGroup **)lua_newuserdata(L, sizeof(GeminiDisplayGroup *));
     *lGroup = group;
-    //[((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group toLayer:0];
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
+   [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
 
     setupObject(L, GEMINI_DISPLAY_GROUP_LUA_KEY, group);
     
@@ -320,13 +492,9 @@ static int displayGroupGC (lua_State *L){
     return 0;
 }
 
-static int displayGroupSetLayer(lua_State *L){
-    NSLog(@"Calling displayGroupSetLayer()");
-    GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
-    int layer = luaL_checkinteger(L, 2);
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:*group toLayer:layer];
-
-    return 0;
+static int displayGroupNewIndex (lua_State *L){
+    GeminiDisplayGroup  **dg = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
+    return genericNewIndex(L, dg);
 }
 
 static int displayGroupInsert(lua_State *L){
@@ -338,30 +506,7 @@ static int displayGroupInsert(lua_State *L){
     return 0;
 }
 
-// this index uses the meta table itself to handle string keys and the attached display group object for integer keys
-static int displayGroupIndex( lua_State* L )
-{
-    //NSLog(@"Calling displayGroupIndex()");
-    GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);    
-    
-    
-    int index = lua_tonumber(L, 2) - 1;
-    if (index > -1) {
-        GeminiObject *obj = (GeminiObject *)[(*group).objects objectAtIndex:index];
-        lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
-        
-    } else {
-        // not a valid index must be a method name so use the metatable to look it up
-        lua_getmetatable(L, 1);
-        lua_pushvalue(L, -2);
-        lua_gettable(L, -2);
-        
-        return 1;
-        
-    }
-    
-    return 1;
-}
+
 
 // the mappings for the library functions
 static const struct luaL_Reg displayLib_f [] = {
@@ -377,23 +522,24 @@ static const struct luaL_Reg layer_m [] = {
     {"insert", layerInsert},
     {"setBlendFunc", layerSetBlendFunc},
     {"__gc", layerGC},
-    {"__index", layerIndex},
+    {"__index", genericIndex},
+    {"__newindex", layerNewIndex},
     {NULL, NULL}
 };
 
 // mappings for the display group methods
 static const struct luaL_Reg displayGroup_m [] = {
     {"insert", displayGroupInsert},
-    {"setLayer", displayGroupSetLayer},
     {"__gc", displayGroupGC},
-    {"__index", displayGroupIndex},
+    {"__index", genericIndex},
+    {"__newindex", displayGroupNewIndex},
     {NULL, NULL}
 };
 
 // mappings for the line methods
 static const struct luaL_Reg line_m [] = {
     {"__gc", lineGC},
-    {"__index", genericIndex},
+    {"__index", lineIndex},
     {"__newindex", lineNewIndex},
     {"setColor", lineSetColor},
     {"append", lineAppendPoints},
@@ -403,7 +549,11 @@ static const struct luaL_Reg line_m [] = {
 // mappings for the rectangle methods
 static const struct luaL_Reg rectangle_m [] = {
     {"__gc", rectangleGC},
-    {"__index", genericIndex},
+    {"__index", rectangleIndex},
+    {"__newindex", rectangleNewIndex},
+    {"setFillColor", rectangleSetFillColor},
+    {"setStrokeColor", rectangleSetStrokeColor},
+    {"setStrokeWidth", rectangleSetStrokeWidth},
     {NULL, NULL}
 };
 
@@ -422,15 +572,13 @@ int luaopen_display_lib (lua_State *L){
     
     // display groups
     createMetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY, displayGroup_m);
-   /* luaL_newmetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY);    
-    lua_pushvalue(L, -1); // duplicates the metatable
-    luaL_setfuncs(L, displayGroup_m, 0);*/
+   
     
     // lines
-    luaL_newmetatable(L, GEMINI_LINE_LUA_KEY);
-    lua_pushvalue(L, -1);
-    luaL_setfuncs(L, line_m, 0);
-    
+    createMetatable(L, GEMINI_LINE_LUA_KEY, line_m);
+   
+    // rectangles
+    createMetatable(L, GEMINI_RECTANGLE_LUA_KEY, rectangle_m);
     
     /////// finished with metatables ///////////
     

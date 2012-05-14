@@ -9,6 +9,7 @@
 #import "GeminiRenderer.h"
 #import "Gemini.h"
 #import "GeminiLine.h"
+#import "GeminiRectangle.h"
 #import "GeminiSprite.h"
 #import "GeminiLayer.h"
 
@@ -127,7 +128,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     NSLog(@"Rendering layer %d", layer);
     NSLog(@"DisplayGroup has %d objects", [group.objects count]);
     
-    GLKMatrix4 cumulTransform = GLKMatrix4Multiply(group.transform, transform);
+    GLKMatrix4 cumulTransform = GLKMatrix4Multiply(transform, group.transform);
     GLfloat cumulAlpha = group.alpha * alpha;
     
     for (int i=0; i<[group.objects count]; i++) {
@@ -143,6 +144,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             
         } else if(gemObj.class == GeminiSprite.class){
             
+        } else if(gemObj.class == GeminiRectangle.class){
+            [self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:alpha transform:transform];
         }
         
     }
@@ -154,6 +157,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex alpha:(GLfloat)alpha tranform:(GLKMatrix4 ) transform {
     
     glBindVertexArrayOES(lineVAO);
+    
+    glUseProgram(lineShaderManager.program);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
@@ -171,7 +176,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     [line computeVertices:layerIndex];
     
-    GLKMatrix4 finalTransform = GLKMatrix4Multiply(line.transform, transform);
+    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, line.transform);
     
     GLfloat *newVerts = (GLfloat *)malloc(line.numPoints * 6*sizeof(GLfloat));
     transformVertices(newVerts, line.verts, line.numPoints*2, finalTransform);
@@ -185,6 +190,61 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glDrawElements(GL_TRIANGLES,(line.numPoints - 1)*6,GL_UNSIGNED_SHORT, (void*)0);
     
+    free(newVerts);
+}
+
+
+-(void)renderRectangle:(GeminiRectangle *)rectangle withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+    
+    glBindVertexArrayOES(rectangleVAO);
+    
+    glUseProgram(rectangleShaderManager.program);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
+    glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
+    
+    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, rectangle.transform);
+    
+    GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
+    
+    
+    unsigned int vertCount = 4;
+    unsigned int indexCount = 6;
+    if (rectangle.strokeWidth > 0) {
+        vertCount = 12;
+        indexCount = 30;
+    }
+    
+    transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
+    
+    memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
+    
+    ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
+    for (int i=0; i<vertCount; i++) {
+        vertData[i].position[0] = newVerts[i*3];
+        vertData[i].position[1] = newVerts[i*3+1];
+        vertData[i].position[2] = newVerts[i*3+2];
+        vertData[i].color[0] = rectangle.vertColor[i*4];
+        vertData[i].color[1] = rectangle.vertColor[i*4+1];
+        vertData[i].color[2] = rectangle.vertColor[i*4+2];
+        vertData[i].color[3] = rectangle.vertColor[i*4+3];
+    }
+    
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertCount*sizeof(ColoredVertex), vertData);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexCount*sizeof(GLushort), rectangle.vertIndex);
+
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
+    
+    /*if (rectangle.strokeWidth > 0) {
+        glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_SHORT, (void*)0);
+    } else {
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (void*)0);
+    }*/
+    
+    free(vertData);
     free(newVerts);
 }
 
@@ -260,9 +320,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     activeStage = [stage retain];
 }
 
--(void)setupGL {
-    
-    
+-(void)setupLineRendering {
     glGenVertexArraysOES(1, &lineVAO);
     glBindVertexArrayOES(lineVAO);
     
@@ -299,6 +357,53 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glBindVertexArrayOES(0);
+}
+
+-(void)setupRectangleRendering {
+    glGenVertexArraysOES(1, &rectangleVAO);
+    glBindVertexArrayOES(rectangleVAO);
+    
+    rectangleShaderManager = [[GeminiRectangleShaderManager alloc] init];
+    [rectangleShaderManager loadShaders];
+    
+    glUseProgram(rectangleShaderManager.program);
+    GLfloat width = 320;
+    GLfloat height = 480;
+    
+    GLfloat left = 0;
+    GLfloat right = width;
+    GLfloat bottom = 0;
+    GLfloat top = height;
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_RECTANGLE, 3, GL_FLOAT, GL_FALSE, sizeof(ColoredVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_RECTANGLE, 4, GL_FLOAT, GL_FALSE, 
+                          sizeof(ColoredVertex), (GLvoid*) (sizeof(float) * 3));
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
+    glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    
+    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
+    glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
+   
+    
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindVertexArrayOES(0);
+}
+
+-(void)setupGL {
+    
+    [self setupLineRendering];
+    [self setupRectangleRendering];
+    
 }
 
 -(id) initWithLuaState:(lua_State *)luaState {

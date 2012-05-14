@@ -129,9 +129,7 @@
 -(BOOL)handleEvent:(GeminiEvent *)event {
     //NSLog(@"GeminiObject checking for event handler");
     NSArray *callbacks = (NSMutableArray *)[eventHandlers objectForKey:event.name];
-    int count = [callbacks count];
-    //NSLog(@"Found %d callbacks", count);
-    
+        
     if ([callbacks count] > 0) {
         for (int i=0; i<[callbacks count]; i++) {
             

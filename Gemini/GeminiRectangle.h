@@ -7,13 +7,31 @@
 //
 
 #import "GeminiDisplayObject.h"
+#import "GeminiLine.h"
 
 @interface GeminiRectangle : GeminiDisplayObject {
     GLfloat *verts;
+    GLfloat *vertColor;
     GLushort *vertIndex;
-    GLKVector4 *fillColor;
+    GLKVector2 *points;
+    GLKVector4 fillColor;
+    GLKVector4 *gradient;
+    GLKVector4 strokeColor;
+    GeminiLine *border;
+    GLfloat strokeWidth;
 }
 
+@property (readonly) GLfloat *verts;
+@property (readonly) GLfloat *vertColor;
+@property (readonly) GLushort *vertIndex;
+@property (nonatomic) GLKVector4 fillColor;
+@property (nonatomic) GLKVector4 *gradient;
+@property (nonatomic) GLKVector4 strokeColor;
+@property (nonatomic) GLfloat strokeWidth;
+@property (readonly) GLuint numTriangles;
+
+
 -(id) initWithLuaState:(lua_State *)luaState X:(GLfloat)x Y:(GLfloat)y Width:(GLfloat)width Height:(GLfloat)height;
+
 
 @end

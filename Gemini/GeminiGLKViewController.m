@@ -120,7 +120,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 - (void)update
 {
     //NSLog(@"update()");
-    double scale = [UIScreen mainScreen].scale;
+    //double scale = [UIScreen mainScreen].scale;
     
     
     GLint width;

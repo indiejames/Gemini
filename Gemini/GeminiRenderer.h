@@ -10,10 +10,22 @@
 #import "GeminiDisplayGroup.h"
 #import "GeminiLineShaderManager.h"
 #import "GeminiSpriteShaderManager.h"
+#import "GeminiRectangleShaderManager.h"
 
 #define DEFAULT_STAGE_NAME @"DEFAULT_STAGE"
 #define LINE_SHADER_PROGRAM_KEY @"LINE_SHADER_PROGRAM_KEY"
 #define SPRITE_SHADER_PROGRAM_KEY @"SPRITE_SHADER_PROGRAM_KEY"
+
+typedef struct {
+    GLfloat position[3];
+    GLfloat color[4];
+} ColoredVertex;
+
+typedef struct {
+    GLfloat position[3];
+    GLfloat color[4];
+    GLfloat texCoord[2];
+} TexturedVertex;
 
 @interface GeminiRenderer : NSObject {
     
@@ -23,10 +35,13 @@
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
     GLuint vertexBuffer;
+    GLuint colorBuffer;
     GLuint indexBuffer;
     GLuint lineVAO;
+    GLuint rectangleVAO;
     GeminiLineShaderManager *lineShaderManager;
     GeminiSpriteShaderManager *spriteShaderManager;
+    GeminiRectangleShaderManager *rectangleShaderManager;
     
 }
 

@@ -18,6 +18,13 @@
 
 @interface GeminiDisplayObject : GeminiObject {
     GeminiDisplayGroup *parent;
+    GLfloat xReference;
+    GLfloat yReference;
+    GLfloat xOrigin;
+    GLfloat yOrigin;
+    GLfloat rotation;
+    GLfloat width;
+    GLfloat height;
 }
 
 @property (nonatomic) GLfloat alpha;
