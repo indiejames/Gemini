@@ -220,7 +220,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
     
-    memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
+    //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
     
     ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
     for (int i=0; i<vertCount; i++) {

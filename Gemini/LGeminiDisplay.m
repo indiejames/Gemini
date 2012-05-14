@@ -153,10 +153,10 @@ static int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *ob
 // generic new index method for userdata types
 static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
     
-    if (lua_isstring(L, -2)) {
+    if (lua_isstring(L, 2)) {
         
         if (obj != NULL) {
-            const char *key = lua_tostring(L, -2);
+            const char *key = lua_tostring(L, 2);
             if (strcmp("xReference", key) == 0) {
                 
                 GLfloat xref = luaL_checknumber(L, 3);
@@ -182,7 +182,7 @@ static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
                 return 0;
                 
             } else if (strcmp("rotation", key) == 0) {
-                
+                NSLog(@"Setting rotation");
                 GLfloat rot = luaL_checknumber(L, 3);
                 [*obj setRotation:rot];
                 return 0;
@@ -264,15 +264,16 @@ static int rectangleNewIndex (lua_State *L){
     GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
     if (rect != NULL) {
-        if (lua_isstring(L, -1)) {
+        if (lua_isstring(L, 2)) {
             
             
-            const char *key = lua_tostring(L, -1);
-            if (strcmp("strokeWidth", key) != 0) {
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("strokeWidth", key) == 0) {
                 GLfloat w = luaL_checknumber(L, 3);
                 (*rect).strokeWidth = w;
                 rval = 0;
             } else {
+                //lua_pushstring(L, key);
                 rval = genericNewIndex(L, rect);
             }
 
