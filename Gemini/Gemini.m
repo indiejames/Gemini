@@ -15,6 +15,7 @@
 #import "GeminiGLKViewController.h"
 #import "GeminiDisplayObject.h"
 #import "LGeminiObject.h"
+#import "LGeminiDisplay.h"
 
 Gemini *singleton = nil;
 
@@ -80,6 +81,7 @@ int setLuaPath(lua_State *L, NSString* path );
     lua_setglobal(L, "GL_ZERO");
 }
 
+
 - (id)init
 {
     
@@ -96,10 +98,10 @@ int setLuaPath(lua_State *L, NSString* path );
         initTime = [NSDate timeIntervalSinceReferenceDate];
         config = [self readPlist:@"gemini"];
         geminiObjects = [[NSMutableArray alloc] initWithCapacity:1];
-        viewController = [[GeminiGLKViewController alloc] init];
+        //viewController = [[GeminiGLKViewController alloc] init];
         L = luaL_newstate();
         luaL_openlibs(L);
-        
+        viewController = [[GeminiGLKViewController alloc] initWithLuaState:L];
         
     }
     
@@ -112,11 +114,11 @@ int setLuaPath(lua_State *L, NSString* path );
         singleton = [[Gemini alloc] init];
         [singleton addRuntimeObject];
         [singleton setupGlobalConstants];
+        
     }
     
     return singleton;
 }
-
 
 
 - (id)readPlist:(NSString *)fileName {  

@@ -42,7 +42,6 @@ typedef struct {
     GeminiLineShaderManager *lineShaderManager;
     GeminiSpriteShaderManager *spriteShaderManager;
     GeminiRectangleShaderManager *rectangleShaderManager;
-    
 }
 
 -(id) initWithLuaState:(lua_State *)luaState;

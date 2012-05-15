@@ -12,6 +12,7 @@
 #import "GeminiRectangle.h"
 #import "GeminiSprite.h"
 #import "GeminiLayer.h"
+#import "LGeminiDisplay.h"
 
 #define LINE_BUFFER_CHUNK_SIZE (512)
 
@@ -129,14 +130,15 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     NSLog(@"DisplayGroup has %d objects", [group.objects count]);
     
     GLKMatrix4 cumulTransform = GLKMatrix4Multiply(transform, group.transform);
-    GLfloat cumulAlpha = group.alpha * alpha;
+    GLfloat groupAlpha = group.alpha;
+    GLfloat cumulAlpha = groupAlpha * alpha;
     
     for (int i=0; i<[group.objects count]; i++) {
         
         GeminiDisplayObject *gemObj = (GeminiDisplayObject *)[group.objects objectAtIndex:i];
         if (gemObj.class == GeminiDisplayGroup.class) {
             // recursion
-            [self renderDisplayGroup:(GeminiDisplayGroup *)gemObj forLayer:layer withAlpha:alpha transform:cumulTransform];
+            [self renderDisplayGroup:(GeminiDisplayGroup *)gemObj forLayer:layer withAlpha:cumulAlpha transform:cumulTransform];
             
         } else if(gemObj.class == GeminiLine.class){
             // TODO - sort all lines by line properties so they can be batched
@@ -145,7 +147,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         } else if(gemObj.class == GeminiSprite.class){
             
         } else if(gemObj.class == GeminiRectangle.class){
-            [self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:alpha transform:transform];
+            [self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
         }
         
     }
@@ -220,6 +222,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
     
+    GLfloat finalAlpha = alpha * rectangle.alpha;
+    
     //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
     
     ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
@@ -230,7 +234,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         vertData[i].color[0] = rectangle.vertColor[i*4];
         vertData[i].color[1] = rectangle.vertColor[i*4+1];
         vertData[i].color[2] = rectangle.vertColor[i*4+2];
-        vertData[i].color[3] = rectangle.vertColor[i*4+3];
+        vertData[i].color[3] = rectangle.vertColor[i*4+3] * finalAlpha;
     }
     
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertCount*sizeof(ColoredVertex), vertData);
@@ -251,7 +255,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 // add a new layer
 -(void)addLayer:(GeminiLayer *)layer {
-    NSLog(@"GeminiRenderer adding layer");
+    NSLog(@"GeminiRenderer adding layer with index %d", layer.index);
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
     [stage setObject:layer forKey:[NSNumber numberWithInt:layer.index]];
 }
@@ -268,10 +272,10 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     NSLog(@"GeminiRenderer found layer");
     if (layerGroup == nil) {
         NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
+        /*layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
         layerGroup.index = 0;
         NSLog(@"GeminiRenderer created new layer");
-        [stage setObject:layerGroup forKey:layerIndex];
+        [stage setObject:layerGroup forKey:layerIndex];*/
     }
     NSLog(@"Inserting object into layer 0");
     // remove from previous layer (if any) first
@@ -417,6 +421,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         [self setActiveStage:DEFAULT_STAGE_NAME];
         
         [self setupGL];
+        
     }
     
     return self;

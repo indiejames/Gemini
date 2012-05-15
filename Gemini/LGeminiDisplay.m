@@ -9,7 +9,7 @@
 #import "LGeminiDisplay.h"
 #import "Gemini.h"
 #import "GeminiDisplayGroup.h"
-#import "GeminiLayer.h"
+
 #import "GeminiLine.h"
 #import "GeminiRectangle.h"
 #import "GeminiGLKViewController.h"
@@ -433,7 +433,8 @@ static int newLayer(lua_State *L){
     layer.index = index;
     GeminiLayer **lLayer = (GeminiLayer **)lua_newuserdata(L, sizeof(GeminiLayer *));
     *lLayer = layer;
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addLayer:layer];
+    GeminiRenderer *renderer = ((GeminiGLKViewController *)([Gemini shared].viewController)).renderer;
+    [renderer addLayer:layer];
 
     setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
     
@@ -446,6 +447,23 @@ static int layerGC (lua_State *L){
     [*layer release];
     
     return 0;
+}
+
+GeminiLayer *createLayerZero(lua_State *L) {
+    GeminiLayer *layer = [[GeminiLayer alloc] initWithLuaState:L];
+    layer.index = 0;
+    GeminiLayer **lLayer = (GeminiLayer **)lua_newuserdata(L, sizeof(GeminiLayer *));
+    *lLayer = layer;
+    
+    //GeminiRenderer *renderer = ((GeminiGLKViewController *)([Gemini shared].viewController)).renderer;
+    //[renderer addLayer:layer];
+
+    setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
+    
+    // add layer zero to the global vars for Lua
+    lua_setglobal(L, "GEMINI_LAYER0");
+    
+    return layer;
 }
 
 static int layerNewIndex (lua_State *L){

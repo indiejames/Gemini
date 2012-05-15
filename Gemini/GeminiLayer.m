@@ -37,7 +37,7 @@
 }
 
 // layers are not instantiated via lua, so we have to override the getters/setters
--(GLfloat) x{
+/*-(GLfloat) x{
     return 0;
 }
 -(GLfloat) y{
@@ -53,6 +53,6 @@
 
 -(void)setAlpha:(GLfloat)alpha {
     _alpha = alpha;
-}
+}*/
 
 @end

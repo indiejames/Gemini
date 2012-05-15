@@ -9,6 +9,7 @@
 #import "Gemini.h"
 #import "GeminiGLKViewController.h"
 #import "GeminiRenderer.h"
+#import "LGeminiDisplay.h"
 
 //NSString *spriteFragmentShaderStr = @"uniform sampler2D texture; // texture sampler\nuniform highp float alpha; // alpha value for image\nvarying highp vec2 vTexCoord; // texture coordinates\nvoid main()\n{\nhighp vec4 texVal = texture2D(texture, vTexCoord);\ngl_FragColor = texVal;\n}";
 NSString *spriteFragmentShaderStr = @"void main(){\ngl_FragColor = vec4(1.0,1.0,1.0,1.0);\n}";
@@ -104,7 +105,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     // load the renderer
     renderer = [[GeminiRenderer alloc] initWithLuaState:L];
-    
+    [renderer addLayer:createLayerZero(L)];
 }
 
 

@@ -9,6 +9,7 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#import "GeminiLayer.h"
 
 #define GEMINI_DISPLAY_LUA_KEY "GeminiLib.GEMINI_DISPLAY_LUA_KEY"
 #define GEMINI_LAYER_LUA_KEY "GeminiLib.GEMINI_LAYER_LUA_KEY"
@@ -17,3 +18,5 @@
 #define GEMINI_RECTANGLE_LUA_KEY "GeminiLib.GEMINI_RECTANGLE_LUA_KEY"
 
 int luaopen_display_lib (lua_State *L);
+
+GeminiLayer *createLayerZero(lua_State *L);
