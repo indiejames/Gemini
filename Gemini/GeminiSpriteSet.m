@@ -11,6 +11,8 @@
 
 @implementation GeminiSpriteSet
 
+@synthesize spriteSheet;
+
 -(id) initWithSpriteSheet:(GeminiSpriteSheet *)sheet StartFrame:(int)start NumFrames:(int)nFrames {
     self = [super init];
     
@@ -23,8 +25,9 @@
         animation.startFrame = start;
         animation.frameCount = nFrames;
         animation.frameDuration = 0.1; // 10 frames per sec
-        animation.loopCount = 0; // no loop
-        [animations setObject:animation forKey:@"default"];
+        animation.loopCount = 0; // loop forever
+        [animations setObject:animation forKey:GEMINI_DEFAULT_ANIMATION];
+        spriteSheet = sheet;
     }
     
     return self;
@@ -37,6 +40,10 @@
     animation.frameDuration = duration;
     animation.loopCount = loopCount;
     [animations setObject:animation forKey:name];
+}
+
+-(GeminiSpriteAnimation *)getAnimation:(NSString *)animation {
+    return (GeminiSpriteAnimation *)[animations objectForKey:animation];
 }
 
 @end

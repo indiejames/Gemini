@@ -16,6 +16,12 @@
 		766E2172155F5A63004B6EA3 /* GeminiRectangleShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */; };
 		766E2173155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */; };
 		766E2174155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */; };
+		766E218315648060004B6EA3 /* GeminiSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21811564805D004B6EA3 /* GeminiSpriteManager.h */; };
+		766E218415648060004B6EA3 /* GeminiSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GeminiSpriteManager.m */; };
+		766E218515648060004B6EA3 /* GeminiSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GeminiSpriteManager.m */; };
+		766E218915681321004B6EA3 /* GeminiSpriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */; };
+		766E218A15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GeminiSpriteBatch.m */; };
+		766E218B15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GeminiSpriteBatch.m */; };
 		767198891508620000448706 /* GeminiSpriteSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 767198871508620000448706 /* GeminiSpriteSet.h */; };
 		7671988A1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
 		7671988B1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
@@ -310,6 +316,11 @@
 		766E21621559D3A2004B6EA3 /* GeminiRectangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRectangle.m; sourceTree = "<group>"; };
 		766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRectangleShaderManager.h; sourceTree = "<group>"; };
 		766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRectangleShaderManager.m; sourceTree = "<group>"; };
+		766E21811564805D004B6EA3 /* GeminiSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteManager.h; sourceTree = "<group>"; };
+		766E21821564805F004B6EA3 /* GeminiSpriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteManager.m; sourceTree = "<group>"; };
+		766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteBatch.h; sourceTree = "<group>"; };
+		766E218815681320004B6EA3 /* GeminiSpriteBatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteBatch.m; sourceTree = "<group>"; };
+		766E218C15681421004B6EA3 /* GeminiTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeminiTypes.h; sourceTree = "<group>"; };
 		767198871508620000448706 /* GeminiSpriteSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteSet.h; sourceTree = "<group>"; };
 		767198881508620000448706 /* GeminiSpriteSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSet.m; sourceTree = "<group>"; };
 		7671988D1508698000448706 /* GeminiSpriteAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteAnimation.h; sourceTree = "<group>"; };
@@ -691,6 +702,11 @@
 				766E215D15574BAC004B6EA3 /* GeminiLayer.m */,
 				766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */,
 				766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */,
+				766E21811564805D004B6EA3 /* GeminiSpriteManager.h */,
+				766E21821564805F004B6EA3 /* GeminiSpriteManager.m */,
+				766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */,
+				766E218815681320004B6EA3 /* GeminiSpriteBatch.m */,
+				766E218C15681421004B6EA3 /* GeminiTypes.h */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1206,6 +1222,8 @@
 				766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */,
 				766E21631559D3A2004B6EA3 /* GeminiRectangle.h in Headers */,
 				766E2172155F5A63004B6EA3 /* GeminiRectangleShaderManager.h in Headers */,
+				766E218315648060004B6EA3 /* GeminiSpriteManager.h in Headers */,
+				766E218915681321004B6EA3 /* GeminiSpriteBatch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1433,6 +1451,8 @@
 				766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */,
 				766E21641559D3A2004B6EA3 /* GeminiRectangle.m in Sources */,
 				766E2173155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */,
+				766E218415648060004B6EA3 /* GeminiSpriteManager.m in Sources */,
+				766E218A15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,6 +1480,8 @@
 				766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */,
 				766E21651559D3A2004B6EA3 /* GeminiRectangle.m in Sources */,
 				766E2174155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */,
+				766E218515648060004B6EA3 /* GeminiSpriteManager.m in Sources */,
+				766E218B15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <GLKit/GLKit.h>
 #import "GeminiLineShaderManager.h"
 #import "GeminiRenderer.h"
+#import "GeminiSpriteManager.h"
 
 // Uniform index.
 enum {
@@ -33,9 +34,13 @@ enum {
     SEL postRenderCallback;
     GeminiShaderManager *lineShaderManager;
     GeminiRenderer *renderer;
+    GeminiSpriteManager *spriteManager;
+    double updateTime;
 }
 
 @property (readonly) GeminiRenderer *renderer;
+@property (readonly) GeminiSpriteManager *spriteManager;
+@property (readonly) double updateTime;
 
 -(void)setPreRenderCallback:(SEL)callback;
 -(void)setPostRenderCallback:(SEL)callback;

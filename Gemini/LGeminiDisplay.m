@@ -182,9 +182,20 @@ static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
                 return 0;
                 
             } else if (strcmp("rotation", key) == 0) {
-                NSLog(@"Setting rotation");
+                
                 GLfloat rot = luaL_checknumber(L, 3);
                 [*obj setRotation:rot];
+                return 0;
+                
+            } else if (strcmp("xScale", key) == 0){
+                GLfloat xScale = luaL_checknumber(L, 3);
+                [*obj setXScale:xScale];
+                
+                return 0;
+                
+            } else if (strcmp("yScale", key) == 0){
+                GLfloat yScale = luaL_checknumber(L, 3);
+                [*obj setYScale:yScale];
                 return 0;
                 
             }

@@ -7,20 +7,171 @@
 //
 
 #import "LGeminiSprite.h"
+#import "Gemini.h"
 #import "GeminiSprite.h"
 #import "GeminiSpriteSheet.h"
 #import "GeminiSpriteSet.h"
 #import "GeminiSpriteAnimation.h"
+#import "GeminiGLKViewController.h"
 
 // prototype for library init function
 int luaopen_spritelib (lua_State *L);
+
+// generic index method for userdata types
+static int genericIndex(lua_State *L){
+    /* first check the environment */ 
+    lua_getuservalue( L, -2 );
+    if(lua_isnil(L,-1)){
+        // NSLog(@"user value for user data is nil");
+    }
+    lua_pushvalue( L, -2 );
+    
+    lua_rawget( L, -2 );
+    if( lua_isnoneornil( L, -1 ) == 0 )
+    {
+        return 1;
+    }
+    
+    lua_pop( L, 2 );
+    
+    /* second check the metatable */    
+    lua_getmetatable( L, -2 );
+    lua_pushvalue( L, -2 );
+    lua_rawget( L, -2 );
+    
+    /* nil or otherwise, we return here */
+    return 1;
+    
+}
+
+// generic indexing for GeminiObjects
+static int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
+    if (lua_isstring(L, -1)) {
+        
+        
+        const char *key = lua_tostring(L, -1);
+        if (strcmp("xReference", key) == 0) {
+            
+            GLfloat xRef = obj.xReference;
+            lua_pushnumber(L, xRef);
+            return 1;
+        } else if (strcmp("yReference", key) == 0) {
+            
+            GLfloat yref = obj.yReference;
+            lua_pushnumber(L, yref);
+            return 1;
+            
+        } else if (strcmp("xOrigin", key) == 0) {
+            
+            GLfloat xOrig = obj.xOrigin;
+            lua_pushnumber(L, xOrig);
+            return 1;
+        } else if (strcmp("yOrigin", key) == 0) {
+            
+            GLfloat yOrig = obj.yOrigin;
+            lua_pushnumber(L, yOrig);
+            return 1;
+            
+        } else if (strcmp("x", key) == 0) {
+            
+            GLfloat x = obj.x;
+            lua_pushnumber(L, x);
+            return 1;
+            
+        } else if (strcmp("y", key) == 0) {
+            
+            GLfloat y = obj.y;
+            lua_pushnumber(L, y);
+            return 1;
+            
+        } else if (strcmp("rotation", key) == 0) {
+            
+            GLfloat rot = obj.rotation;
+            lua_pushnumber(L, rot);
+            return 1;
+            
+        } else {
+            return genericIndex(L);
+        }
+        
+    }
+    
+    return 0;
+    
+}
+
+// generic new index method for userdata types
+static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
+    
+    if (lua_isstring(L, 2)) {
+        
+        if (obj != NULL) {
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("xReference", key) == 0) {
+                
+                GLfloat xref = luaL_checknumber(L, 3);
+                [*obj setXReference:xref];
+                return 0;
+                
+            } else if (strcmp("yReference", key) == 0) {
+                
+                GLfloat yref = luaL_checknumber(L, 3);
+                [*obj setYReference:yref];
+                return 0;
+                
+            } else if (strcmp("x", key) == 0) {
+                
+                GLfloat x = luaL_checknumber(L, 3);
+                [*obj setX:x];
+                return 0;
+                
+            } else if (strcmp("y", key) == 0) {
+                
+                GLfloat yref = luaL_checknumber(L, 3);
+                [*obj setYReference:yref];
+                return 0;
+                
+            } else if (strcmp("rotation", key) == 0) {
+                
+                GLfloat rot = luaL_checknumber(L, 3);
+                [*obj setRotation:rot];
+                return 0;
+                
+            } else if (strcmp("xScale", key) == 0){
+                GLfloat xScale = luaL_checknumber(L, 3);
+                [*obj setXScale:xScale];
+                
+                return 0;
+                
+            } else if (strcmp("yScale", key) == 0){
+                GLfloat yScale = luaL_checknumber(L, 3);
+                [*obj setYScale:yScale];
+                return 0;
+                
+            }
+            
+        }
+    } 
+    
+    lua_getuservalue( L, -3 );
+    /* object, key, value */
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
+    
+    return 0;
+    
+}
+
 
 ////////// Sprites //////////////////////
 static int newSprite(lua_State *L){
     GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
     GeminiSprite *sprite = [[GeminiSprite alloc] initWithLuaState:L SpriteSet:*ss];
+    [((GeminiGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:sprite];
     GeminiSprite **lSprite = (GeminiSprite **)lua_newuserdata(L, sizeof(GeminiSprite *));
     *lSprite = sprite;
+    
     
     luaL_getmetatable(L, GEMINI_SPRITE_LUA_KEY);
     lua_setmetatable(L, -2);
@@ -75,38 +226,53 @@ static int spriteIndex( lua_State* L )
     return 1;
 }
 
-// this function gets called with the table on the bottom of the stack, the index to assign to next,
-// and the value to be assigned on top
-static int spriteNewIndex( lua_State* L )
-{
-    NSLog(@"Calling spriteNewIndex()");
-    int top = lua_gettop(L);
-    NSLog(@"stack has %d values", top);
-    lua_getuservalue( L, -3 ); 
-    /* object, key, value */
-    lua_pushvalue(L, -3);
-    lua_pushvalue(L,-3);
-    lua_rawset( L, -3 );
-    //}
-    
-    return 0;
-}
-
-static int printXValue(lua_State *L){
+static int spriteNewIndex (lua_State *L){
+    int rval = 0;
     GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
-    int propertTableRef = (*sprite).propertyTableRef;
-    // get the property table for this user data
-    lua_rawgeti(L, LUA_REGISTRYINDEX, propertTableRef);
-    // now get the x value
-    lua_pushstring(L, "x");
-    lua_gettable(L, -2);
-    double x = lua_tonumber(L, -1);
-    NSLog(@"x == %f", x);
+    
+    if (sprite != NULL) {
+        if (lua_isstring(L, 2)) {
+            
+            
+            rval = genericNewIndex(L, sprite);
+                        
+        }
+        
+        
+    }
+    
+    
+    return rval;
+}
+
+static int spritePrepare(lua_State *L){
+    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    
+    int numargs = lua_gettop(L);
+    if (numargs > 1) {
+        const char *animation = luaL_checkstring(L, 2);
+        NSString *animStr = [NSString stringWithCString:animation encoding:NSUTF8StringEncoding];
+        [*sprite prepareAnimation:animStr];
+    } else {
+        [*sprite prepare];
+    }
     
     return 0;
 }
 
+static int spritePlay(lua_State *L){
+    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    [*sprite play:((GeminiGLKViewController *)([Gemini shared].viewController)).updateTime];
+    
+    return 0;
+}
 
+static int spritePause(lua_State *L){
+    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    [*sprite pause:((GeminiGLKViewController *)([Gemini shared].viewController)).updateTime];
+    
+    return 0;
+}
 
 ////////// Sprite Sets //////////////////
 
@@ -283,7 +449,9 @@ static const struct luaL_Reg sprite_m [] = {
     {"__gc", spriteGC},
     {"__index", spriteIndex},
     {"__newindex", spriteNewIndex},
-    {"printx", printXValue},
+    {"prepare", spritePrepare},
+    {"play", spritePlay},
+    {"pause", spritePlay},
     {NULL, NULL}
 };
 

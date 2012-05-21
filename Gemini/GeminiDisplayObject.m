@@ -14,12 +14,15 @@
 
 @synthesize parent;
 @synthesize layer;
+@synthesize xScale;
+@synthesize yScale;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
     
     if (self) {
-        
+        xScale = 1.0;
+        yScale = 1.0;
     }
     
     return self;
@@ -204,21 +207,7 @@
     //[self setDouble:y forKey:"y"];
 }
 
--(GLfloat)xScale {
-    return [super getDoubleForKey:"xScale" withDefault:1.0];
-}
 
--(void)setXScale:(GLfloat)xScale {
-    [super setDouble:xScale forKey:"xScale"];
-}
-
--(GLfloat)yScale {
-    return [super getDoubleForKey:"yScale" withDefault:1.0];
-}
-
--(void)setYScale:(GLfloat)yScale {
-    [super setDouble:yScale forKey:"yScale"];
-}
 
 -(GLKMatrix4) transform {
     GLKMatrix4 rval = GLKMatrix4Identity;

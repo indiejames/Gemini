@@ -25,6 +25,8 @@
     GLfloat rotation;
     GLfloat width;
     GLfloat height;
+    GLfloat xScale;
+    GLfloat yScale;
 }
 
 @property (nonatomic) GLfloat alpha;

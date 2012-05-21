@@ -13,8 +13,12 @@
 #import "GeminiSprite.h"
 #import "GeminiLayer.h"
 #import "LGeminiDisplay.h"
+#import "GeminiSpriteBatch.h"
+#import "GeminiGLKViewController.h"
 
 #define LINE_BUFFER_CHUNK_SIZE (512)
+
+#define SPRITE_BATCH_CHUNK_SIZE (64)
 
 
 BOOL bufferCreated = NO;
@@ -32,7 +36,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     // create an array of vectors from our input data
     GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
     for (GLuint i = 0; i<vertCount; i++) {
-        vectorArray[i] = GLKVector3MakeWithArray(inVerts + 3*i);    
+        vectorArray[i] = GLKVector3MakeWithArray(inVerts + 3*i); 
     }
     
     GLKMatrix4MultiplyVector3ArrayWithTranslation(transform, vectorArray, vertCount);
@@ -58,7 +62,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 // render layers from front to back to minimize overdraw
 -(NSArray *)renderUnblendedLayers {
     glDisable(GL_BLEND);
-    
+    glDepthMask(GL_TRUE);
     NSMutableArray *blendedLayers = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
     
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
@@ -81,16 +85,20 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             // a display group layer 
             GeminiLayer *layer = (GeminiLayer *)obj;
             if (layer.isBLendingLayer) {
+               
                 [blendedLayers insertObject:layer atIndex:0];
             } else {
+                
                 [self renderDisplayGroup:layer forLayer:[layerIndex intValue] withAlpha:1.0 transform:GLKMatrix4Identity];
             }
             
         }
         
+        if ([spriteBatches count] > 0) {
+            [self renderSpriteBatches];
+        }
+        
     }
-
-    
     
     return blendedLayers;
     
@@ -99,7 +107,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 // render layers from back to front to support blending
 -(void)renderBlendedLayers:(NSArray *)layers {
     glEnable(GL_BLEND);
-    
+    glDepthMask(GL_FALSE);
     for (int i=0; i<[layers count]; i++) {
         
         NSObject *obj = [layers objectAtIndex:i];
@@ -114,7 +122,13 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             glBlendFunc(layer.sourceBlend, layer.destBlend);
             
             [self renderDisplayGroup:layer forLayer:layer.index withAlpha:1.0 transform:GLKMatrix4Identity];
+            
         }
+        
+        if ([spriteBatches count] > 0) {
+            [self renderSpriteBatches];
+        }
+
         
     }
 }
@@ -124,10 +138,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 -(void)renderDisplayGroup:(GeminiDisplayGroup *)group forLayer:(int)layer withAlpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
-    // NSMutableDictionary *spriteBatch = [NSMutableDictionary dictionaryWithCapacity:1];
-    
-    NSLog(@"Rendering layer %d", layer);
-    NSLog(@"DisplayGroup has %d objects", [group.objects count]);
+    NSMutableArray *rectangles = [NSMutableArray arrayWithCapacity:1];
     
     GLKMatrix4 cumulTransform = GLKMatrix4Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
@@ -145,16 +156,137 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             [lines addObject:gemObj];
             
         } else if(gemObj.class == GeminiSprite.class){
-            
+            [self renderSprite:(GeminiSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+                                    
         } else if(gemObj.class == GeminiRectangle.class){
-            [self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
+            //[self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
+            [rectangles addObject:gemObj];
         }
         
     }
-
-    [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
-
+    
+    if ([lines count] > 0) {
+        [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
+    }
+    if ([rectangles count] > 0) {
+        [self renderRectangles:rectangles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    }
+    
+    
 }
+
+-(void)renderSpriteBatches {
+    glBindVertexArrayOES(spriteVAO);
+    glUseProgram(spriteShaderManager.program);
+    
+    NSEnumerator *textureEnumerator = [spriteBatches keyEnumerator];
+    GLKTextureInfo *texture;
+    while (texture = (GLKTextureInfo *)[textureEnumerator nextObject]) {
+        GeminiSpriteBatch *batch = [spriteBatches objectForKey:texture];
+        //GLuint indexByteCount = 6 * [batch count] * sizeof(GLushort);
+        GLuint indexByteCount = (4 * [batch count] + 2*([batch count] - 1)) * sizeof(GLushort);
+        GLushort *index = (GLushort *)malloc(indexByteCount);
+        
+        unsigned int indexCount = 0;
+        for (int i=0; i<[batch count]; i++) {
+            index[i*6] = indexCount++;
+            index[i*6 + 1] = indexCount++;
+            index[i*6 + 2] = indexCount++;
+            index[i*6 + 3] = indexCount++;
+            
+            if (i < [batch count] - 1) {
+                index[i*6 + 4] = indexCount - 1;
+                index[i*6 + 5] = indexCount;
+            }
+            
+            
+        }
+        
+        /*for (int i=0; i<indexByteCount/sizeof(GLushort); i++) {
+            NSLog(@"index[%d] = %d", i, index[i]);
+        }*/
+                                                  
+        glBufferSubData(GL_ARRAY_BUFFER, 0, [batch count] * 4*sizeof(TexturedVertex), batch.vertexBuffer);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexByteCount, index);
+        
+        glActiveTexture(GL_TEXTURE0); 
+        GLuint texId = texture.name;
+        glBindTexture(GL_TEXTURE_2D, texId);
+        glUniform1i(uniforms_sprite[UNIFORM_TEXTURE_SPRITE], 0); 
+        
+        //glDrawElements(GL_TRIANGLES,6*[batch count],GL_UNSIGNED_SHORT, (void*)0);
+        glDrawElements(GL_TRIANGLE_STRIP, indexByteCount / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
+        
+        free(index);
+    }
+    
+    [spriteBatches removeAllObjects];
+}
+
+-(void)renderSprite:(GeminiSprite *)sprite withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+    
+    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, sprite.transform);
+    
+    GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+    
+    GLfloat *posVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
+//    posVerts[0] = sprite.x - sprite.width / 2.0;
+//    posVerts[1] = sprite.y - sprite.height / 2.0;
+//    posVerts[2] = z;
+//    posVerts[3] = sprite.x + sprite.width / 2.0;
+//    posVerts[4] = posVerts[1];
+//    posVerts[5] = z;
+//    posVerts[6] = posVerts[3];
+//    posVerts[7] = sprite.y + sprite.height / 2.0;
+//    posVerts[8] = z;
+//    posVerts[9] = posVerts[0];
+//    posVerts[10] = posVerts[7];
+//    posVerts[11] = z;
+
+    posVerts[0] = sprite.x - sprite.width / 2.0;
+    posVerts[1] = sprite.y - sprite.height / 2.0;
+    posVerts[2] = z;
+    posVerts[3] = posVerts[0];
+    posVerts[4] = sprite.y + sprite.height / 2.0;
+    posVerts[5] = z;
+    posVerts[6] = sprite.x + sprite.width / 2.0;
+    posVerts[7] = posVerts[1];
+    posVerts[8] = z;
+    posVerts[9] = posVerts[6];
+    posVerts[10] = posVerts[4];
+    posVerts[11] = z;
+    
+    GLfloat *newPosVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
+    
+    transformVertices(newPosVerts, posVerts, 4, finalTransform);
+    
+    GeminiSpriteBatch *sprites = (GeminiSpriteBatch *)[spriteBatches objectForKey:sprite.textureInfo];
+    if (sprites == nil) {
+        sprites = [[GeminiSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE];
+        [spriteBatches setObject:sprites forKey:sprite.textureInfo];
+        [sprites release];
+    }
+    
+    TexturedVertex *spriteVerts = [sprites getPointerForInsertion];
+    
+    for (int i=0; i<4; i++) {
+        
+        for (int j=0; j<3; j++) {
+            
+            spriteVerts[i].position[j] = newPosVerts[i*3+j];
+            spriteVerts[i].color[j] = 1.0; // TODO - allow use of colors here
+        }
+        spriteVerts[i].color[3] = sprite.alpha;
+        spriteVerts[i].texCoord[0] = (i == 0 || i == 1) ? sprite.textureCoord.x : sprite.textureCoord.z;
+        spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? sprite.textureCoord.y : sprite.textureCoord.w;
+    }
+    
+    
+    free(newPosVerts);
+    free(posVerts);
+    
+}
+
 
 -(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex alpha:(GLfloat)alpha tranform:(GLKMatrix4 ) transform {
     
@@ -162,7 +294,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(lineShaderManager.program);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+   // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
     for (int i=0; i<[lines count]; i++) {
         GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
@@ -183,8 +315,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLfloat *newVerts = (GLfloat *)malloc(line.numPoints * 6*sizeof(GLfloat));
     transformVertices(newVerts, line.verts, line.numPoints*2, finalTransform);
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+  //  glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+  //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
     glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), newVerts);
     //glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), line.verts);
@@ -196,15 +328,84 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 }
 
 
+
+-(void)renderRectangles:(NSArray *)rectangles withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+    
+    glBindVertexArrayOES(rectangleVAO);
+    
+    glUseProgram(rectangleShaderManager.program);
+    
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    
+    GLuint vertOffset = 0;
+    GLuint indexOffset = 0;
+    
+    for (int i=0; i<[rectangles count]; i++) {
+        GeminiRectangle *rectangle = (GeminiRectangle *)[rectangles objectAtIndex:i];
+        GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, rectangle.transform);
+        
+        GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
+        
+        
+        unsigned int vertCount = 4;
+        unsigned int indexCount = 6;
+        if (rectangle.strokeWidth > 0) {
+            vertCount = 12;
+            indexCount = 30;
+        }
+        
+        transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
+        
+        GLfloat finalAlpha = alpha * rectangle.alpha;
+        
+        //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
+        
+        ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
+        for (int j=0; j<vertCount; j++) {
+            vertData[j].position[0] = newVerts[j*3];
+            vertData[j].position[1] = newVerts[j*3+1];
+            vertData[j].position[2] = newVerts[j*3+2];
+            vertData[j].color[0] = rectangle.vertColor[j*4];
+            vertData[j].color[1] = rectangle.vertColor[j*4+1];
+            vertData[j].color[2] = rectangle.vertColor[j*4+2];
+            vertData[j].color[3] = rectangle.vertColor[j*4+3] * finalAlpha;
+        }
+        
+        GLushort *newIndex = malloc(indexCount * sizeof(GLushort));
+        
+        GLushort vertIndexOffset = vertOffset / sizeof(ColoredVertex);
+        
+        for (int j=0; j<indexCount; j++) {
+            newIndex[j] = rectangle.vertIndex[j] + vertIndexOffset;
+        }
+        
+        glBufferSubData(GL_ARRAY_BUFFER, vertOffset, vertCount*sizeof(ColoredVertex), vertData);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, indexOffset, indexCount*sizeof(GLushort), newIndex);
+        
+        vertOffset += vertCount*sizeof(ColoredVertex);
+        indexOffset += indexCount*sizeof(GLushort);
+        
+        free(vertData);
+        free(newVerts);
+        free(newIndex);
+    }
+    
+    glDrawElements(GL_TRIANGLES, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
+
+}
+
 -(void)renderRectangle:(GeminiRectangle *)rectangle withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
     
     glBindVertexArrayOES(rectangleVAO);
     
     glUseProgram(rectangleShaderManager.program);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
     glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
     
@@ -239,14 +440,10 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertCount*sizeof(ColoredVertex), vertData);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexCount*sizeof(GLushort), rectangle.vertIndex);
-
-    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
     
-    /*if (rectangle.strokeWidth > 0) {
-        glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_SHORT, (void*)0);
-    } else {
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (void*)0);
-    }*/
+    NSLog(@"renderRectangle() - indexCount = %d", indexCount);
+    
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
     
     free(vertData);
     free(newVerts);
@@ -265,19 +462,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(void)addObject:(GeminiDisplayObject *)obj {
     NSLog(@"GeminiRenderer adding object");
     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
-    NSLog(@"GeminiRenderer found stage");
     // get the default layer on the stage
     NSNumber *layerIndex = [NSNumber numberWithInt:0];
     GeminiLayer *layerGroup = (GeminiLayer *)[stage objectForKey:layerIndex];
-    NSLog(@"GeminiRenderer found layer");
-    if (layerGroup == nil) {
-        NSLog(@"GeminiRenderer layer is nil");
-        /*layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
-        layerGroup.index = 0;
-        NSLog(@"GeminiRenderer created new layer");
-        [stage setObject:layerGroup forKey:layerIndex];*/
-    }
-    NSLog(@"Inserting object into layer 0");
     // remove from previous layer (if any) first
     [obj.layer remove:obj];
     obj.layer = layerGroup;
@@ -333,15 +520,19 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 64096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
     
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 64096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     glUseProgram(lineShaderManager.program);
-    GLfloat width = 320;
-    GLfloat height = 480;
+    
+    GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
+    
+    
+    GLfloat width = 640;
+    GLfloat height = 960;
     
     GLfloat left = 0;
     GLfloat right = width;
@@ -371,8 +562,12 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     [rectangleShaderManager loadShaders];
     
     glUseProgram(rectangleShaderManager.program);
-    GLfloat width = 320;
-    GLfloat height = 480;
+    
+    GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
+    
+    
+    GLfloat width = 640;
+    GLfloat height = 960;
     
     GLfloat left = 0;
     GLfloat right = width;
@@ -391,8 +586,10 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     
     GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
-    glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
+    glUniformMatrix4fv(uniforms_rectangle[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
    
+    glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
+    glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -403,11 +600,62 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     glBindVertexArrayOES(0);
 }
 
+-(void)setupSpriteRendering {
+    glGenVertexArraysOES(1, &spriteVAO);
+    glBindVertexArrayOES(spriteVAO);
+    
+    spriteBatches = [[NSMutableDictionary alloc] initWithCapacity:1];
+    
+    spriteShaderManager = [[GeminiSpriteShaderManager alloc] init];
+    [spriteShaderManager loadShaders];
+    
+    glUseProgram(spriteShaderManager.program);
+    
+    GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
+    
+    
+    GLfloat width = 640;
+    GLfloat height = 960;
+    
+    GLfloat left = 0;
+    GLfloat right = width;
+    GLfloat bottom = 0;
+    GLfloat top = height;
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_SPRITE, 3, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_SPRITE, 4, GL_FLOAT, GL_FALSE, 
+                          sizeof(TexturedVertex), (GLvoid*) (sizeof(float) * 3));
+    glVertexAttribPointer(ATTRIB_TEXCOORD_SPRITE, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (GLvoid *)(sizeof(float) * 7));
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glEnableVertexAttribArray(ATTRIB_VERTEX_SPRITE);
+    glEnableVertexAttribArray(ATTRIB_COLOR_SPRITE);
+    glEnableVertexAttribArray(ATTRIB_TEXCOORD_SPRITE);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    
+    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
+    glUniformMatrix4fv(uniforms_sprite[UNIFORM_PROJECTION_SPRITE], 1, 0, modelViewProjectionMatrix.m);
+    
+    
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    //glEnable(GL_TEXTURE_2D);
+    
+    glBindVertexArrayOES(0);
+}
+
+
 -(void)setupGL {
     
     [self setupLineRendering];
     [self setupRectangleRendering];
-    
+    [self setupSpriteRendering];
 }
 
 -(id) initWithLuaState:(lua_State *)luaState {

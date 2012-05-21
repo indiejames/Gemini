@@ -50,6 +50,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 @implementation GeminiGLKViewController
 @synthesize context;
 @synthesize renderer;
+@synthesize spriteManager;
+@synthesize updateTime;
 @synthesize L;
 
 -(id)initWithLuaState:(lua_State *)luaState {
@@ -62,6 +64,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
         L = luaState;
         frameCount = 0;
         frameRenderTime = 0;
+        updateTime = 0;
     }
     
     return self;
@@ -78,8 +81,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    view.drawableMultisample = GLKViewDrawableMultisample4X;
-    view.contentScaleFactor = 1.0;
+    //view.drawableMultisample = GLKViewDrawableMultisample4X;
+    view.contentScaleFactor = 2.0;
     
     self.preferredFramesPerSecond = 60;
     
@@ -106,6 +109,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     // load the renderer
     renderer = [[GeminiRenderer alloc] initWithLuaState:L];
     [renderer addLayer:createLayerZero(L)];
+    spriteManager = [[GeminiSpriteManager alloc] init];
 }
 
 
@@ -122,7 +126,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 {
     //NSLog(@"update()");
     //double scale = [UIScreen mainScreen].scale;
-    
+    double timeDelta = self.timeSinceLastUpdate;
     
     GLint width;
     GLint height;
@@ -133,8 +137,12 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     NSLog(@"height = %d", height);
     NSLog(@"main screen scale = %f", scale);*/
     
+    updateTime += timeDelta;
     
-    [[Gemini shared] update:self.timeSinceLastUpdate];
+    [spriteManager update:updateTime];
+    
+    [[Gemini shared] update:timeDelta];
+    
 }
 
 - (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause {
