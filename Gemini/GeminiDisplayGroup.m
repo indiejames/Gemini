@@ -27,6 +27,14 @@
     [super dealloc];
 }
 
+-(void)setLayer:(GeminiLayer *)_layer {
+    layer = _layer;
+    for (int i=0; i<[objects count]; i++) {
+        GeminiDisplayObject *child = (GeminiDisplayObject *)[objects objectAtIndex:i];
+        child.layer = layer;
+    }
+}
+
 -(void)insert:(GeminiDisplayObject *)obj {
     NSLog(@"Calling insert for GeminiDisplayGroup");
     if (obj.parent != nil) {
@@ -34,6 +42,15 @@
     }
     [objects addObject:obj];
     obj.parent = self;
+    GeminiLayer *parentLayer;
+    if (self.layer == nil) {
+        // this must be a layer
+        parentLayer = (GeminiLayer *)self;
+    } else {
+        parentLayer = self.layer;
+    }
+    
+    obj.layer = parentLayer;
 }
 
 -(void)remove:(GeminiDisplayObject *)obj {

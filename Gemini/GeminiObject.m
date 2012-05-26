@@ -167,7 +167,7 @@
     NSLog(@"GeminiObject adding event listener for %@", event);
     NSMutableArray *handler = (NSMutableArray *)[eventHandlers objectForKey:event];
     if (handler == nil) {
-        handler = [[NSMutableArray alloc] initWithCapacity:1];
+        handler = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
         [eventHandlers setObject:handler forKey:event];
     }
     

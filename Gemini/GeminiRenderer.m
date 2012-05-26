@@ -201,11 +201,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             
             
         }
+                                                         
         
-        /*for (int i=0; i<indexByteCount/sizeof(GLushort); i++) {
-            NSLog(@"index[%d] = %d", i, index[i]);
-        }*/
-                                                  
         glBufferSubData(GL_ARRAY_BUFFER, 0, [batch count] * 4*sizeof(TexturedVertex), batch.vertexBuffer);
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexByteCount, index);
         
@@ -214,12 +211,14 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         glBindTexture(GL_TEXTURE_2D, texId);
         glUniform1i(uniforms_sprite[UNIFORM_TEXTURE_SPRITE], 0); 
         
-        //glDrawElements(GL_TRIANGLES,6*[batch count],GL_UNSIGNED_SHORT, (void*)0);
+        
         glDrawElements(GL_TRIANGLE_STRIP, indexByteCount / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
+        //glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_SHORT, (void*)0);
         
         free(index);
     }
-    
+  
+
     [spriteBatches removeAllObjects];
 }
 
@@ -230,18 +229,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     
     GLfloat *posVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
-//    posVerts[0] = sprite.x - sprite.width / 2.0;
-//    posVerts[1] = sprite.y - sprite.height / 2.0;
-//    posVerts[2] = z;
-//    posVerts[3] = sprite.x + sprite.width / 2.0;
-//    posVerts[4] = posVerts[1];
-//    posVerts[5] = z;
-//    posVerts[6] = posVerts[3];
-//    posVerts[7] = sprite.y + sprite.height / 2.0;
-//    posVerts[8] = z;
-//    posVerts[9] = posVerts[0];
-//    posVerts[10] = posVerts[7];
-//    posVerts[11] = z;
 
     posVerts[0] = sprite.x - sprite.width / 2.0;
     posVerts[1] = sprite.y - sprite.height / 2.0;
@@ -262,9 +249,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     GeminiSpriteBatch *sprites = (GeminiSpriteBatch *)[spriteBatches objectForKey:sprite.textureInfo];
     if (sprites == nil) {
-        sprites = [[GeminiSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE];
+        sprites = [[[GeminiSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE] autorelease];
         [spriteBatches setObject:sprites forKey:sprite.textureInfo];
-        [sprites release];
+        
     }
     
     TexturedVertex *spriteVerts = [sprites getPointerForInsertion];
@@ -484,7 +471,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     NSLog(@"GeminiRenderer found layer");
     if (layerGroup == nil) {
         NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L];
+        layerGroup = [[[GeminiLayer alloc] initWithLuaState:((GeminiDisplayObject *)obj).L] autorelease];
         layerGroup.index = layer;
         NSLog(@"GeminiRenderer created new layer");
         [stage setObject:layerGroup forKey:[NSNumber numberWithInt:layer]];
@@ -667,7 +654,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         NSMutableDictionary *defaultStage = [[NSMutableDictionary alloc] initWithCapacity:1];
         [stages setObject:defaultStage forKey:DEFAULT_STAGE_NAME];
         [self setActiveStage:DEFAULT_STAGE_NAME];
-        
+        [defaultStage release];
         [self setupGL];
         
     }

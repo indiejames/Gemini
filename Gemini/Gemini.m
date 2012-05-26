@@ -141,8 +141,9 @@ int setLuaPath(lua_State *L, NSString* path );
 
 
 -(void)fireTimer {
-    GeminiEvent *event = [[GeminiEvent alloc] init];
-    event.name = @"timer";
+    //GeminiEvent *event = [[GeminiEvent alloc] init];
+    //event.name = @"timer";
+    // TODO - finish this
     
 }
 

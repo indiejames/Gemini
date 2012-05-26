@@ -18,6 +18,7 @@
 
 @interface GeminiDisplayObject : GeminiObject {
     GeminiDisplayGroup *parent;
+    GeminiLayer *layer;
     GLfloat xReference;
     GLfloat yReference;
     GLfloat xOrigin;

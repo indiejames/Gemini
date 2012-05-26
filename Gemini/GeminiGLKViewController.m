@@ -72,7 +72,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 
 
 -(void) viewDidLoad {
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    self.context = [[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2] autorelease];
     
     if (!self.context) {
         NSLog(@"Failed to create ES context");
@@ -80,7 +80,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    //view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     //view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.contentScaleFactor = 2.0;
     

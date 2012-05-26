@@ -57,6 +57,12 @@
     return rval;
 }
 
+-(void)setLayer:(GeminiLayer *)_layer {
+    [super setLayer:_layer];
+    
+    [self computeVertices];
+}
+
 -(GLfloat) strokeWidth {
     return strokeWidth;
 }

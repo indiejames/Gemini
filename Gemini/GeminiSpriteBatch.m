@@ -16,19 +16,13 @@
     self = [super init];
     
     if (self) {
-        vertexBuffer = (TexturedVertex *)malloc(cap * sizeof(TexturedVertex));
+        vertexBuffer = (TexturedVertex *)malloc(cap * 4 * sizeof(TexturedVertex));
         capacity = cap;
         bufferOffset = 0;
     }
     
     return self;
 }
-
-/*-(void)dealloc {
-    free(vertexBuffer);
-    
-    [super dealloc];
-}*/
 
 - (void)dealloc
 {
@@ -39,7 +33,7 @@
 }
 
 
-// !!! IMPORTANT !!! - calling this method will increment to insertion pointer, possibly
+// !!! IMPORTANT !!! - calling this method will increment the insertion pointer, possibly
 // allocating more memory, so ONLY call this when actually about to insert data
 -(TexturedVertex *)getPointerForInsertion {
     
