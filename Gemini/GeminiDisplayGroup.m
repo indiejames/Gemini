@@ -36,11 +36,15 @@
 }
 
 -(void)insert:(GeminiDisplayObject *)obj {
+    [self insert:obj atIndex:[objects count]];
+}
+
+-(void)insert:(GeminiDisplayObject *)obj atIndex:(int)indx {
     NSLog(@"Calling insert for GeminiDisplayGroup");
     if (obj.parent != nil) {
         [(GeminiDisplayGroup *)(obj.parent) remove:obj];
     }
-    [objects addObject:obj];
+    [objects insertObject:obj atIndex:indx];
     obj.parent = self;
     GeminiLayer *parentLayer;
     if (self.layer == nil) {

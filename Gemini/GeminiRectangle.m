@@ -119,7 +119,8 @@
 }
 
 -(void)computeVertices {
-    GLfloat z = ((GLfloat)(self.layer.index)) / 256.0 - 0.5;
+    //GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
+    GLfloat z = 0;
     
     // inner portion
     vertIndex[0] = 0;
@@ -157,31 +158,31 @@
     
     if (strokeWidth > 0) {
         // inner portion
-        verts[0] = self.xOrigin - self.width / 2.0 + strokeWidth;
-        verts[1] = self.yOrigin - self.height / 2.0 + strokeWidth;
+        verts[0] = -self.width / 2.0 + strokeWidth;
+        verts[1] = -self.height / 2.0 + strokeWidth;
         verts[2] = z;
-        verts[3] = self.xOrigin + self.width / 2.0 - strokeWidth;
-        verts[4] = self.yOrigin - self.height / 2.0 + strokeWidth;
+        verts[3] = self.width / 2.0 - strokeWidth;
+        verts[4] = -self.height / 2.0 + strokeWidth;
         verts[5] = z;
-        verts[6] = self.xOrigin + self.width / 2.0 - strokeWidth;
-        verts[7] = self.yOrigin + self.height / 2.0 - strokeWidth;
+        verts[6] = self.width / 2.0 - strokeWidth;
+        verts[7] = self.height / 2.0 - strokeWidth;
         verts[8] = z;
-        verts[9] = self.xOrigin - self.width / 2.0 + strokeWidth;
-        verts[10] = self.yOrigin + self.height / 2.0 - strokeWidth;
+        verts[9] = -self.width / 2.0 + strokeWidth;
+        verts[10] = self.height / 2.0 - strokeWidth;
         verts[11] = z;
         
         // border
-        verts[12] = self.xOrigin - self.width / 2.0;
-        verts[13] = self.yOrigin - self.height / 2.0;
+        verts[12] = -self.width / 2.0;
+        verts[13] = -self.height / 2.0;
         verts[14] = z;
-        verts[15] = self.xOrigin + self.width / 2.0;
-        verts[16] = self.yOrigin - self.height / 2.0;
+        verts[15] = self.width / 2.0;
+        verts[16] = -self.height / 2.0;
         verts[17] = z;
-        verts[18] = self.xOrigin + self.width / 2.0;
-        verts[19] = self.yOrigin + self.height / 2.0;
+        verts[18] = self.width / 2.0;
+        verts[19] = self.height / 2.0;
         verts[20] = z;
-        verts[21] = self.xOrigin - self.width / 2.0;
-        verts[22] = self.yOrigin + self.height / 2.0;
+        verts[21] = -self.width / 2.0;
+        verts[22] = self.height / 2.0;
         verts[23] = z;
         verts[24] = verts[0];
         verts[25] = verts[1];
@@ -198,17 +199,17 @@
         
         
     } else {
-        verts[0] = self.xOrigin - self.width / 2.0;
-        verts[1] = self.yOrigin - self.height / 2.0;
+        verts[0] = -self.width / 2.0;
+        verts[1] = -self.height / 2.0;
         verts[2] = z;
-        verts[3] = self.xOrigin + self.width / 2.0;
-        verts[4] = self.yOrigin - self.height / 2.0;
+        verts[3] = self.width / 2.0;
+        verts[4] = -self.height / 2.0;
         verts[5] = z;
-        verts[6] = self.xOrigin + self.width / 2.0;
-        verts[7] = self.yOrigin + self.height / 2.0;
+        verts[6] = self.width / 2.0;
+        verts[7] = self.height / 2.0;
         verts[8] = z;
-        verts[9] = self.xOrigin - self.width / 2.0;
-        verts[10] = self.yOrigin + self.height / 2.0;
+        verts[9] = -self.width / 2.0;
+        verts[10] = self.height / 2.0;
         verts[11] = z;
     }
     

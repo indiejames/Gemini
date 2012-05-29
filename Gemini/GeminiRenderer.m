@@ -75,6 +75,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     for (int i=0; i<[layers count]; i++) {
         NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
+        GLfloat z = [layerIndex floatValue] / 256.0 - 0.5;
+        
+        GLKMatrix4 transform = GLKMatrix4MakeTranslation(0, 0, z);
         
         NSObject *obj = [stage objectForKey:layerIndex];
         if (obj.class == NSValue.class) {
@@ -89,7 +92,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
                 [blendedLayers insertObject:layer atIndex:0];
             } else {
                 
-                [self renderDisplayGroup:layer forLayer:[layerIndex intValue] withAlpha:1.0 transform:GLKMatrix4Identity];
+                [self renderDisplayGroup:layer forLayer:[layerIndex intValue] withAlpha:1.0 transform:transform];
             }
             
         }
@@ -286,7 +289,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     for (int i=0; i<[lines count]; i++) {
         GeminiLine *line = (GeminiLine *)[lines objectAtIndex:i];
         
-        glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a);
+        glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a * line.alpha);
        
         [self renderLine:line withLayer:layerIndex alpha:alpha transform:transform];
         
@@ -295,7 +298,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 -(void)renderLine:(GeminiLine *)line withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
     
-    [line computeVertices:layerIndex];
+    //[line computeVertices:layerIndex];
     
     GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, line.transform);
     
@@ -518,8 +521,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
     
     
-    GLfloat width = 640;
-    GLfloat height = 960;
+    GLfloat width = 960;
+    GLfloat height = 640;
     
     GLfloat left = 0;
     GLfloat right = width;
@@ -553,8 +556,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
     
     
-    GLfloat width = 640;
-    GLfloat height = 960;
+    GLfloat width = 960;
+    GLfloat height = 640;
     
     GLfloat left = 0;
     GLfloat right = width;
@@ -601,8 +604,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLKView *view = (GLKView *)((GeminiGLKViewController *)([Gemini shared].viewController)).view;
     
     
-    GLfloat width = 640;
-    GLfloat height = 960;
+    GLfloat width = 960;
+    GLfloat height = 640;
     
     GLfloat left = 0;
     GLfloat right = width;

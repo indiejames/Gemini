@@ -16,6 +16,7 @@
 #import "GeminiDisplayObject.h"
 #import "LGeminiObject.h"
 #import "LGeminiDisplay.h"
+#import "GeminiTransitionManager.h"
 
 Gemini *singleton = nil;
 
@@ -194,7 +195,12 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 // the global update method - called from the GeminiGLKViewController update method
+// deltaT - time in seconds since last update
 -(void) update:(double)deltaT {
+    
+    // update transitions
+    [[GeminiTransitionManager shared] processTransitions:deltaT];
+    
     GeminiEvent *enterFrameEvent = [[GeminiEvent alloc] init];
     enterFrameEvent.name = @"enterFrame";
     [runtime handleEvent:enterFrameEvent];

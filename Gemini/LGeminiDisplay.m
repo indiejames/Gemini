@@ -13,205 +13,9 @@
 #import "GeminiLine.h"
 #import "GeminiRectangle.h"
 #import "GeminiGLKViewController.h"
+#import "LGeminiLuaSupport.h"
 
 
-// used to set common defaults for all display objects
-// this function expects a table to be the top item on the stack
-static void setDefaultValues(lua_State *L) {
-    assert(lua_type(L, -1) == LUA_TTABLE);
-    lua_pushstring(L, "x");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-
-    lua_pushstring(L, "y");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-    
-    lua_pushstring(L, "xOrigin");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-    
-    lua_pushstring(L, "yOrigin");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-    
-    lua_pushstring(L, "xReference");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-    
-    lua_pushstring(L, "yReference");
-    lua_pushnumber(L, 0);
-    lua_settable(L, -3);
-    
-}
-
-// generic init method
-static void setupObject(lua_State *L, const char *luaKey, GeminiDisplayObject *obj){
-    
-    luaL_getmetatable(L, luaKey);
-    lua_setmetatable(L, -2);
-    
-    // append a lua table to this user data to allow the user to store values in it
-    lua_newtable(L);
-    lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
-    // store a reference to this table so our sprite methods can access it
-    obj.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-    
-    // add in some default values
-    setDefaultValues(L);
-    
-    // set the table as the user value for the Lua object
-    lua_setuservalue(L, -2);
-    
-    lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
-    obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
-}
-
-// generic index method for userdata types
-static int genericIndex(lua_State *L){
-    /* first check the environment */ 
-    lua_getuservalue( L, -2 );
-    if(lua_isnil(L,-1)){
-        // NSLog(@"user value for user data is nil");
-    }
-    lua_pushvalue( L, -2 );
-    
-    lua_rawget( L, -2 );
-    if( lua_isnoneornil( L, -1 ) == 0 )
-    {
-        return 1;
-    }
-    
-    lua_pop( L, 2 );
-    
-    /* second check the metatable */    
-    lua_getmetatable( L, -2 );
-    lua_pushvalue( L, -2 );
-    lua_rawget( L, -2 );
-    
-    /* nil or otherwise, we return here */
-    return 1;
-
-}
-
-// generic indexing for GeminiObjects
-static int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
-    if (lua_isstring(L, -1)) {
-        
-        
-        const char *key = lua_tostring(L, -1);
-        if (strcmp("xReference", key) == 0) {
-            
-            GLfloat xRef = obj.xReference;
-            lua_pushnumber(L, xRef);
-            return 1;
-        } else if (strcmp("yReference", key) == 0) {
-            
-            GLfloat yref = obj.yReference;
-            lua_pushnumber(L, yref);
-            return 1;
-            
-        } else if (strcmp("xOrigin", key) == 0) {
-            
-            GLfloat xOrig = obj.xOrigin;
-            lua_pushnumber(L, xOrig);
-            return 1;
-        } else if (strcmp("yOrigin", key) == 0) {
-            
-            GLfloat yOrig = obj.yOrigin;
-            lua_pushnumber(L, yOrig);
-            return 1;
-            
-        } else if (strcmp("x", key) == 0) {
-            
-            GLfloat x = obj.x;
-            lua_pushnumber(L, x);
-            return 1;
-            
-        } else if (strcmp("y", key) == 0) {
-            
-            GLfloat y = obj.y;
-            lua_pushnumber(L, y);
-            return 1;
-            
-        } else if (strcmp("rotation", key) == 0) {
-            
-            GLfloat rot = obj.rotation;
-            lua_pushnumber(L, rot);
-            return 1;
-            
-        } else {
-            return genericIndex(L);
-        }
-        
-    }
-    
-    return 0;
-    
-}
-
-// generic new index method for userdata types
-static int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
-    
-    if (lua_isstring(L, 2)) {
-        
-        if (obj != NULL) {
-            const char *key = lua_tostring(L, 2);
-            if (strcmp("xReference", key) == 0) {
-                
-                GLfloat xref = luaL_checknumber(L, 3);
-                [*obj setXReference:xref];
-                return 0;
-                
-            } else if (strcmp("yReference", key) == 0) {
-                
-                GLfloat yref = luaL_checknumber(L, 3);
-                [*obj setYReference:yref];
-                return 0;
-                
-            } else if (strcmp("x", key) == 0) {
-                
-                GLfloat x = luaL_checknumber(L, 3);
-                [*obj setX:x];
-                return 0;
-                
-            } else if (strcmp("y", key) == 0) {
-                
-                GLfloat yref = luaL_checknumber(L, 3);
-                [*obj setYReference:yref];
-                return 0;
-                
-            } else if (strcmp("rotation", key) == 0) {
-                
-                GLfloat rot = luaL_checknumber(L, 3);
-                [*obj setRotation:rot];
-                return 0;
-                
-            } else if (strcmp("xScale", key) == 0){
-                GLfloat xScale = luaL_checknumber(L, 3);
-                [*obj setXScale:xScale];
-                
-                return 0;
-                
-            } else if (strcmp("yScale", key) == 0){
-                GLfloat yScale = luaL_checknumber(L, 3);
-                [*obj setYScale:yScale];
-                return 0;
-                
-            }
-            
-        }
-    } 
-    
-    lua_getuservalue( L, -3 );
-    /* object, key, value */
-    lua_pushvalue(L, -3);
-    lua_pushvalue(L,-3);
-    lua_rawset( L, -3 );
-    
-    return 0;
-
-}
 
 
 ///////////// rectangles //////////////////////
@@ -529,9 +333,44 @@ static int displayGroupNewIndex (lua_State *L){
 
 static int displayGroupInsert(lua_State *L){
      NSLog(@"Calling displayGroupInsert()");
-   GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
-    GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 2);
-    [*group insert:*displayObj];
+    int stackSize = lua_gettop(L);
+    
+    if (stackSize > 2) {
+        
+        GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+        int insertionIndex = luaL_checkint(L, 2) - 1;
+        GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 3);
+        [*group insert:*displayObj atIndex:insertionIndex];
+        
+    } else {
+        GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+        GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 2);
+        [*group insert:*displayObj];
+        
+    }
+    
+    
+    return 0;
+}
+
+static int displayGroupRemove(lua_State *L){
+    NSLog(@"Calling displayGroupRemove()");
+    int stackSize = lua_gettop(L);
+    
+    if (stackSize > 2) {
+        
+        GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+        int insertionIndex = luaL_checkint(L, 2);
+        GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 3);
+        [*group insert:*displayObj atIndex:insertionIndex];
+        
+    } else {
+        GeminiDisplayGroup  **group = (GeminiDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+        GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 2);
+        [*group insert:*displayObj];
+        
+    }
+    
     
     return 0;
 }
@@ -587,12 +426,6 @@ static const struct luaL_Reg rectangle_m [] = {
     {NULL, NULL}
 };
 
-
-static void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs){
-    luaL_newmetatable(L, key);    
-    lua_pushvalue(L, -1); // duplicates the metatable
-    luaL_setfuncs(L, funcs, 0);
-}
 
 int luaopen_display_lib (lua_State *L){
     // create meta tables for our various types /////////

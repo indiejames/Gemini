@@ -21,13 +21,17 @@
     self = [super initWithLuaState:luaState];
     if (self) {
         points = (GLfloat *)malloc(4 * sizeof(GLfloat));
-        points[0] = x1;
-        points[1] = y1;
-        points[2] = x2;
-        points[3] = y2;
+        points[0] = 0;
+        points[1] = 0;
+        points[2] = x2 - x1;
+        points[3] = y2 - y1;
         numPoints = 2;
+        self.xOrigin = x1;
+        self.yOrigin = y1;
         verts = NULL;
         vertIndex = NULL;
+        width = 10.0;
+        [self computeVertices];
     }
     
     return self;
@@ -40,12 +44,17 @@
     if (self) {
         [prt insert:self]; 
         points = (GLfloat *)malloc(4 * sizeof(GLfloat));
-        points[0] = x1;
-        points[1] = y1;
-        points[2] = x2;
-        points[3] = y2;
+        points[0] = 0;
+        points[1] = 0;
+        points[2] = x2-x1;
+        points[3] = y2-y1;
         numPoints = 2;
-        
+        self.xOrigin = x1;
+        self.yOrigin = y1;
+        verts = NULL;
+        vertIndex = NULL;
+        width = 10.0;
+        [self computeVertices];
     }
     
     return self;
@@ -63,14 +72,30 @@
 -(void)append:(int)count Points:(const GLfloat *)newPoints {
     points = (GLfloat *)realloc(points, (numPoints + count) * 2 * sizeof(GLfloat));
     memcpy(points + numPoints * 2, newPoints, count*2*sizeof(GLfloat));
+    
+    // normalize points
+    for (int i=numPoints; i<numPoints + count; i++) {
+        points[i*2] = points[i*2] - self.xOrigin;
+        points[i*2+1] = points[i*2+1] - self.yOrigin;
+    }
+    
     numPoints = numPoints + count;
+    
+    [self computeVertices];
 }
 
--(void)computeVertices:(int)layerIndex {
-    GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
+// need to override this to force verts to be recomputed
+-(void)setWidth:(GLfloat)w {
+    [super setWidth:w];
+    [self computeVertices];
+}
+
+-(void)computeVertices {
+    
+    GLfloat z = 0;
     verts = realloc(verts, 2*3*numPoints*sizeof(GLfloat));
     vertIndex = realloc(vertIndex, 6*(numPoints - 1)*sizeof(GLushort));
-    GLfloat halfWidth = [self getDoubleForKey:"width" withDefault:1.0] / 2.0;
+    GLfloat halfWidth = self.width / 2.0;
     
     for (int i=0; i<numPoints; i++) {
         

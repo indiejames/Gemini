@@ -14,8 +14,9 @@
 
 @property (readonly) NSArray *objects;
 
--(void)insert:(GeminiDisplayObject *) obj;
 -(void)remove:(GeminiDisplayObject *) obj;
 -(void)recomputeWidthHeight;
+-(void)insert:(GeminiDisplayObject *) obj;
+-(void)insert:(GeminiDisplayObject *)obj atIndex:(int)indx;
 
 @end

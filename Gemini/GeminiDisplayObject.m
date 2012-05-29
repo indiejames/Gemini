@@ -211,12 +211,15 @@
 
 -(GLKMatrix4) transform {
     GLKMatrix4 rval = GLKMatrix4Identity;
+        
+    // NOTE - The order of operations may seem reversed, but this is correct for the way the
+    // transform matrix is used
     
-    GLfloat refX = self.xOrigin + self.xReference;
-    GLfloat refY = self.yOrigin + self.yReference;
+    // translate to (xOrigin,yOrigin)
+    rval = GLKMatrix4Translate(rval, self.xOrigin, self.yOrigin, 0);
     
-    // need to translate reference point to origin for proper rotation scaling about it
-    rval = GLKMatrix4Translate(rval, refX, refY, 0);
+    // now translate back from reference poin
+    rval = GLKMatrix4Translate(rval, self.xReference, self.yReference, 0);
     
     if (self.xScale != 1.0 || self.yScale != 1.0) {
         rval = GLKMatrix4Scale(rval, self.xScale, self.yScale, 1.0);
@@ -226,8 +229,10 @@
         rval = GLKMatrix4RotateZ(rval, GLKMathDegreesToRadians(self.rotation));
     }
     
-    // now translate back
-    rval = GLKMatrix4Translate(rval, -refX, -refY, 0);
+    // need to translate reference point to origin for proper rotation scaling about it
+    rval = GLKMatrix4Translate(rval, -self.xReference, -self.yReference, 0);
+    
+   
     
     return rval;
 }
