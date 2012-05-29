@@ -30,7 +30,7 @@
         self.yOrigin = y1;
         verts = NULL;
         vertIndex = NULL;
-        width = 10.0;
+        width = 1.0;
         [self computeVertices];
     }
     
@@ -53,7 +53,7 @@
         self.yOrigin = y1;
         verts = NULL;
         vertIndex = NULL;
-        width = 10.0;
+        width = 1.0;
         [self computeVertices];
     }
     
