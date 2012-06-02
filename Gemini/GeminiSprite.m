@@ -28,11 +28,11 @@
     return self;
 }
 
--(NSDictionary *)currentFrameData {
+/*-(NSDictionary *)currentFrameData {
     unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame - 1;
    
     return (NSDictionary *)[spriteSet.spriteSheet.frames objectAtIndex:sequenceFrame];
-}
+}*/
 
 -(GLKTextureInfo *)textureInfo {
     GLKTextureInfo *texInfo = spriteSet.spriteSheet.textureInfo;

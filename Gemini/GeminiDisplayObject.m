@@ -16,6 +16,7 @@
 @synthesize layer;
 @synthesize xScale;
 @synthesize yScale;
+@synthesize alpha;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
@@ -23,17 +24,12 @@
     if (self) {
         xScale = 1.0;
         yScale = 1.0;
+        alpha = 1.0;
+        xReference = 0;
+        yReference = 0;
     }
     
     return self;
-}
-
--(GLfloat)alpha {
-    return [super getDoubleForKey:"alpha" withDefault:1.0];
-}
-
--(void)setAlpha:(GLfloat)alph {
-    [super setDouble:alph forKey:"alpha"];
 }
 
 -(GLfloat)height {
@@ -156,28 +152,18 @@
 }
 
 -(GLfloat)xOrigin {
-    //return [super getDoubleForKey:"xOrigin" withDefault:0];
     return xOrigin;
 }
 
 -(void)setXOrigin:(GLfloat)xOrig {
     xOrigin = xOrig;
-    //[super setDouble:xOrigin forKey:"xOrigin"];
-    //GLfloat x = xOrigin + self.xReference;
-    // must bypass property setter to avoid infinite recursion
-    //[self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yOrigin {
-    //return [super getDoubleForKey:"yOrigin" withDefault:0];
     return yOrigin;
 }
 
 -(void)setYOrigin:(GLfloat)yOrig {
-    //[super setDouble:yOrigin forKey:"yOrigin"];
-    //GLfloat y = yOrigin + self.yReference;
-    // must bypass property setter to avoid infinite recursion
-    //[self setDouble:y forKey:"y"];
     yOrigin = yOrig;
 }
 
@@ -187,54 +173,85 @@
 }
 
 -(void)setXReference:(GLfloat)xRef{
-    //[super setDouble:xReference forKey:"xReference"];
     xReference = xRef;
-    //GLfloat x = self.xOrigin + xReference;
-    // must bypass property setter to avoid infinite recursion
-    //[self setDouble:x forKey:"x"];
 }
 
 -(GLfloat)yReference {
-    //return [super getDoubleForKey:"yReference" withDefault:0];
     return yReference;
 }
 
 -(void)setYReference:(GLfloat)yRef {
     yReference = yRef;
-    //[super setDouble:yReference forKey:"yReference"];
-    //GLfloat y = self.yOrigin + yReference;
-    // must bypass property setter to avoid infinite recursion
-    //[self setDouble:y forKey:"y"];
 }
 
 
 
--(GLKMatrix4) transform {
+/*-(GLKMatrix4) transform {
+    
     GLKMatrix4 rval = GLKMatrix4Identity;
         
     // NOTE - The order of operations may seem reversed, but this is correct for the way the
     // transform matrix is used
     
     // translate to (xOrigin,yOrigin)
-    rval = GLKMatrix4Translate(rval, self.xOrigin, self.yOrigin, 0);
-    
-    // now translate back from reference poin
-    rval = GLKMatrix4Translate(rval, self.xReference, self.yReference, 0);
-    
-    if (self.xScale != 1.0 || self.yScale != 1.0) {
-        rval = GLKMatrix4Scale(rval, self.xScale, self.yScale, 1.0);
+    if (xReference != 0 || yReference != 0) {
+        // combine two translations into one
+        rval = GLKMatrix4Translate(rval, xOrigin + xReference, yOrigin + yReference, 0);
+    } else {
+        // combine two translations into one
+        rval = GLKMatrix4Translate(rval, xOrigin, yOrigin, 0);
     }
     
-    if (self.rotation != 0) {
-        rval = GLKMatrix4RotateZ(rval, GLKMathDegreesToRadians(self.rotation));
+    if (xScale != 1.0 || yScale != 1.0) {
+        rval = GLKMatrix4Scale(rval, xScale, yScale, 1.0);
+    }
+    
+    if (rotation != 0) {
+        rval = GLKMatrix4RotateZ(rval, GLKMathDegreesToRadians(rotation));
     }
     
     // need to translate reference point to origin for proper rotation scaling about it
-    rval = GLKMatrix4Translate(rval, -self.xReference, -self.yReference, 0);
+    if (xReference != 0 || yReference != 0) {
+        rval = GLKMatrix4Translate(rval, -xReference, -yReference, 0);
+    }
+       
+    return rval;
+}*/
+
+
+-(GLKMatrix3) transform {
+    GLKMatrix3 rval = GLKMatrix3Identity;
     
-   
+    // NOTE - The order of operations may seem reversed, but this is correct for the way the
+    // transform matrix is used
+    
+    // translate to (xOrigin,yOrigin)
+    if (xReference != 0 || yReference != 0) {
+        // combine two translations into one
+        rval = GLKMatrix3Make(1.0, 0.0, 0, 0, 1, 0, xOrigin + xReference, yOrigin+yReference, 1.0);
+        
+    } else {
+        
+        rval = GLKMatrix3Make(1.0, 0, 0, 0, 1, 0, xOrigin, yOrigin, 1.0);
+    }
+    
+    if (xScale != 1.0 || yScale != 1.0) {
+        rval = GLKMatrix3Scale(rval, xScale, yScale, 1);
+    }
+    
+    if (rotation != 0) {
+        rval = GLKMatrix3RotateZ(rval, GLKMathDegreesToRadians(rotation));
+    }
+    
+    // need to translate reference point to origin for proper rotation scaling about it
+    if (xReference != 0 || yReference != 0) {
+        rval = GLKMatrix3Multiply(rval, GLKMatrix3Make(1.0, 0, 0, 0, 1, 0, -xReference, -yReference, 1));
+       
+    }
+
     
     return rval;
 }
+
 
 @end

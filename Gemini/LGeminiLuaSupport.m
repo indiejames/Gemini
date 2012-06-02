@@ -86,6 +86,11 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
             lua_pushnumber(L, width);
             return 1;
             
+        } else if (strcmp("alpha", key) == 0){
+            GLfloat alpha = obj.alpha;
+            lua_pushnumber(L, alpha);
+            return 1;
+            
         } else if (strcmp("rotation", key) == 0) {
             
             GLfloat rot = obj.rotation;
@@ -165,6 +170,11 @@ int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
             } else if (strcmp("width", key) == 0){
                 GLfloat width = luaL_checknumber(L, 3);
                 [*obj setWidth:width];
+                return 0;
+                
+            } else if (strcmp("alpha", key) == 0){
+                GLfloat alpha = luaL_checknumber(L, 3);
+                [*obj setAlpha:alpha];
                 return 0;
                 
             }

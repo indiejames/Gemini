@@ -28,6 +28,9 @@
     GLfloat height;
     GLfloat xScale;
     GLfloat yScale;
+    GLfloat alpha;
+    GLKMatrix4 transform;
+    BOOL needsTransformUpdate;
 }
 
 @property (nonatomic) GLfloat alpha;
@@ -53,6 +56,6 @@
 @property (nonatomic) GLfloat xScale;
 @property (nonatomic) GLfloat yScale;
 
--(GLKMatrix4) transform;
+-(GLKMatrix3) transform;
 
 @end

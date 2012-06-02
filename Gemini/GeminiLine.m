@@ -92,7 +92,7 @@
 
 -(void)computeVertices {
     
-    GLfloat z = 0;
+    GLfloat z = 1;
     verts = realloc(verts, 2*3*numPoints*sizeof(GLfloat));
     vertIndex = realloc(vertIndex, 6*(numPoints - 1)*sizeof(GLushort));
     GLfloat halfWidth = self.width / 2.0;

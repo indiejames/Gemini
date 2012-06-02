@@ -17,6 +17,9 @@
 		7624E2B81572DAC300E7759E /* GeminiTransistion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B51572DAC300E7759E /* GeminiTransistion.m */; };
 		7624E2BB1573D77500E7759E /* LGeminiLuaSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */; };
 		7624E2BC1573D77500E7759E /* LGeminiLuaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */; };
+		7624E2C415771D9100E7759E /* LGeminiPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2C215771D9000E7759E /* LGeminiPhysics.h */; };
+		7624E2C515771D9100E7759E /* LGeminiPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2C315771D9100E7759E /* LGeminiPhysics.mm */; };
+		7624E2C615771D9100E7759E /* LGeminiPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2C315771D9100E7759E /* LGeminiPhysics.mm */; };
 		766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E215C15574BAC004B6EA3 /* GeminiLayer.h */; };
 		766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
 		766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
@@ -328,6 +331,8 @@
 		7624E2B51572DAC300E7759E /* GeminiTransistion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiTransistion.m; sourceTree = "<group>"; };
 		7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiLuaSupport.h; sourceTree = "<group>"; };
 		7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiLuaSupport.m; sourceTree = "<group>"; };
+		7624E2C215771D9000E7759E /* LGeminiPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiPhysics.h; sourceTree = "<group>"; };
+		7624E2C315771D9100E7759E /* LGeminiPhysics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LGeminiPhysics.mm; sourceTree = "<group>"; };
 		766E215C15574BAC004B6EA3 /* GeminiLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLayer.h; sourceTree = "<group>"; };
 		766E215D15574BAC004B6EA3 /* GeminiLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLayer.m; sourceTree = "<group>"; };
 		766E21611559D3A2004B6EA3 /* GeminiRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRectangle.h; sourceTree = "<group>"; };
@@ -733,6 +738,8 @@
 				7624E2B51572DAC300E7759E /* GeminiTransistion.m */,
 				7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */,
 				7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */,
+				7624E2C215771D9000E7759E /* LGeminiPhysics.h */,
+				7624E2C315771D9100E7759E /* LGeminiPhysics.mm */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1254,6 +1261,7 @@
 				7624E2B11572D67700E7759E /* GeminiTransitionManager.h in Headers */,
 				7624E2B61572DAC300E7759E /* GeminiTransistion.h in Headers */,
 				7624E2BB1573D77500E7759E /* LGeminiLuaSupport.h in Headers */,
+				7624E2C415771D9100E7759E /* LGeminiPhysics.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1487,6 +1495,7 @@
 				7624E2B21572D67700E7759E /* GeminiTransitionManager.m in Sources */,
 				7624E2B71572DAC300E7759E /* GeminiTransistion.m in Sources */,
 				7624E2BC1573D77500E7759E /* LGeminiLuaSupport.m in Sources */,
+				7624E2C515771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1518,6 +1527,7 @@
 				766E218B15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */,
 				7624E2B31572D67700E7759E /* GeminiTransitionManager.m in Sources */,
 				7624E2B81572DAC300E7759E /* GeminiTransistion.m in Sources */,
+				7624E2C615771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1603,6 +1613,7 @@
 				DSTROOT = /tmp/Gemini.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				GCC_VERSION = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1616,6 +1627,7 @@
 				DSTROOT = /tmp/Gemini.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gemini/Gemini-Prefix.pch";
+				GCC_VERSION = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

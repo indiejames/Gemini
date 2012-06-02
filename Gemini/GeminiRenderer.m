@@ -25,31 +25,39 @@ BOOL bufferCreated = NO;
 GLfloat lineWidth[512];
 GLuint lineCount = 0;
 
+GLfloat posVerts[12];
+GLfloat newPosVerts[12];
+GLKVector3 vectorArray[1024];
+
 @implementation GeminiRenderer
 
 //
 // apply a transform to a set of vertices.  
 // the ouput array should be preallocated to the same size as the input array
 //
-static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix4 transform){
+static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix3 transform){
     
     // create an array of vectors from our input data
-    GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
-    for (GLuint i = 0; i<vertCount; i++) {
+   // GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
+    /*for (GLuint i = 0; i<vertCount; i++) {
         vectorArray[i] = GLKVector3MakeWithArray(inVerts + 3*i); 
-    }
+    }*/
     
-    GLKMatrix4MultiplyVector3ArrayWithTranslation(transform, vectorArray, vertCount);
+    memcpy(vectorArray, inVerts, vertCount * sizeof(GLKVector3));
     
-    for (GLuint i = 0; i<vertCount; i++) {
+    GLKMatrix3MultiplyVector3Array(transform, vectorArray, vertCount);
+    
+    memcpy(outVerts, vectorArray, vertCount * sizeof(GLKVector3));
+    
+    /*for (GLuint i = 0; i<vertCount; i++) {
         
         outVerts[i*3] = vectorArray[i].x;
         outVerts[i*3+1] = vectorArray[i].y;
         outVerts[i*3+2] = vectorArray[i].z;
         
-    }
+    }*/
     
-    free(vectorArray);
+    //free(vectorArray);
     
 }
 
@@ -75,9 +83,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     for (int i=0; i<[layers count]; i++) {
         NSNumber *layerIndex = (NSNumber *)[layers objectAtIndex:i];
-        GLfloat z = [layerIndex floatValue] / 256.0 - 0.5;
-        
-        GLKMatrix4 transform = GLKMatrix4MakeTranslation(0, 0, z);
         
         NSObject *obj = [stage objectForKey:layerIndex];
         if (obj.class == NSValue.class) {
@@ -91,6 +96,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
                
                 [blendedLayers insertObject:layer atIndex:0];
             } else {
+                
+                GLKMatrix3 transform = GLKMatrix3Identity;
                 
                 [self renderDisplayGroup:layer forLayer:[layerIndex intValue] withAlpha:1.0 transform:transform];
             }
@@ -122,9 +129,11 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             // a display group layer
             GeminiLayer *layer = (GeminiLayer *)obj;
             
+            GLKMatrix3 transform = GLKMatrix3Identity;
+            
             glBlendFunc(layer.sourceBlend, layer.destBlend);
             
-            [self renderDisplayGroup:layer forLayer:layer.index withAlpha:1.0 transform:GLKMatrix4Identity];
+            [self renderDisplayGroup:layer forLayer:layer.index withAlpha:1.0 transform:transform];
             
         }
         
@@ -139,11 +148,11 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 
 
--(void)renderDisplayGroup:(GeminiDisplayGroup *)group forLayer:(int)layer withAlpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+-(void)renderDisplayGroup:(GeminiDisplayGroup *)group forLayer:(int)layer withAlpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *rectangles = [NSMutableArray arrayWithCapacity:1];
     
-    GLKMatrix4 cumulTransform = GLKMatrix4Multiply(transform, group.transform);
+    GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
     GLfloat cumulAlpha = groupAlpha * alpha;
     
@@ -225,28 +234,35 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     [spriteBatches removeAllObjects];
 }
 
--(void)renderSprite:(GeminiSprite *)sprite withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+-(void)renderSprite:(GeminiSprite *)sprite withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     
-    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, sprite.transform);
+    GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, sprite.transform);
+    //GLKMatrix4 finalTransform = GLKMatrix4Identity;
     
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+    //GLfloat z = 1;
     
-    GLfloat *posVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
+    //GLfloat *posVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
+    
+    GLfloat width = sprite.width;
+    GLfloat height = sprite.height;
 
-    posVerts[0] = sprite.x - sprite.width / 2.0;
-    posVerts[1] = sprite.y - sprite.height / 2.0;
-    posVerts[2] = z;
+    
+    
+    posVerts[0] = -width / 2.0;
+    posVerts[1] = -height / 2.0;
+    posVerts[2] = 1;
     posVerts[3] = posVerts[0];
-    posVerts[4] = sprite.y + sprite.height / 2.0;
-    posVerts[5] = z;
-    posVerts[6] = sprite.x + sprite.width / 2.0;
+    posVerts[4] = height / 2.0;
+    posVerts[5] = 1;
+    posVerts[6] = width / 2.0;
     posVerts[7] = posVerts[1];
-    posVerts[8] = z;
+    posVerts[8] = 1;
     posVerts[9] = posVerts[6];
     posVerts[10] = posVerts[4];
-    posVerts[11] = z;
+    posVerts[11] = 1;
     
-    GLfloat *newPosVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
+    //GLfloat *newPosVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
     
     transformVertices(newPosVerts, posVerts, 4, finalTransform);
     
@@ -261,24 +277,26 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     for (int i=0; i<4; i++) {
         
-        for (int j=0; j<3; j++) {
+        for (int j=0; j<2; j++) {
             
             spriteVerts[i].position[j] = newPosVerts[i*3+j];
             spriteVerts[i].color[j] = 1.0; // TODO - allow use of colors here
         }
+        spriteVerts[i].position[2] = z;
+        spriteVerts[i].color[2] = 1.0;
         spriteVerts[i].color[3] = sprite.alpha;
         spriteVerts[i].texCoord[0] = (i == 0 || i == 1) ? sprite.textureCoord.x : sprite.textureCoord.z;
         spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? sprite.textureCoord.y : sprite.textureCoord.w;
     }
     
     
-    free(newPosVerts);
-    free(posVerts);
+    //free(newPosVerts);
+    //free(posVerts);
     
 }
 
 
--(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex alpha:(GLfloat)alpha tranform:(GLKMatrix4 ) transform {
+-(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex alpha:(GLfloat)alpha tranform:(GLKMatrix3 ) transform {
     
     glBindVertexArrayOES(lineVAO);
     
@@ -296,19 +314,27 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     }
 }
 
--(void)renderLine:(GeminiLine *)line withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+-(void)renderLine:(GeminiLine *)line withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     
+    GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     //[line computeVertices:layerIndex];
     
-    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, line.transform);
+    GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, line.transform);
     
     GLfloat *newVerts = (GLfloat *)malloc(line.numPoints * 6*sizeof(GLfloat));
     transformVertices(newVerts, line.verts, line.numPoints*2, finalTransform);
     
+    GLfloat *finalVerts = (GLfloat *)malloc(line.numPoints * 6 *sizeof(GLfloat));
+    for (int i=0; i<line.numPoints * 2; i++) {
+        finalVerts[i*3] = newVerts[i*3];
+        finalVerts[i*3+1] = newVerts[i*3+1];
+        finalVerts[i*3+2] = z;
+    }
+    
   //  glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
   //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
-    glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), newVerts);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), finalVerts);
     //glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), line.verts);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, (line.numPoints - 1)*6*sizeof(GLushort), line.vertIndex);
     
@@ -319,7 +345,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 
 
--(void)renderRectangles:(NSArray *)rectangles withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
+-(void)renderRectangles:(NSArray *)rectangles withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
+    
+     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     
     glBindVertexArrayOES(rectangleVAO);
     
@@ -333,13 +361,16 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLuint vertOffset = 0;
     GLuint indexOffset = 0;
     
+    GLfloat newVerts[36];
+    ColoredVertex vertData[12];
+    GLushort newIndex[30];
+    
     for (int i=0; i<[rectangles count]; i++) {
         GeminiRectangle *rectangle = (GeminiRectangle *)[rectangles objectAtIndex:i];
-        GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, rectangle.transform);
+        GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, rectangle.transform);
         
-        GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
-        
-        
+        //GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
+                
         unsigned int vertCount = 4;
         unsigned int indexCount = 6;
         if (rectangle.strokeWidth > 0) {
@@ -353,18 +384,20 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         
         //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
         
-        ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
+        //ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
+        
+        
         for (int j=0; j<vertCount; j++) {
             vertData[j].position[0] = newVerts[j*3];
             vertData[j].position[1] = newVerts[j*3+1];
-            vertData[j].position[2] = newVerts[j*3+2];
+            vertData[j].position[2] = z;
             vertData[j].color[0] = rectangle.vertColor[j*4];
             vertData[j].color[1] = rectangle.vertColor[j*4+1];
             vertData[j].color[2] = rectangle.vertColor[j*4+2];
             vertData[j].color[3] = rectangle.vertColor[j*4+3] * finalAlpha;
         }
         
-        GLushort *newIndex = malloc(indexCount * sizeof(GLushort));
+        //GLushort *newIndex = malloc(indexCount * sizeof(GLushort));
         
         GLushort vertIndexOffset = vertOffset / sizeof(ColoredVertex);
         
@@ -378,65 +411,13 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         vertOffset += vertCount*sizeof(ColoredVertex);
         indexOffset += indexCount*sizeof(GLushort);
         
-        free(vertData);
-        free(newVerts);
-        free(newIndex);
+        //free(vertData);
+        //free(newVerts);
+        //free(newIndex);
     }
     
     glDrawElements(GL_TRIANGLES, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
 
-}
-
--(void)renderRectangle:(GeminiRectangle *)rectangle withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix4)transform {
-    
-    glBindVertexArrayOES(rectangleVAO);
-    
-    glUseProgram(rectangleShaderManager.program);
-    
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    
-    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
-    glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
-    
-    GLKMatrix4 finalTransform = GLKMatrix4Multiply(transform, rectangle.transform);
-    
-    GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
-    
-    
-    unsigned int vertCount = 4;
-    unsigned int indexCount = 6;
-    if (rectangle.strokeWidth > 0) {
-        vertCount = 12;
-        indexCount = 30;
-    }
-    
-    transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
-    
-    GLfloat finalAlpha = alpha * rectangle.alpha;
-    
-    //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
-    
-    ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
-    for (int i=0; i<vertCount; i++) {
-        vertData[i].position[0] = newVerts[i*3];
-        vertData[i].position[1] = newVerts[i*3+1];
-        vertData[i].position[2] = newVerts[i*3+2];
-        vertData[i].color[0] = rectangle.vertColor[i*4];
-        vertData[i].color[1] = rectangle.vertColor[i*4+1];
-        vertData[i].color[2] = rectangle.vertColor[i*4+2];
-        vertData[i].color[3] = rectangle.vertColor[i*4+3] * finalAlpha;
-    }
-    
-    glBufferSubData(GL_ARRAY_BUFFER, 0, vertCount*sizeof(ColoredVertex), vertData);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexCount*sizeof(GLushort), rectangle.vertIndex);
-    
-    NSLog(@"renderRectangle() - indexCount = %d", indexCount);
-    
-    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
-    
-    free(vertData);
-    free(newVerts);
 }
 
 

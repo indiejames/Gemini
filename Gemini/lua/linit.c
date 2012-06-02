@@ -28,7 +28,7 @@ extern int luaopen_soundlib (lua_State *L);
 extern int luaopen_spritelib (lua_State *L);
 extern int luaopen_system_lib (lua_State *L);
 extern int luaopen_display_lib (lua_State *L);
-extern luaopen_transition_lib (lua_State *L);
+extern int luaopen_transition_lib (lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua

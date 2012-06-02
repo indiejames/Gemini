@@ -120,7 +120,7 @@
 
 -(void)computeVertices {
     //GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
-    GLfloat z = 0;
+    GLfloat z = 1;
     
     // inner portion
     vertIndex[0] = 0;

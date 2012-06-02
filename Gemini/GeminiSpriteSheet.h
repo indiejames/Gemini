@@ -10,20 +10,24 @@
 #import <GLKit/GLKit.h>
 
 @interface GeminiSpriteSheet : NSObject {
-    NSArray *frames;
+    GLKVector4 *frames;
+    int frameCount;
     NSString *imageFileName;
     GLKTextureInfo *textureInfo;
     GLfloat frameWidth;
     GLfloat frameHeight;
     int framesPerRow;
     int numRows;
+    GLfloat *frameWidths;
+    GLfloat *frameHeights;
 }
 
-@property (readonly) NSArray *frames;
+
 @property (readonly) NSString *imageFileName;
 @property (readonly) GLKTextureInfo *textureInfo;
 @property (readonly) GLfloat frameWidth;
 @property (readonly) GLfloat frameHeight;
+@property (readonly) int frameCount;
 
 -(id) initWithImage:(NSString *)imageFileName Data:(NSArray *)data;
 -(id)initWithImage:(NSString *)imgFileName FrameWidth:(int)width FrameHeight:(int)height;

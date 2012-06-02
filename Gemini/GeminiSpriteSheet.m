@@ -10,11 +10,12 @@
 
 
 @implementation GeminiSpriteSheet
-@synthesize frames;
+
 @synthesize imageFileName;
 @synthesize textureInfo;
 @synthesize frameWidth;
 @synthesize frameHeight;
+@synthesize frameCount;
 
 static GLKTextureInfo *createTexture(NSString * imgFileName){
     
@@ -42,8 +43,29 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
         
         imageFileName = [[NSString alloc] initWithString:imgFileName];
         textureInfo = [createTexture(imageFileName) retain];
-        frames = [[NSArray alloc] initWithArray:data];
-        
+        GLfloat imgWidth = textureInfo.width;
+        GLfloat imgHeight = textureInfo.height;
+        frames = (GLKVector4 *)malloc([data count] * sizeof(GLKVector4));
+        frameCount = [data count];
+        frameWidths = (GLfloat *)malloc([data count] * sizeof(GLfloat));
+        frameHeights = (GLfloat *)malloc([data count] * sizeof(GLfloat));
+        for (int i=0; i<[data count]; i++) {
+            NSDictionary *frame = (NSDictionary *)[data objectAtIndex:i];
+            
+            GLfloat frmWidth = [(NSNumber *)[frame valueForKey:@"width"] floatValue];
+            GLfloat frmHeight = [(NSNumber *)[frame valueForKey:@"height"] floatValue];
+            GLfloat x = [(NSNumber *)[frame valueForKey:@"x"] floatValue];
+            GLfloat y = [(NSNumber *)[frame valueForKey:@"y"] floatValue];
+            
+            GLfloat x0 = x / imgWidth;
+            GLfloat y0 = (imgHeight - y - frmHeight) / imgHeight; // reorient y axis
+            GLfloat x1 = x0 + frmWidth / imgWidth;
+            GLfloat y1 = y0 + frmHeight / imgHeight;
+            
+            frames[i] = GLKVector4Make(x0,y0,x1,y1);
+            frameWidths[i] = frmWidth;
+            frameHeights[i] = frmHeight;
+        }
     }
     
     return self;
@@ -58,8 +80,26 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
         textureInfo = [createTexture(imageFileName) retain];
         frameWidth = width;
         frameHeight = height;
+        GLfloat imgWidth = textureInfo.width;
+        GLfloat imgHeight = textureInfo.height;
         framesPerRow = textureInfo.width / frameWidth;
         numRows = textureInfo.height / frameHeight;
+        frames = (GLKVector4 *)malloc(numRows * framesPerRow * sizeof(GLKVector4));
+        frameCount = numRows * framesPerRow;
+        frameWidths = (GLfloat *)malloc(numRows * framesPerRow * sizeof(GLfloat));
+        frameHeights = (GLfloat *)malloc(numRows * framesPerRow * sizeof(GLfloat));
+        for (int i=0; i<numRows*framesPerRow; i++) {
+            unsigned int row = i / framesPerRow;
+            unsigned int col = i % framesPerRow;
+            GLfloat y0 = (imgHeight - (row + 1) * frameHeight) / imgHeight;
+            GLfloat x0 = (col * frameWidth) / imgWidth;
+            GLfloat x1 = x0 + frameWidth / imgWidth;
+            GLfloat y1 = y0 + frameHeight / imgHeight;
+            
+            frames[i] = GLKVector4Make(x0, y0, x1, y1);
+            frameWidths[i] = frameHeight;
+            frameHeights[i] = frameWidth;
+        }
     }
         
     
@@ -67,75 +107,22 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
 }
 
 -(GLfloat)frameWidth:(unsigned int)frameNum {
-    if (frames) {
-        NSDictionary *frame = (NSDictionary *)[frames objectAtIndex:frameNum];
-        
-        return [(NSNumber *)[frame valueForKey:@"width"] floatValue];
-    } else {
-        return frameWidth;
-    }
+    return frameWidths[frameNum];
 
 }
 
 -(GLfloat)frameHeight:(unsigned int)frameNum {
-    if (frames) {
-        NSDictionary *frame = (NSDictionary *)[frames objectAtIndex:frameNum];
-        
-        return [(NSNumber *)[frame valueForKey:@"height"] floatValue];
-    } else {
-        return frameHeight;
-    }
+    return frameHeights[frameNum];
 }
 
 -(GLKVector4)texCoordsForFrame:(unsigned int)frameNum {
-    GLfloat imgWidth = textureInfo.width;
-    GLfloat imgHeight = textureInfo.height;
-    if (frames) {
-        NSDictionary *frame = (NSDictionary *)[frames objectAtIndex:frameNum];
-        
-              
-        GLfloat frmWidth = [(NSNumber *)[frame valueForKey:@"width"] floatValue];
-        GLfloat frmHeight = [(NSNumber *)[frame valueForKey:@"height"] floatValue];
-        GLfloat x = [(NSNumber *)[frame valueForKey:@"x"] floatValue];
-        GLfloat y = [(NSNumber *)[frame valueForKey:@"y"] floatValue];
-        
-        GLfloat x0 = x / imgWidth;
-        GLfloat y0 = (imgHeight - y - frmHeight) / imgHeight; // reorient y axis
-        GLfloat x1 = x0 + frmWidth / imgWidth;
-        GLfloat y1 = y0 + frmHeight / imgHeight;
-        
-        return GLKVector4Make(x0,y0,x1,y1);
-        
-    } else {
-        unsigned int row = frameNum / framesPerRow;
-        unsigned int col = frameNum % framesPerRow;
-        GLfloat y0 = (imgHeight - (row + 1) * frameHeight) / imgHeight;
-        GLfloat x0 = (col * frameWidth) / imgWidth;
-        GLfloat x1 = x0 + frameWidth / imgWidth;
-        GLfloat y1 = y0 + frameHeight / imgHeight;
-        
-        return GLKVector4Make(x0, y0, x1, y1);
-    }
+    return frames[frameNum];
 }
 
--(int) frameCount {
-    int frameCount = 0;
-    if (frames != nil) {
-        frameCount = [frames count];
-    } else {
-        // compute frame count from image size and frame size
-        int cols = textureInfo.width / frameWidth;
-        int rows = textureInfo.height / frameHeight;
-        
-        frameCount = cols * rows;
-    }
-    
-    return frameCount;
-}
 
 -(void)dealloc {
     [imageFileName release];
-    [frames release];
+    free(frames);
     [super dealloc];
 }
 
