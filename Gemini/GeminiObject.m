@@ -21,7 +21,7 @@
         L = luaState;
     }
     
-    NSLog(@"New GeminiObject inited");
+    //NSLog(@"New GeminiObject inited");
     
     return self;
 }

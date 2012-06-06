@@ -237,14 +237,10 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(void)renderSprite:(GeminiSprite *)sprite withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     
     GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, sprite.transform);
-    //GLKMatrix4 finalTransform = GLKMatrix4Identity;
-    
+        
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
-    //GLfloat z = 1;
     
-    //GLfloat *posVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
-    
-    GLfloat width = sprite.width;
+    /*GLfloat width = sprite.width;
     GLfloat height = sprite.height;
 
     
@@ -260,11 +256,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     posVerts[8] = 1;
     posVerts[9] = posVerts[6];
     posVerts[10] = posVerts[4];
-    posVerts[11] = 1;
+    posVerts[11] = 1;*/
     
-    //GLfloat *newPosVerts = (GLfloat *)malloc(4*3*sizeof(GLfloat));
-    
-    transformVertices(newPosVerts, posVerts, 4, finalTransform);
+    transformVertices(posVerts, sprite.frameCoords, 4, finalTransform);
     
     GeminiSpriteBatch *sprites = (GeminiSpriteBatch *)[spriteBatches objectForKey:sprite.textureInfo];
     if (sprites == nil) {
@@ -275,22 +269,28 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     TexturedVertex *spriteVerts = [sprites getPointerForInsertion];
     
+    GLKVector4 texCoord = sprite.textureCoord;
+    
+    GLfloat texCoordX = texCoord.x;
+    GLfloat texCoordY = texCoord.y;
+    GLfloat texCoordZ = texCoord.z;
+    GLfloat texCoordW = texCoord.w;
+    
+    
     for (int i=0; i<4; i++) {
         
         for (int j=0; j<2; j++) {
             
-            spriteVerts[i].position[j] = newPosVerts[i*3+j];
+            spriteVerts[i].position[j] = posVerts[i*3+j];
             spriteVerts[i].color[j] = 1.0; // TODO - allow use of colors here
         }
         spriteVerts[i].position[2] = z;
         spriteVerts[i].color[2] = 1.0;
         spriteVerts[i].color[3] = sprite.alpha;
-        spriteVerts[i].texCoord[0] = (i == 0 || i == 1) ? sprite.textureCoord.x : sprite.textureCoord.z;
-        spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? sprite.textureCoord.y : sprite.textureCoord.w;
+        spriteVerts[i].texCoord[0] = (i == 0 || i == 1) ? texCoordX : texCoordZ;
+        spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? texCoordY : texCoordW;
     }
     
-    
-    //free(newPosVerts);
     //free(posVerts);
     
 }

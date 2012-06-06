@@ -159,7 +159,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     glDepthMask(GL_TRUE);
     
-    glClearColor(0.7, 0.7, 0.7, 1.0f);
+    glClearColor(0, 0, 0, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // compute frame rate
     frameRenderTime += self.timeSinceLastDraw;
@@ -168,7 +168,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
         double frameRate = (double)frameCount / frameRenderTime;
         frameCount = 0;
         frameRenderTime = 0;
-        NSLog(@"frame rate = %d", (int)frameRate);
+        NSLog(@"frame rate = %f", frameRate);
     }
     //NSLog(@"Drawing");
    // glClearColor(0, 0.0, 1.0, 1.0);

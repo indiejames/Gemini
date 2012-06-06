@@ -56,30 +56,24 @@ static int spriteGC (lua_State *L){
 
 static int spriteIndex( lua_State* L )
 {
-    NSLog(@"Calling spriteIndex()");
-    /* object, key */
-    /* first check the environment */ 
-    lua_getuservalue( L, -2 );
-    if(lua_isnil(L,-1)){
-        NSLog(@"user value for user data is nil");
+    int rval = 0;
+    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    if (sprite != NULL) {
+        if (lua_isstring(L, -1)) {
+            
+            
+            const char *key = lua_tostring(L, -1);
+            if (strcmp("strokeWidth", key) == 0) {
+                
+            } else {
+                rval = genericGeminiDisplayObjectIndex(L, *sprite);
+            }
+        }
+        
+        
     }
-    lua_pushvalue( L, -2 );
     
-    lua_rawget( L, -2 );
-    if( lua_isnoneornil( L, -1 ) == 0 )
-    {
-        return 1;
-    }
-    
-    lua_pop( L, 2 );
-    
-    /* second check the metatable */    
-    lua_getmetatable( L, -2 );
-    lua_pushvalue( L, -2 );
-    lua_rawget( L, -2 );
-    
-    /* nil or otherwise, we return here */
-    return 1;
+    return rval;
 }
 
 static int spriteNewIndex (lua_State *L){

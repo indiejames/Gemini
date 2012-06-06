@@ -20,7 +20,7 @@
 
 ///////////// rectangles //////////////////////
 static int newRectangle(lua_State *L){
-    NSLog(@"Creating new rectangle");
+   // NSLog(@"Creating new rectangle");
     GLfloat x = luaL_checknumber(L, 1);
     GLfloat y = luaL_checknumber(L, 2);
     GLfloat width = luaL_checknumber(L, 3);
@@ -42,7 +42,7 @@ static int newRectangle(lua_State *L){
 }
 
 static int rectangleGC (lua_State *L){
-    NSLog(@"rectangleGC called");
+    //NSLog(@"rectangleGC called");
     GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     [(*rect).parent remove:*rect];
     //[*rect release];
@@ -102,7 +102,7 @@ static int rectangleNewIndex (lua_State *L){
 }
 
 static int rectangleSetFillColor(lua_State *L){
-    NSLog(@"Setting rectangle fill color");
+    //NSLog(@"Setting rectangle fill color");
     int numargs = lua_gettop(L);
     
     GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
@@ -122,7 +122,7 @@ static int rectangleSetFillColor(lua_State *L){
 }
 
 static int rectangleSetStrokeColor(lua_State *L){
-    NSLog(@"Setting rectangle stroke color");
+    //NSLog(@"Setting rectangle stroke color");
     int numargs = lua_gettop(L);
     
     GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
@@ -142,7 +142,7 @@ static int rectangleSetStrokeColor(lua_State *L){
 }
 
 static int rectangleSetStrokeWidth(lua_State *L){
-    NSLog(@"Setting rectangle stroke width");
+    //NSLog(@"Setting rectangle stroke width");
    
     GeminiRectangle  **rect = (GeminiRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
@@ -156,12 +156,12 @@ static int rectangleSetStrokeWidth(lua_State *L){
 
 ///////////// lines ///////////////////////////
 static int newLine(lua_State *L){
-    NSLog(@"Creating new line...");
+    //NSLog(@"Creating new line...");
     GLfloat x1 = luaL_checknumber(L, 1);
     GLfloat y1 = luaL_checknumber(L, 2);
     GLfloat x2 = luaL_checknumber(L, 3);
     GLfloat y2 = luaL_checknumber(L, 4);
-    NSLog(@"(x1,y1,x2,y2)=(%f,%f,%f,%f)",x1,y1,x2,y2);
+    
     GeminiLine *line = [[GeminiLine alloc] initWithLuaState:L X1:x1 Y1:y1 X2:x2 Y2:y2];
     [((GeminiGLKViewController *)([Gemini shared].viewController)).renderer addObject:line];
     GeminiLine **lLine = (GeminiLine **)lua_newuserdata(L, sizeof(GeminiLine *)); 
@@ -177,7 +177,7 @@ static int newLine(lua_State *L){
 }
 
 static int lineGC (lua_State *L){
-    NSLog(@"lineGC called");
+    //NSLog(@"lineGC called");
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     [(*line).parent remove:*line];
     //[*line release];
@@ -203,7 +203,7 @@ static int lineNewIndex (lua_State *L){
 }
 
 static int lineSetColor(lua_State *L){
-    NSLog(@"Setting line color");
+    //NSLog(@"Setting line color");
     int numargs = lua_gettop(L);
     
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
@@ -221,7 +221,7 @@ static int lineSetColor(lua_State *L){
 }
 
 static int lineAppendPoints(lua_State *L){
-    NSLog(@"Appending points to line");
+    //NSLog(@"Appending points to line");
     int numargs = lua_gettop(L);
     
     GeminiLine  **line = (GeminiLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
@@ -288,7 +288,7 @@ static int layerNewIndex (lua_State *L){
 
 
 static int layerInsert(lua_State *L){
-    NSLog(@"Calling layerInsert()");
+    //NSLog(@"Calling layerInsert()");
     GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
     GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 2);
     [*layer insert:*displayObj];
@@ -297,7 +297,7 @@ static int layerInsert(lua_State *L){
 }
 
 static int layerSetBlendFunc(lua_State *L){
-    NSLog(@"Calling layerSetBlendFunc()");
+    //NSLog(@"Calling layerSetBlendFunc()");
     GeminiLayer  **layer = (GeminiLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
     GLenum srcBlend = luaL_checkinteger(L, 2);
     GLenum destBlend = luaL_checkinteger(L, 3);
@@ -332,7 +332,7 @@ static int displayGroupNewIndex (lua_State *L){
 }
 
 static int displayGroupInsert(lua_State *L){
-     NSLog(@"Calling displayGroupInsert()");
+     //NSLog(@"Calling displayGroupInsert()");
     int stackSize = lua_gettop(L);
     
     if (stackSize > 2) {
@@ -354,7 +354,7 @@ static int displayGroupInsert(lua_State *L){
 }
 
 static int displayGroupRemove(lua_State *L){
-    NSLog(@"Calling displayGroupRemove()");
+    //NSLog(@"Calling displayGroupRemove()");
     int stackSize = lua_gettop(L);
     
     if (stackSize > 2) {

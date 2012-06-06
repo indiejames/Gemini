@@ -19,6 +19,9 @@
     
     if (self) {
         spriteSet = [spSet retain];
+        spriteSheet = [spriteSet.spriteSheet retain];
+        frameCoords = spriteSheet.frameCoords;
+        frames = spriteSheet.frames;
         currentAnimation = [spriteSet getAnimation:GEMINI_DEFAULT_ANIMATION];
         paused = YES;
         currentFrame = 0;
@@ -35,22 +38,27 @@
 }*/
 
 -(GLKTextureInfo *)textureInfo {
-    GLKTextureInfo *texInfo = spriteSet.spriteSheet.textureInfo;
+    GLKTextureInfo *texInfo = spriteSheet.textureInfo;
     return texInfo;
 }
 
 -(GLKVector4)textureCoord {
     unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame - 1;
-    return [spriteSet.spriteSheet texCoordsForFrame:sequenceFrame];
+    return [spriteSheet texCoordsForFrame:sequenceFrame];
+}
+
+-(GLfloat *)frameCoords {
+    unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame - 1;
+    return frameCoords + sequenceFrame * 12;
 }
 
 // height and width can change with each frame
 -(GLfloat)width {
-    return [spriteSet.spriteSheet frameWidth];
+    return [spriteSheet frameWidth:currentFrame];
 }
 
 -(GLfloat)height {
-    return [spriteSet.spriteSheet frameHeight];
+    return [spriteSheet frameHeight:currentFrame];
 }
 
 -(void)prepare {
@@ -117,6 +125,7 @@
 
 - (void)dealloc
 {
+    [spriteSheet release];
     [spriteSet release];
     [super dealloc];
 }

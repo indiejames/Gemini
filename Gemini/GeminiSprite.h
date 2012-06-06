@@ -13,6 +13,9 @@
 @interface GeminiSprite : GeminiDisplayObject {
     GeminiSpriteSet *spriteSet;
     GeminiSpriteAnimation *currentAnimation;
+    GeminiSpriteSheet *spriteSheet;
+    GLKVector4 *frames;
+    GLfloat *frameCoords;
     double lastUpdateTime;
     double accumulatedTime;
     unsigned int currentFrame;
@@ -22,6 +25,7 @@
 @property (readonly) GLKTextureInfo *textureInfo;
 @property (readonly) GLKVector4 textureCoord;
 @property BOOL paused;
+@property (readonly) GLfloat *frameCoords;
 
 -(id) initWithLuaState:(lua_State *)luaState SpriteSet:(GeminiSpriteSet *)ss;
 -(void)prepare;

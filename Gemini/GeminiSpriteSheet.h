@@ -20,18 +20,23 @@
     int numRows;
     GLfloat *frameWidths;
     GLfloat *frameHeights;
+    GLfloat *frameCoords;
 }
 
 
 @property (readonly) NSString *imageFileName;
 @property (readonly) GLKTextureInfo *textureInfo;
-@property (readonly) GLfloat frameWidth;
-@property (readonly) GLfloat frameHeight;
+//@property (readonly) GLfloat frameWidth;
+//@property (readonly) GLfloat frameHeight;
 @property (readonly) int frameCount;
+@property (readonly) GLKVector4 *frames;
+@property (readonly) GLfloat *frameCoords;
 
 -(id) initWithImage:(NSString *)imageFileName Data:(NSArray *)data;
 -(id)initWithImage:(NSString *)imgFileName FrameWidth:(int)width FrameHeight:(int)height;
 -(GLKVector4)texCoordsForFrame:(unsigned int)frame;
+-(GLfloat)frameWidth:(unsigned int)frameNum;
+-(GLfloat)frameHeight:(unsigned int)frameNum;
 
 -(int) frameCount;
 

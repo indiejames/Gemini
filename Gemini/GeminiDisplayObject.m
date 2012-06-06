@@ -222,6 +222,11 @@
 -(GLKMatrix3) transform {
     GLKMatrix3 rval = GLKMatrix3Identity;
     
+    /*if (YES) {
+        rval = GLKMatrix3Make(1.0, 0.0, 0, 0, 1, 0, xOrigin, yOrigin, 1.0);
+        return rval;
+    }*/
+    
     // NOTE - The order of operations may seem reversed, but this is correct for the way the
     // transform matrix is used
     
