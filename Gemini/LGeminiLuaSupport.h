@@ -9,11 +9,11 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#import "GeminiDisplayObject.h"
+#import "GemDisplayObject.h"
 
 void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs);
 int genericIndex(lua_State *L);
-int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj);
-int genericNewIndex(lua_State *L, GeminiDisplayObject **obj);
+int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj);
+int genericNewIndex(lua_State *L, GemDisplayObject **obj);
 void setDefaultValues(lua_State *L);
-void setupObject(lua_State *L, const char *luaKey, GeminiDisplayObject *obj);
+void setupObject(lua_State *L, const char *luaKey, GemDisplayObject *obj);

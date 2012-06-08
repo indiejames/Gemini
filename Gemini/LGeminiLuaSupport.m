@@ -42,7 +42,7 @@ int genericIndex(lua_State *L){
 }
 
 // generic indexing for GeminiObjects
-int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
+int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
     if (lua_isstring(L, -1)) {
         
         
@@ -108,7 +108,7 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GeminiDisplayObject *obj){
 }
 
 // generic new index method for userdata types
-int genericNewIndex(lua_State *L, GeminiDisplayObject **obj){
+int genericNewIndex(lua_State *L, GemDisplayObject **obj){
     
     if (lua_isstring(L, 2)) {
         
@@ -223,7 +223,7 @@ void setDefaultValues(lua_State *L) {
 }
 
 // generic init method
-void setupObject(lua_State *L, const char *luaKey, GeminiDisplayObject *obj){
+void setupObject(lua_State *L, const char *luaKey, GemDisplayObject *obj){
     
     luaL_getmetatable(L, luaKey);
     lua_setmetatable(L, -2);

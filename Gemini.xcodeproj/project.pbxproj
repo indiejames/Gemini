@@ -9,61 +9,61 @@
 /* Begin PBXBuildFile section */
 		7624E2AC1572D49300E7759E /* LGeminiTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2AA1572D49300E7759E /* LGeminiTransition.h */; };
 		7624E2AD1572D49300E7759E /* LGeminiTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2AB1572D49300E7759E /* LGeminiTransition.m */; };
-		7624E2B11572D67700E7759E /* GeminiTransitionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2AF1572D67700E7759E /* GeminiTransitionManager.h */; };
-		7624E2B21572D67700E7759E /* GeminiTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B01572D67700E7759E /* GeminiTransitionManager.m */; };
-		7624E2B31572D67700E7759E /* GeminiTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B01572D67700E7759E /* GeminiTransitionManager.m */; };
-		7624E2B61572DAC300E7759E /* GeminiTransistion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2B41572DAC300E7759E /* GeminiTransistion.h */; };
-		7624E2B71572DAC300E7759E /* GeminiTransistion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B51572DAC300E7759E /* GeminiTransistion.m */; };
-		7624E2B81572DAC300E7759E /* GeminiTransistion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B51572DAC300E7759E /* GeminiTransistion.m */; };
+		7624E2B11572D67700E7759E /* GemTransitionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2AF1572D67700E7759E /* GemTransitionManager.h */; };
+		7624E2B21572D67700E7759E /* GemTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B01572D67700E7759E /* GemTransitionManager.m */; };
+		7624E2B31572D67700E7759E /* GemTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B01572D67700E7759E /* GemTransitionManager.m */; };
+		7624E2B61572DAC300E7759E /* GemTransistion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2B41572DAC300E7759E /* GemTransistion.h */; };
+		7624E2B71572DAC300E7759E /* GemTransistion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B51572DAC300E7759E /* GemTransistion.m */; };
+		7624E2B81572DAC300E7759E /* GemTransistion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2B51572DAC300E7759E /* GemTransistion.m */; };
 		7624E2BB1573D77500E7759E /* LGeminiLuaSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */; };
 		7624E2BC1573D77500E7759E /* LGeminiLuaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */; };
 		7624E2C415771D9100E7759E /* LGeminiPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = 7624E2C215771D9000E7759E /* LGeminiPhysics.h */; };
 		7624E2C515771D9100E7759E /* LGeminiPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2C315771D9100E7759E /* LGeminiPhysics.mm */; };
 		7624E2C615771D9100E7759E /* LGeminiPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7624E2C315771D9100E7759E /* LGeminiPhysics.mm */; };
-		766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E215C15574BAC004B6EA3 /* GeminiLayer.h */; };
-		766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
-		766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GeminiLayer.m */; };
-		766E21631559D3A2004B6EA3 /* GeminiRectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21611559D3A2004B6EA3 /* GeminiRectangle.h */; };
-		766E21641559D3A2004B6EA3 /* GeminiRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21621559D3A2004B6EA3 /* GeminiRectangle.m */; };
-		766E21651559D3A2004B6EA3 /* GeminiRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21621559D3A2004B6EA3 /* GeminiRectangle.m */; };
+		766E215E15574BAC004B6EA3 /* GemLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E215C15574BAC004B6EA3 /* GemLayer.h */; };
+		766E215F15574BAC004B6EA3 /* GemLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GemLayer.m */; };
+		766E216015574BAC004B6EA3 /* GemLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E215D15574BAC004B6EA3 /* GemLayer.m */; };
+		766E21631559D3A2004B6EA3 /* GemRectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21611559D3A2004B6EA3 /* GemRectangle.h */; };
+		766E21641559D3A2004B6EA3 /* GemRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21621559D3A2004B6EA3 /* GemRectangle.m */; };
+		766E21651559D3A2004B6EA3 /* GemRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21621559D3A2004B6EA3 /* GemRectangle.m */; };
 		766E2172155F5A63004B6EA3 /* GeminiRectangleShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */; };
 		766E2173155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */; };
 		766E2174155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */; };
-		766E218315648060004B6EA3 /* GeminiSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21811564805D004B6EA3 /* GeminiSpriteManager.h */; };
-		766E218415648060004B6EA3 /* GeminiSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GeminiSpriteManager.m */; };
-		766E218515648060004B6EA3 /* GeminiSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GeminiSpriteManager.m */; };
-		766E218915681321004B6EA3 /* GeminiSpriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */; };
-		766E218A15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GeminiSpriteBatch.m */; };
-		766E218B15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GeminiSpriteBatch.m */; };
-		767198891508620000448706 /* GeminiSpriteSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 767198871508620000448706 /* GeminiSpriteSet.h */; };
-		7671988A1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
-		7671988B1508620000448706 /* GeminiSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GeminiSpriteSet.m */; };
-		7671988F1508698000448706 /* GeminiSpriteAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7671988D1508698000448706 /* GeminiSpriteAnimation.h */; };
-		767198901508698000448706 /* GeminiSpriteAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7671988E1508698000448706 /* GeminiSpriteAnimation.m */; };
-		767198911508698000448706 /* GeminiSpriteAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7671988E1508698000448706 /* GeminiSpriteAnimation.m */; };
+		766E218315648060004B6EA3 /* GemSpriteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21811564805D004B6EA3 /* GemSpriteManager.h */; };
+		766E218415648060004B6EA3 /* GemSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GemSpriteManager.m */; };
+		766E218515648060004B6EA3 /* GemSpriteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E21821564805F004B6EA3 /* GemSpriteManager.m */; };
+		766E218915681321004B6EA3 /* GemSpriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 766E21871568131F004B6EA3 /* GemSpriteBatch.h */; };
+		766E218A15681321004B6EA3 /* GemSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GemSpriteBatch.m */; };
+		766E218B15681321004B6EA3 /* GemSpriteBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E218815681320004B6EA3 /* GemSpriteBatch.m */; };
+		767198891508620000448706 /* GemSpriteSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 767198871508620000448706 /* GemSpriteSet.h */; };
+		7671988A1508620000448706 /* GemSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GemSpriteSet.m */; };
+		7671988B1508620000448706 /* GemSpriteSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 767198881508620000448706 /* GemSpriteSet.m */; };
+		7671988F1508698000448706 /* GemSpriteAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7671988D1508698000448706 /* GemSpriteAnimation.h */; };
+		767198901508698000448706 /* GemSpriteAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7671988E1508698000448706 /* GemSpriteAnimation.m */; };
+		767198911508698000448706 /* GemSpriteAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7671988E1508698000448706 /* GemSpriteAnimation.m */; };
 		767CA04B150B04E0001C94CA /* LGeminiSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA049150B04E0001C94CA /* LGeminiSystem.h */; };
 		767CA04C150B04E0001C94CA /* LGeminiSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA04A150B04E0001C94CA /* LGeminiSystem.m */; };
-		767CA04F150C518D001C94CA /* GeminiDisplayObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA04D150C518D001C94CA /* GeminiDisplayObject.h */; };
-		767CA050150C518D001C94CA /* GeminiDisplayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA04E150C518D001C94CA /* GeminiDisplayObject.m */; };
-		767CA051150C518D001C94CA /* GeminiDisplayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA04E150C518D001C94CA /* GeminiDisplayObject.m */; };
-		767CA054150ED6D5001C94CA /* GeminiDisplayGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA052150ED6D4001C94CA /* GeminiDisplayGroup.h */; };
-		767CA055150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */; };
-		767CA056150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */; };
+		767CA04F150C518D001C94CA /* GemDisplayObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA04D150C518D001C94CA /* GemDisplayObject.h */; };
+		767CA050150C518D001C94CA /* GemDisplayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA04E150C518D001C94CA /* GemDisplayObject.m */; };
+		767CA051150C518D001C94CA /* GemDisplayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA04E150C518D001C94CA /* GemDisplayObject.m */; };
+		767CA054150ED6D5001C94CA /* GemDisplayGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA052150ED6D4001C94CA /* GemDisplayGroup.h */; };
+		767CA055150ED6D5001C94CA /* GemDisplayGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA053150ED6D4001C94CA /* GemDisplayGroup.m */; };
+		767CA056150ED6D5001C94CA /* GemDisplayGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA053150ED6D4001C94CA /* GemDisplayGroup.m */; };
 		767CA05915154358001C94CA /* LGeminiDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA05715154357001C94CA /* LGeminiDisplay.h */; };
 		767CA05A15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
 		767CA05B15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
-		7692566A1522982800BEEF0C /* GeminiRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 769256681522982700BEEF0C /* GeminiRenderer.h */; };
-		7692566B1522982800BEEF0C /* GeminiRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GeminiRenderer.m */; };
-		7692566C1522982800BEEF0C /* GeminiRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GeminiRenderer.m */; };
-		7692567A15278D4D00BEEF0C /* GeminiShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567815278D4C00BEEF0C /* GeminiShaderManager.h */; };
-		7692567B15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GeminiShaderManager.m */; };
-		7692567C15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GeminiShaderManager.m */; };
-		7692567F15278EAE00BEEF0C /* GeminiSpriteShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */; };
-		7692568015278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */; };
-		7692568115278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */; };
-		7692568415278F4000BEEF0C /* GeminiLineShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */; };
-		7692568515278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */; };
-		7692568615278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */; };
+		7692566A1522982800BEEF0C /* GemRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 769256681522982700BEEF0C /* GemRenderer.h */; };
+		7692566B1522982800BEEF0C /* GemRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GemRenderer.m */; };
+		7692566C1522982800BEEF0C /* GemRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GemRenderer.m */; };
+		7692567A15278D4D00BEEF0C /* GemShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567815278D4C00BEEF0C /* GemShaderManager.h */; };
+		7692567B15278D4D00BEEF0C /* GemShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GemShaderManager.m */; };
+		7692567C15278D4D00BEEF0C /* GemShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567915278D4D00BEEF0C /* GemShaderManager.m */; };
+		7692567F15278EAE00BEEF0C /* GemSpriteShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692567D15278EAE00BEEF0C /* GemSpriteShaderManager.h */; };
+		7692568015278EAE00BEEF0C /* GemSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GemSpriteShaderManager.m */; };
+		7692568115278EAE00BEEF0C /* GemSpriteShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692567E15278EAE00BEEF0C /* GemSpriteShaderManager.m */; };
+		7692568415278F4000BEEF0C /* GemLineShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692568215278F4000BEEF0C /* GemLineShaderManager.h */; };
+		7692568515278F4000BEEF0C /* GemLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GemLineShaderManager.m */; };
+		7692568615278F4000BEEF0C /* GemLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GemLineShaderManager.m */; };
 		76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2B14F99687006B1E17 /* Foundation.framework */; };
 		76BC9A3214F99687006B1E17 /* Gemini.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A3114F99687006B1E17 /* Gemini.m */; };
 		76BC9A3A14F99687006B1E17 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A3914F99687006B1E17 /* SenTestingKit.framework */; };
@@ -129,18 +129,18 @@
 		76BC9AC214F99746006B1E17 /* lvm.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8914F99746006B1E17 /* lvm.h */; };
 		76BC9AC314F99746006B1E17 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A8A14F99746006B1E17 /* lzio.c */; };
 		76BC9AC414F99746006B1E17 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9A8B14F99746006B1E17 /* lzio.h */; };
-		76BC9B4E14F9B923006B1E17 /* GeminiEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */; };
-		76BC9B4F14F9B923006B1E17 /* GeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */; };
-		76BC9B5014F9B923006B1E17 /* GeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */; };
-		76BC9B5414F9BF3B006B1E17 /* GeminiObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */; };
-		76BC9B5514F9BF3B006B1E17 /* GeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */; };
-		76BC9B5614F9BF3B006B1E17 /* GeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */; };
+		76BC9B4E14F9B923006B1E17 /* GemEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B4C14F9B923006B1E17 /* GemEvent.h */; };
+		76BC9B4F14F9B923006B1E17 /* GemEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GemEvent.m */; };
+		76BC9B5014F9B923006B1E17 /* GemEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B4D14F9B923006B1E17 /* GemEvent.m */; };
+		76BC9B5414F9BF3B006B1E17 /* GemObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B5214F9BF3B006B1E17 /* GemObject.h */; };
+		76BC9B5514F9BF3B006B1E17 /* GemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GemObject.m */; };
+		76BC9B5614F9BF3B006B1E17 /* GemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B5314F9BF3B006B1E17 /* GemObject.m */; };
 		76BC9B9314F9C733006B1E17 /* LGeminiObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B9114F9C733006B1E17 /* LGeminiObject.h */; };
 		76BC9B9414F9C733006B1E17 /* LGeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9214F9C733006B1E17 /* LGeminiObject.m */; };
 		76BC9B9514F9C733006B1E17 /* LGeminiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9214F9C733006B1E17 /* LGeminiObject.m */; };
-		76BC9B9914F9CD85006B1E17 /* GeminiGLKViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */; };
-		76BC9B9A14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */; };
-		76BC9B9B14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */; };
+		76BC9B9914F9CD85006B1E17 /* GemGLKViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BC9B9714F9CD85006B1E17 /* GemGLKViewController.h */; };
+		76BC9B9A14F9CD85006B1E17 /* GemGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GemGLKViewController.m */; };
+		76BC9B9B14F9CD85006B1E17 /* GemGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9B9814F9CD85006B1E17 /* GemGLKViewController.m */; };
 		76BC9B9D14F9CDC1006B1E17 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9B9C14F9CDC1006B1E17 /* GLKit.framework */; };
 		76BC9B9F14F9CDCC006B1E17 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9B9E14F9CDCC006B1E17 /* OpenGLES.framework */; };
 		76BC9BA114F9CDE0006B1E17 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9BA014F9CDE0006B1E17 /* OpenAL.framework */; };
@@ -299,17 +299,17 @@
 		76BF971C1501AC67009D51FD /* ObjectAL-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 76BF96DE1501AC67009D51FD /* ObjectAL-Prefix.pch */; };
 		76BF971D1501AC67009D51FD /* ObjectAL.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF96DF1501AC67009D51FD /* ObjectAL.h */; };
 		76BF971E1501AC67009D51FD /* ObjectAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF96E01501AC67009D51FD /* ObjectAL.m */; };
-		76BF97211501B419009D51FD /* GeminiSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF971F1501B418009D51FD /* GeminiSprite.h */; };
-		76BF97221501B419009D51FD /* GeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GeminiSprite.m */; };
-		76BF97231501B419009D51FD /* GeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GeminiSprite.m */; };
-		76BF9726150450AD009D51FD /* GeminiSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */; };
-		76BF9727150450AD009D51FD /* GeminiSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */; };
-		76BF9728150450AD009D51FD /* GeminiSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */; };
+		76BF97211501B419009D51FD /* GemSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF971F1501B418009D51FD /* GemSprite.h */; };
+		76BF97221501B419009D51FD /* GemSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GemSprite.m */; };
+		76BF97231501B419009D51FD /* GemSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF97201501B418009D51FD /* GemSprite.m */; };
+		76BF9726150450AD009D51FD /* GemSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF9724150450AC009D51FD /* GemSpriteSheet.h */; };
+		76BF9727150450AD009D51FD /* GemSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GemSpriteSheet.m */; };
+		76BF9728150450AD009D51FD /* GemSpriteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF9725150450AC009D51FD /* GemSpriteSheet.m */; };
 		76BF972B1504520A009D51FD /* LGeminiSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BF97291504520A009D51FD /* LGeminiSprite.h */; };
 		76BF972C1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
 		76BF972D1504520A009D51FD /* LGeminiSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BF972A1504520A009D51FD /* LGeminiSprite.m */; };
-		76F95F4D151AB649003E3526 /* GeminiLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F95F4B151AB649003E3526 /* GeminiLine.h */; };
-		76F95F4E151AB649003E3526 /* GeminiLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F95F4C151AB649003E3526 /* GeminiLine.m */; };
+		76F95F4D151AB649003E3526 /* GemLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F95F4B151AB649003E3526 /* GemLine.h */; };
+		76F95F4E151AB649003E3526 /* GemLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F95F4C151AB649003E3526 /* GemLine.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,45 +325,45 @@
 /* Begin PBXFileReference section */
 		7624E2AA1572D49300E7759E /* LGeminiTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiTransition.h; sourceTree = "<group>"; };
 		7624E2AB1572D49300E7759E /* LGeminiTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiTransition.m; sourceTree = "<group>"; };
-		7624E2AF1572D67700E7759E /* GeminiTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiTransitionManager.h; sourceTree = "<group>"; };
-		7624E2B01572D67700E7759E /* GeminiTransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiTransitionManager.m; sourceTree = "<group>"; };
-		7624E2B41572DAC300E7759E /* GeminiTransistion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiTransistion.h; sourceTree = "<group>"; };
-		7624E2B51572DAC300E7759E /* GeminiTransistion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiTransistion.m; sourceTree = "<group>"; };
+		7624E2AF1572D67700E7759E /* GemTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemTransitionManager.h; sourceTree = "<group>"; };
+		7624E2B01572D67700E7759E /* GemTransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemTransitionManager.m; sourceTree = "<group>"; };
+		7624E2B41572DAC300E7759E /* GemTransistion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemTransistion.h; sourceTree = "<group>"; };
+		7624E2B51572DAC300E7759E /* GemTransistion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemTransistion.m; sourceTree = "<group>"; };
 		7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiLuaSupport.h; sourceTree = "<group>"; };
 		7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiLuaSupport.m; sourceTree = "<group>"; };
 		7624E2C215771D9000E7759E /* LGeminiPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiPhysics.h; sourceTree = "<group>"; };
 		7624E2C315771D9100E7759E /* LGeminiPhysics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LGeminiPhysics.mm; sourceTree = "<group>"; };
-		766E215C15574BAC004B6EA3 /* GeminiLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLayer.h; sourceTree = "<group>"; };
-		766E215D15574BAC004B6EA3 /* GeminiLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLayer.m; sourceTree = "<group>"; };
-		766E21611559D3A2004B6EA3 /* GeminiRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRectangle.h; sourceTree = "<group>"; };
-		766E21621559D3A2004B6EA3 /* GeminiRectangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRectangle.m; sourceTree = "<group>"; };
+		766E215C15574BAC004B6EA3 /* GemLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemLayer.h; sourceTree = "<group>"; };
+		766E215D15574BAC004B6EA3 /* GemLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemLayer.m; sourceTree = "<group>"; };
+		766E21611559D3A2004B6EA3 /* GemRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemRectangle.h; sourceTree = "<group>"; };
+		766E21621559D3A2004B6EA3 /* GemRectangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemRectangle.m; sourceTree = "<group>"; };
 		766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRectangleShaderManager.h; sourceTree = "<group>"; };
 		766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRectangleShaderManager.m; sourceTree = "<group>"; };
-		766E21811564805D004B6EA3 /* GeminiSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteManager.h; sourceTree = "<group>"; };
-		766E21821564805F004B6EA3 /* GeminiSpriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteManager.m; sourceTree = "<group>"; };
-		766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteBatch.h; sourceTree = "<group>"; };
-		766E218815681320004B6EA3 /* GeminiSpriteBatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteBatch.m; sourceTree = "<group>"; };
+		766E21811564805D004B6EA3 /* GemSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteManager.h; sourceTree = "<group>"; };
+		766E21821564805F004B6EA3 /* GemSpriteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteManager.m; sourceTree = "<group>"; };
+		766E21871568131F004B6EA3 /* GemSpriteBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteBatch.h; sourceTree = "<group>"; };
+		766E218815681320004B6EA3 /* GemSpriteBatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteBatch.m; sourceTree = "<group>"; };
 		766E218C15681421004B6EA3 /* GeminiTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeminiTypes.h; sourceTree = "<group>"; };
-		767198871508620000448706 /* GeminiSpriteSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteSet.h; sourceTree = "<group>"; };
-		767198881508620000448706 /* GeminiSpriteSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSet.m; sourceTree = "<group>"; };
-		7671988D1508698000448706 /* GeminiSpriteAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteAnimation.h; sourceTree = "<group>"; };
-		7671988E1508698000448706 /* GeminiSpriteAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteAnimation.m; sourceTree = "<group>"; };
+		767198871508620000448706 /* GemSpriteSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteSet.h; sourceTree = "<group>"; };
+		767198881508620000448706 /* GemSpriteSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteSet.m; sourceTree = "<group>"; };
+		7671988D1508698000448706 /* GemSpriteAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteAnimation.h; sourceTree = "<group>"; };
+		7671988E1508698000448706 /* GemSpriteAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteAnimation.m; sourceTree = "<group>"; };
 		767CA049150B04E0001C94CA /* LGeminiSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiSystem.h; sourceTree = "<group>"; };
 		767CA04A150B04E0001C94CA /* LGeminiSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiSystem.m; sourceTree = "<group>"; };
-		767CA04D150C518D001C94CA /* GeminiDisplayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiDisplayObject.h; sourceTree = "<group>"; };
-		767CA04E150C518D001C94CA /* GeminiDisplayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiDisplayObject.m; sourceTree = "<group>"; };
-		767CA052150ED6D4001C94CA /* GeminiDisplayGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiDisplayGroup.h; sourceTree = "<group>"; };
-		767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiDisplayGroup.m; sourceTree = "<group>"; };
+		767CA04D150C518D001C94CA /* GemDisplayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemDisplayObject.h; sourceTree = "<group>"; };
+		767CA04E150C518D001C94CA /* GemDisplayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemDisplayObject.m; sourceTree = "<group>"; };
+		767CA052150ED6D4001C94CA /* GemDisplayGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemDisplayGroup.h; sourceTree = "<group>"; };
+		767CA053150ED6D4001C94CA /* GemDisplayGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemDisplayGroup.m; sourceTree = "<group>"; };
 		767CA05715154357001C94CA /* LGeminiDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiDisplay.h; sourceTree = "<group>"; };
 		767CA05815154357001C94CA /* LGeminiDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiDisplay.m; sourceTree = "<group>"; };
-		769256681522982700BEEF0C /* GeminiRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiRenderer.h; sourceTree = "<group>"; };
-		769256691522982700BEEF0C /* GeminiRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiRenderer.m; sourceTree = "<group>"; };
-		7692567815278D4C00BEEF0C /* GeminiShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiShaderManager.h; sourceTree = "<group>"; };
-		7692567915278D4D00BEEF0C /* GeminiShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiShaderManager.m; sourceTree = "<group>"; };
-		7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteShaderManager.h; sourceTree = "<group>"; };
-		7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteShaderManager.m; sourceTree = "<group>"; };
-		7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLineShaderManager.h; sourceTree = "<group>"; };
-		7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLineShaderManager.m; sourceTree = "<group>"; };
+		769256681522982700BEEF0C /* GemRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemRenderer.h; sourceTree = "<group>"; };
+		769256691522982700BEEF0C /* GemRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemRenderer.m; sourceTree = "<group>"; };
+		7692567815278D4C00BEEF0C /* GemShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemShaderManager.h; sourceTree = "<group>"; };
+		7692567915278D4D00BEEF0C /* GemShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemShaderManager.m; sourceTree = "<group>"; };
+		7692567D15278EAE00BEEF0C /* GemSpriteShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteShaderManager.h; sourceTree = "<group>"; };
+		7692567E15278EAE00BEEF0C /* GemSpriteShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteShaderManager.m; sourceTree = "<group>"; };
+		7692568215278F4000BEEF0C /* GemLineShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemLineShaderManager.h; sourceTree = "<group>"; };
+		7692568315278F4000BEEF0C /* GemLineShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemLineShaderManager.m; sourceTree = "<group>"; };
 		76BC9A2814F99687006B1E17 /* libGemini.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGemini.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BC9A2B14F99687006B1E17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
@@ -433,14 +433,14 @@
 		76BC9A8914F99746006B1E17 /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
 		76BC9A8A14F99746006B1E17 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		76BC9A8B14F99746006B1E17 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
-		76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiEvent.h; sourceTree = "<group>"; };
-		76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiEvent.m; sourceTree = "<group>"; };
-		76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiObject.h; sourceTree = "<group>"; };
-		76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiObject.m; sourceTree = "<group>"; };
+		76BC9B4C14F9B923006B1E17 /* GemEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemEvent.h; sourceTree = "<group>"; };
+		76BC9B4D14F9B923006B1E17 /* GemEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemEvent.m; sourceTree = "<group>"; };
+		76BC9B5214F9BF3B006B1E17 /* GemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemObject.h; sourceTree = "<group>"; };
+		76BC9B5314F9BF3B006B1E17 /* GemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemObject.m; sourceTree = "<group>"; };
 		76BC9B9114F9C733006B1E17 /* LGeminiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiObject.h; sourceTree = "<group>"; };
 		76BC9B9214F9C733006B1E17 /* LGeminiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiObject.m; sourceTree = "<group>"; };
-		76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiGLKViewController.h; sourceTree = "<group>"; };
-		76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiGLKViewController.m; sourceTree = "<group>"; };
+		76BC9B9714F9CD85006B1E17 /* GemGLKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemGLKViewController.h; sourceTree = "<group>"; };
+		76BC9B9814F9CD85006B1E17 /* GemGLKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemGLKViewController.m; sourceTree = "<group>"; };
 		76BC9B9C14F9CDC1006B1E17 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		76BC9B9E14F9CDCC006B1E17 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		76BC9BA014F9CDE0006B1E17 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -604,14 +604,14 @@
 		76BF96DE1501AC67009D51FD /* ObjectAL-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ObjectAL-Prefix.pch"; sourceTree = "<group>"; };
 		76BF96DF1501AC67009D51FD /* ObjectAL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectAL.h; sourceTree = "<group>"; };
 		76BF96E01501AC67009D51FD /* ObjectAL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectAL.m; sourceTree = "<group>"; };
-		76BF971F1501B418009D51FD /* GeminiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSprite.h; sourceTree = "<group>"; };
-		76BF97201501B418009D51FD /* GeminiSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSprite.m; sourceTree = "<group>"; };
-		76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiSpriteSheet.h; sourceTree = "<group>"; };
-		76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiSpriteSheet.m; sourceTree = "<group>"; };
+		76BF971F1501B418009D51FD /* GemSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSprite.h; sourceTree = "<group>"; };
+		76BF97201501B418009D51FD /* GemSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSprite.m; sourceTree = "<group>"; };
+		76BF9724150450AC009D51FD /* GemSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSpriteSheet.h; sourceTree = "<group>"; };
+		76BF9725150450AC009D51FD /* GemSpriteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteSheet.m; sourceTree = "<group>"; };
 		76BF97291504520A009D51FD /* LGeminiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiSprite.h; sourceTree = "<group>"; };
 		76BF972A1504520A009D51FD /* LGeminiSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiSprite.m; sourceTree = "<group>"; };
-		76F95F4B151AB649003E3526 /* GeminiLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeminiLine.h; sourceTree = "<group>"; };
-		76F95F4C151AB649003E3526 /* GeminiLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeminiLine.m; sourceTree = "<group>"; };
+		76F95F4B151AB649003E3526 /* GemLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemLine.h; sourceTree = "<group>"; };
+		76F95F4C151AB649003E3526 /* GemLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemLine.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -681,61 +681,61 @@
 				76BC9A3014F99687006B1E17 /* Gemini.h */,
 				76BC9A3114F99687006B1E17 /* Gemini.m */,
 				76BC9A2E14F99687006B1E17 /* Supporting Files */,
-				76BC9B4C14F9B923006B1E17 /* GeminiEvent.h */,
-				76BC9B4D14F9B923006B1E17 /* GeminiEvent.m */,
-				76BC9B5214F9BF3B006B1E17 /* GeminiObject.h */,
-				76BC9B5314F9BF3B006B1E17 /* GeminiObject.m */,
+				76BC9B4C14F9B923006B1E17 /* GemEvent.h */,
+				76BC9B4D14F9B923006B1E17 /* GemEvent.m */,
+				76BC9B5214F9BF3B006B1E17 /* GemObject.h */,
+				76BC9B5314F9BF3B006B1E17 /* GemObject.m */,
 				76BC9B9114F9C733006B1E17 /* LGeminiObject.h */,
 				76BC9B9214F9C733006B1E17 /* LGeminiObject.m */,
-				76BC9B9714F9CD85006B1E17 /* GeminiGLKViewController.h */,
-				76BC9B9814F9CD85006B1E17 /* GeminiGLKViewController.m */,
+				76BC9B9714F9CD85006B1E17 /* GemGLKViewController.h */,
+				76BC9B9814F9CD85006B1E17 /* GemGLKViewController.m */,
 				76BF968915018940009D51FD /* LGeminiSound.m */,
 				76BF968B1501898E009D51FD /* LGeminiSound.h */,
 				76BF97291504520A009D51FD /* LGeminiSprite.h */,
 				76BF972A1504520A009D51FD /* LGeminiSprite.m */,
 				767CA049150B04E0001C94CA /* LGeminiSystem.h */,
 				767CA04A150B04E0001C94CA /* LGeminiSystem.m */,
-				76BF971F1501B418009D51FD /* GeminiSprite.h */,
-				76BF97201501B418009D51FD /* GeminiSprite.m */,
-				76BF9724150450AC009D51FD /* GeminiSpriteSheet.h */,
-				76BF9725150450AC009D51FD /* GeminiSpriteSheet.m */,
-				767198871508620000448706 /* GeminiSpriteSet.h */,
-				767198881508620000448706 /* GeminiSpriteSet.m */,
-				7671988D1508698000448706 /* GeminiSpriteAnimation.h */,
-				7671988E1508698000448706 /* GeminiSpriteAnimation.m */,
-				767CA04D150C518D001C94CA /* GeminiDisplayObject.h */,
-				767CA04E150C518D001C94CA /* GeminiDisplayObject.m */,
-				767CA052150ED6D4001C94CA /* GeminiDisplayGroup.h */,
-				767CA053150ED6D4001C94CA /* GeminiDisplayGroup.m */,
+				76BF971F1501B418009D51FD /* GemSprite.h */,
+				76BF97201501B418009D51FD /* GemSprite.m */,
+				76BF9724150450AC009D51FD /* GemSpriteSheet.h */,
+				76BF9725150450AC009D51FD /* GemSpriteSheet.m */,
+				767198871508620000448706 /* GemSpriteSet.h */,
+				767198881508620000448706 /* GemSpriteSet.m */,
+				7671988D1508698000448706 /* GemSpriteAnimation.h */,
+				7671988E1508698000448706 /* GemSpriteAnimation.m */,
+				767CA04D150C518D001C94CA /* GemDisplayObject.h */,
+				767CA04E150C518D001C94CA /* GemDisplayObject.m */,
+				767CA052150ED6D4001C94CA /* GemDisplayGroup.h */,
+				767CA053150ED6D4001C94CA /* GemDisplayGroup.m */,
 				767CA05715154357001C94CA /* LGeminiDisplay.h */,
 				767CA05815154357001C94CA /* LGeminiDisplay.m */,
-				766E21611559D3A2004B6EA3 /* GeminiRectangle.h */,
-				766E21621559D3A2004B6EA3 /* GeminiRectangle.m */,
-				76F95F4B151AB649003E3526 /* GeminiLine.h */,
-				76F95F4C151AB649003E3526 /* GeminiLine.m */,
-				769256681522982700BEEF0C /* GeminiRenderer.h */,
-				769256691522982700BEEF0C /* GeminiRenderer.m */,
-				7692567815278D4C00BEEF0C /* GeminiShaderManager.h */,
-				7692567915278D4D00BEEF0C /* GeminiShaderManager.m */,
-				7692567D15278EAE00BEEF0C /* GeminiSpriteShaderManager.h */,
-				7692567E15278EAE00BEEF0C /* GeminiSpriteShaderManager.m */,
-				7692568215278F4000BEEF0C /* GeminiLineShaderManager.h */,
-				7692568315278F4000BEEF0C /* GeminiLineShaderManager.m */,
-				766E215C15574BAC004B6EA3 /* GeminiLayer.h */,
-				766E215D15574BAC004B6EA3 /* GeminiLayer.m */,
+				766E21611559D3A2004B6EA3 /* GemRectangle.h */,
+				766E21621559D3A2004B6EA3 /* GemRectangle.m */,
+				76F95F4B151AB649003E3526 /* GemLine.h */,
+				76F95F4C151AB649003E3526 /* GemLine.m */,
+				769256681522982700BEEF0C /* GemRenderer.h */,
+				769256691522982700BEEF0C /* GemRenderer.m */,
+				7692567815278D4C00BEEF0C /* GemShaderManager.h */,
+				7692567915278D4D00BEEF0C /* GemShaderManager.m */,
+				7692567D15278EAE00BEEF0C /* GemSpriteShaderManager.h */,
+				7692567E15278EAE00BEEF0C /* GemSpriteShaderManager.m */,
+				7692568215278F4000BEEF0C /* GemLineShaderManager.h */,
+				7692568315278F4000BEEF0C /* GemLineShaderManager.m */,
+				766E215C15574BAC004B6EA3 /* GemLayer.h */,
+				766E215D15574BAC004B6EA3 /* GemLayer.m */,
 				766E2170155F5A62004B6EA3 /* GeminiRectangleShaderManager.h */,
 				766E2171155F5A62004B6EA3 /* GeminiRectangleShaderManager.m */,
-				766E21811564805D004B6EA3 /* GeminiSpriteManager.h */,
-				766E21821564805F004B6EA3 /* GeminiSpriteManager.m */,
-				766E21871568131F004B6EA3 /* GeminiSpriteBatch.h */,
-				766E218815681320004B6EA3 /* GeminiSpriteBatch.m */,
+				766E21811564805D004B6EA3 /* GemSpriteManager.h */,
+				766E21821564805F004B6EA3 /* GemSpriteManager.m */,
+				766E21871568131F004B6EA3 /* GemSpriteBatch.h */,
+				766E218815681320004B6EA3 /* GemSpriteBatch.m */,
 				766E218C15681421004B6EA3 /* GeminiTypes.h */,
 				7624E2AA1572D49300E7759E /* LGeminiTransition.h */,
 				7624E2AB1572D49300E7759E /* LGeminiTransition.m */,
-				7624E2AF1572D67700E7759E /* GeminiTransitionManager.h */,
-				7624E2B01572D67700E7759E /* GeminiTransitionManager.m */,
-				7624E2B41572DAC300E7759E /* GeminiTransistion.h */,
-				7624E2B51572DAC300E7759E /* GeminiTransistion.m */,
+				7624E2AF1572D67700E7759E /* GemTransitionManager.h */,
+				7624E2B01572D67700E7759E /* GemTransitionManager.m */,
+				7624E2B41572DAC300E7759E /* GemTransistion.h */,
+				7624E2B51572DAC300E7759E /* GemTransistion.m */,
 				7624E2B91573D77500E7759E /* LGeminiLuaSupport.h */,
 				7624E2BA1573D77500E7759E /* LGeminiLuaSupport.m */,
 				7624E2C215771D9000E7759E /* LGeminiPhysics.h */,
@@ -1152,10 +1152,10 @@
 				76BC9AC014F99746006B1E17 /* lundump.h in Headers */,
 				76BC9AC214F99746006B1E17 /* lvm.h in Headers */,
 				76BC9AC414F99746006B1E17 /* lzio.h in Headers */,
-				76BC9B4E14F9B923006B1E17 /* GeminiEvent.h in Headers */,
-				76BC9B5414F9BF3B006B1E17 /* GeminiObject.h in Headers */,
+				76BC9B4E14F9B923006B1E17 /* GemEvent.h in Headers */,
+				76BC9B5414F9BF3B006B1E17 /* GemObject.h in Headers */,
 				76BC9B9314F9C733006B1E17 /* LGeminiObject.h in Headers */,
-				76BC9B9914F9CD85006B1E17 /* GeminiGLKViewController.h in Headers */,
+				76BC9B9914F9CD85006B1E17 /* GemGLKViewController.h in Headers */,
 				76BF962E1501806F009D51FD /* Box2D.h in Headers */,
 				76BF96301501806F009D51FD /* b2BroadPhase.h in Headers */,
 				76BF96351501806F009D51FD /* b2Collision.h in Headers */,
@@ -1238,28 +1238,28 @@
 				76BF971B1501AC67009D51FD /* SynthesizeSingleton.h in Headers */,
 				76BF971C1501AC67009D51FD /* ObjectAL-Prefix.pch in Headers */,
 				76BF971D1501AC67009D51FD /* ObjectAL.h in Headers */,
-				76BF97211501B419009D51FD /* GeminiSprite.h in Headers */,
-				76BF9726150450AD009D51FD /* GeminiSpriteSheet.h in Headers */,
+				76BF97211501B419009D51FD /* GemSprite.h in Headers */,
+				76BF9726150450AD009D51FD /* GemSpriteSheet.h in Headers */,
 				76BF972B1504520A009D51FD /* LGeminiSprite.h in Headers */,
-				767198891508620000448706 /* GeminiSpriteSet.h in Headers */,
-				7671988F1508698000448706 /* GeminiSpriteAnimation.h in Headers */,
+				767198891508620000448706 /* GemSpriteSet.h in Headers */,
+				7671988F1508698000448706 /* GemSpriteAnimation.h in Headers */,
 				767CA04B150B04E0001C94CA /* LGeminiSystem.h in Headers */,
-				767CA04F150C518D001C94CA /* GeminiDisplayObject.h in Headers */,
-				767CA054150ED6D5001C94CA /* GeminiDisplayGroup.h in Headers */,
+				767CA04F150C518D001C94CA /* GemDisplayObject.h in Headers */,
+				767CA054150ED6D5001C94CA /* GemDisplayGroup.h in Headers */,
 				767CA05915154358001C94CA /* LGeminiDisplay.h in Headers */,
-				76F95F4D151AB649003E3526 /* GeminiLine.h in Headers */,
-				7692566A1522982800BEEF0C /* GeminiRenderer.h in Headers */,
-				7692567A15278D4D00BEEF0C /* GeminiShaderManager.h in Headers */,
-				7692567F15278EAE00BEEF0C /* GeminiSpriteShaderManager.h in Headers */,
-				7692568415278F4000BEEF0C /* GeminiLineShaderManager.h in Headers */,
-				766E215E15574BAC004B6EA3 /* GeminiLayer.h in Headers */,
-				766E21631559D3A2004B6EA3 /* GeminiRectangle.h in Headers */,
+				76F95F4D151AB649003E3526 /* GemLine.h in Headers */,
+				7692566A1522982800BEEF0C /* GemRenderer.h in Headers */,
+				7692567A15278D4D00BEEF0C /* GemShaderManager.h in Headers */,
+				7692567F15278EAE00BEEF0C /* GemSpriteShaderManager.h in Headers */,
+				7692568415278F4000BEEF0C /* GemLineShaderManager.h in Headers */,
+				766E215E15574BAC004B6EA3 /* GemLayer.h in Headers */,
+				766E21631559D3A2004B6EA3 /* GemRectangle.h in Headers */,
 				766E2172155F5A63004B6EA3 /* GeminiRectangleShaderManager.h in Headers */,
-				766E218315648060004B6EA3 /* GeminiSpriteManager.h in Headers */,
-				766E218915681321004B6EA3 /* GeminiSpriteBatch.h in Headers */,
+				766E218315648060004B6EA3 /* GemSpriteManager.h in Headers */,
+				766E218915681321004B6EA3 /* GemSpriteBatch.h in Headers */,
 				7624E2AC1572D49300E7759E /* LGeminiTransition.h in Headers */,
-				7624E2B11572D67700E7759E /* GeminiTransitionManager.h in Headers */,
-				7624E2B61572DAC300E7759E /* GeminiTransistion.h in Headers */,
+				7624E2B11572D67700E7759E /* GemTransitionManager.h in Headers */,
+				7624E2B61572DAC300E7759E /* GemTransistion.h in Headers */,
 				7624E2BB1573D77500E7759E /* LGeminiLuaSupport.h in Headers */,
 				7624E2C415771D9100E7759E /* LGeminiPhysics.h in Headers */,
 			);
@@ -1395,10 +1395,10 @@
 				76BC9ABF14F99746006B1E17 /* lundump.c in Sources */,
 				76BC9AC114F99746006B1E17 /* lvm.c in Sources */,
 				76BC9AC314F99746006B1E17 /* lzio.c in Sources */,
-				76BC9B4F14F9B923006B1E17 /* GeminiEvent.m in Sources */,
-				76BC9B5514F9BF3B006B1E17 /* GeminiObject.m in Sources */,
+				76BC9B4F14F9B923006B1E17 /* GemEvent.m in Sources */,
+				76BC9B5514F9BF3B006B1E17 /* GemObject.m in Sources */,
 				76BC9B9414F9C733006B1E17 /* LGeminiObject.m in Sources */,
-				76BC9B9A14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */,
+				76BC9B9A14F9CD85006B1E17 /* GemGLKViewController.m in Sources */,
 				76BF962F1501806F009D51FD /* b2BroadPhase.cpp in Sources */,
 				76BF96311501806F009D51FD /* b2CollideCircle.cpp in Sources */,
 				76BF96321501806F009D51FD /* b2CollideEdge.cpp in Sources */,
@@ -1472,28 +1472,28 @@
 				76BF97161501AC67009D51FD /* OALAudioFile.m in Sources */,
 				76BF97191501AC67009D51FD /* OALTools.m in Sources */,
 				76BF971E1501AC67009D51FD /* ObjectAL.m in Sources */,
-				76BF97221501B419009D51FD /* GeminiSprite.m in Sources */,
-				76BF9727150450AD009D51FD /* GeminiSpriteSheet.m in Sources */,
+				76BF97221501B419009D51FD /* GemSprite.m in Sources */,
+				76BF9727150450AD009D51FD /* GemSpriteSheet.m in Sources */,
 				76BF972C1504520A009D51FD /* LGeminiSprite.m in Sources */,
-				7671988A1508620000448706 /* GeminiSpriteSet.m in Sources */,
-				767198901508698000448706 /* GeminiSpriteAnimation.m in Sources */,
+				7671988A1508620000448706 /* GemSpriteSet.m in Sources */,
+				767198901508698000448706 /* GemSpriteAnimation.m in Sources */,
 				767CA04C150B04E0001C94CA /* LGeminiSystem.m in Sources */,
-				767CA050150C518D001C94CA /* GeminiDisplayObject.m in Sources */,
-				767CA055150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */,
+				767CA050150C518D001C94CA /* GemDisplayObject.m in Sources */,
+				767CA055150ED6D5001C94CA /* GemDisplayGroup.m in Sources */,
 				767CA05A15154358001C94CA /* LGeminiDisplay.m in Sources */,
-				76F95F4E151AB649003E3526 /* GeminiLine.m in Sources */,
-				7692566B1522982800BEEF0C /* GeminiRenderer.m in Sources */,
-				7692567B15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
-				7692568015278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
-				7692568515278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
-				766E215F15574BAC004B6EA3 /* GeminiLayer.m in Sources */,
-				766E21641559D3A2004B6EA3 /* GeminiRectangle.m in Sources */,
+				76F95F4E151AB649003E3526 /* GemLine.m in Sources */,
+				7692566B1522982800BEEF0C /* GemRenderer.m in Sources */,
+				7692567B15278D4D00BEEF0C /* GemShaderManager.m in Sources */,
+				7692568015278EAE00BEEF0C /* GemSpriteShaderManager.m in Sources */,
+				7692568515278F4000BEEF0C /* GemLineShaderManager.m in Sources */,
+				766E215F15574BAC004B6EA3 /* GemLayer.m in Sources */,
+				766E21641559D3A2004B6EA3 /* GemRectangle.m in Sources */,
 				766E2173155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */,
-				766E218415648060004B6EA3 /* GeminiSpriteManager.m in Sources */,
-				766E218A15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */,
+				766E218415648060004B6EA3 /* GemSpriteManager.m in Sources */,
+				766E218A15681321004B6EA3 /* GemSpriteBatch.m in Sources */,
 				7624E2AD1572D49300E7759E /* LGeminiTransition.m in Sources */,
-				7624E2B21572D67700E7759E /* GeminiTransitionManager.m in Sources */,
-				7624E2B71572DAC300E7759E /* GeminiTransistion.m in Sources */,
+				7624E2B21572D67700E7759E /* GemTransitionManager.m in Sources */,
+				7624E2B71572DAC300E7759E /* GemTransistion.m in Sources */,
 				7624E2BC1573D77500E7759E /* LGeminiLuaSupport.m in Sources */,
 				7624E2C515771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 			);
@@ -1504,29 +1504,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				76BC9A4914F99687006B1E17 /* GeminiTests.m in Sources */,
-				76BC9B5014F9B923006B1E17 /* GeminiEvent.m in Sources */,
-				76BC9B5614F9BF3B006B1E17 /* GeminiObject.m in Sources */,
+				76BC9B5014F9B923006B1E17 /* GemEvent.m in Sources */,
+				76BC9B5614F9BF3B006B1E17 /* GemObject.m in Sources */,
 				76BC9B9514F9C733006B1E17 /* LGeminiObject.m in Sources */,
-				76BC9B9B14F9CD85006B1E17 /* GeminiGLKViewController.m in Sources */,
-				76BF97231501B419009D51FD /* GeminiSprite.m in Sources */,
-				76BF9728150450AD009D51FD /* GeminiSpriteSheet.m in Sources */,
+				76BC9B9B14F9CD85006B1E17 /* GemGLKViewController.m in Sources */,
+				76BF97231501B419009D51FD /* GemSprite.m in Sources */,
+				76BF9728150450AD009D51FD /* GemSpriteSheet.m in Sources */,
 				76BF972D1504520A009D51FD /* LGeminiSprite.m in Sources */,
-				7671988B1508620000448706 /* GeminiSpriteSet.m in Sources */,
-				767198911508698000448706 /* GeminiSpriteAnimation.m in Sources */,
-				767CA051150C518D001C94CA /* GeminiDisplayObject.m in Sources */,
-				767CA056150ED6D5001C94CA /* GeminiDisplayGroup.m in Sources */,
+				7671988B1508620000448706 /* GemSpriteSet.m in Sources */,
+				767198911508698000448706 /* GemSpriteAnimation.m in Sources */,
+				767CA051150C518D001C94CA /* GemDisplayObject.m in Sources */,
+				767CA056150ED6D5001C94CA /* GemDisplayGroup.m in Sources */,
 				767CA05B15154358001C94CA /* LGeminiDisplay.m in Sources */,
-				7692566C1522982800BEEF0C /* GeminiRenderer.m in Sources */,
-				7692567C15278D4D00BEEF0C /* GeminiShaderManager.m in Sources */,
-				7692568115278EAE00BEEF0C /* GeminiSpriteShaderManager.m in Sources */,
-				7692568615278F4000BEEF0C /* GeminiLineShaderManager.m in Sources */,
-				766E216015574BAC004B6EA3 /* GeminiLayer.m in Sources */,
-				766E21651559D3A2004B6EA3 /* GeminiRectangle.m in Sources */,
+				7692566C1522982800BEEF0C /* GemRenderer.m in Sources */,
+				7692567C15278D4D00BEEF0C /* GemShaderManager.m in Sources */,
+				7692568115278EAE00BEEF0C /* GemSpriteShaderManager.m in Sources */,
+				7692568615278F4000BEEF0C /* GemLineShaderManager.m in Sources */,
+				766E216015574BAC004B6EA3 /* GemLayer.m in Sources */,
+				766E21651559D3A2004B6EA3 /* GemRectangle.m in Sources */,
 				766E2174155F5A63004B6EA3 /* GeminiRectangleShaderManager.m in Sources */,
-				766E218515648060004B6EA3 /* GeminiSpriteManager.m in Sources */,
-				766E218B15681321004B6EA3 /* GeminiSpriteBatch.m in Sources */,
-				7624E2B31572D67700E7759E /* GeminiTransitionManager.m in Sources */,
-				7624E2B81572DAC300E7759E /* GeminiTransistion.m in Sources */,
+				766E218515648060004B6EA3 /* GemSpriteManager.m in Sources */,
+				766E218B15681321004B6EA3 /* GemSpriteBatch.m in Sources */,
+				7624E2B31572D67700E7759E /* GemTransitionManager.m in Sources */,
+				7624E2B81572DAC300E7759E /* GemTransistion.m in Sources */,
 				7624E2C615771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

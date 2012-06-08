@@ -10,13 +10,13 @@
 
 
 #import "ObjectAL.h"
-#import "GeminiEvent.h"
-#import "GeminiObject.h"
-#import "GeminiGLKViewController.h"
-#import "GeminiDisplayObject.h"
+#import "GemEvent.h"
+#import "GemObject.h"
+#import "GemGLKViewController.h"
+#import "GemDisplayObject.h"
 #import "LGeminiObject.h"
 #import "LGeminiDisplay.h"
-#import "GeminiTransitionManager.h"
+#import "GemTransitionManager.h"
 
 Gemini *singleton = nil;
 
@@ -24,10 +24,10 @@ Gemini *singleton = nil;
 @private
     lua_State *L;
     NSDictionary *config;
-    GeminiGLKViewController *viewController;
+    GemGLKViewController *viewController;
     int x;
     double initTime;
-    GeminiObject *runtime;
+    GemObject *runtime;
 }
 @end
 
@@ -44,9 +44,9 @@ int setLuaPath(lua_State *L, NSString* path );
 // add a global Runtime object
 -(void) addRuntimeObject {
     
-    runtime = [[GeminiObject alloc] initWithLuaState:L];
+    runtime = [[GemObject alloc] initWithLuaState:L];
     
-    GeminiObject **lgo = (GeminiObject **)lua_newuserdata(L, sizeof(GeminiObject *));
+    GemObject **lgo = (GemObject **)lua_newuserdata(L, sizeof(GemObject *));
     *lgo = runtime;
     
     luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
@@ -102,7 +102,7 @@ int setLuaPath(lua_State *L, NSString* path );
         //viewController = [[GeminiGLKViewController alloc] init];
         L = luaL_newstate();
         luaL_openlibs(L);
-        viewController = [[GeminiGLKViewController alloc] initWithLuaState:L];
+        viewController = [[GemGLKViewController alloc] initWithLuaState:L];
         
     }
     
@@ -179,11 +179,11 @@ int setLuaPath(lua_State *L, NSString* path );
 
 -(BOOL)handleEvent:(NSString *)event {
     NSLog(@"Gemini handling event %@", event);
-    GeminiEvent *ge = [[GeminiEvent alloc] init];
+    GemEvent *ge = [[GemEvent alloc] init];
     ge.name = event;
     
     for (id gemObj in geminiObjects) {
-        if ([(GeminiObject *)gemObj handleEvent:ge]) {
+        if ([(GemObject *)gemObj handleEvent:ge]) {
             [ge release];
             return YES;
         }
@@ -199,9 +199,9 @@ int setLuaPath(lua_State *L, NSString* path );
 -(void) update:(double)deltaT {
     
     // update transitions
-    [[GeminiTransitionManager shared] processTransitions:deltaT];
+    [[GemTransitionManager shared] processTransitions:deltaT];
     
-    GeminiEvent *enterFrameEvent = [[GeminiEvent alloc] init];
+    GemEvent *enterFrameEvent = [[GemEvent alloc] init];
     enterFrameEvent.name = @"enterFrame";
     [runtime handleEvent:enterFrameEvent];
     [enterFrameEvent release];

@@ -8,14 +8,14 @@
 
 #include <stdio.h>
 #import "Gemini.h"
-#import "GeminiObject.h"
+#import "GemObject.h"
 #import "LGeminiObject.h"
 
 
 static int newGeminiObject(lua_State *L){
-    GeminiObject *go = [[GeminiObject alloc] initWithLuaState:L];
+    GemObject *go = [[GemObject alloc] initWithLuaState:L];
     
-    GeminiObject **lgo = (GeminiObject **)lua_newuserdata(L, sizeof(GeminiObject *));
+    GemObject **lgo = (GemObject **)lua_newuserdata(L, sizeof(GemObject *));
     *lgo = go;
     
     luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
@@ -40,7 +40,7 @@ static int newGeminiObject(lua_State *L){
 }
 
 static int geminiObjectGC (lua_State *L){
-    GeminiObject **go = (GeminiObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
+    GemObject **go = (GemObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
     [*go release];
     NSLog(@"GeminiObject released");
     
@@ -50,7 +50,7 @@ static int geminiObjectGC (lua_State *L){
 }
 
 static int addEventListener(lua_State *L){
-    GeminiObject **go = (GeminiObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
+    GemObject **go = (GemObject **)luaL_checkudata(L, 1, GEMINI_OBJECT_LUA_KEY);
     const char *eventName = luaL_checkstring(L, 2);
     NSString *name = [[NSString stringWithFormat:@"%s", eventName] retain];
     int callback = luaL_ref(L, LUA_REGISTRYINDEX);

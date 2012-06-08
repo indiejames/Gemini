@@ -8,11 +8,11 @@
 
 #import "LGeminiSprite.h"
 #import "Gemini.h"
-#import "GeminiSprite.h"
-#import "GeminiSpriteSheet.h"
-#import "GeminiSpriteSet.h"
-#import "GeminiSpriteAnimation.h"
-#import "GeminiGLKViewController.h"
+#import "GemSprite.h"
+#import "GemSpriteSheet.h"
+#import "GemSpriteSet.h"
+#import "GemSpriteAnimation.h"
+#import "GemGLKViewController.h"
 #import "LGeminiLuaSupport.h"
 
 // prototype for library init function
@@ -22,10 +22,10 @@ int luaopen_spritelib (lua_State *L);
 
 ////////// Sprites //////////////////////
 static int newSprite(lua_State *L){
-    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
-    GeminiSprite *sprite = [[GeminiSprite alloc] initWithLuaState:L SpriteSet:*ss];
-    [((GeminiGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:sprite];
-    GeminiSprite **lSprite = (GeminiSprite **)lua_newuserdata(L, sizeof(GeminiSprite *));
+    GemSpriteSet  **ss = (GemSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    GemSprite *sprite = [[GemSprite alloc] initWithLuaState:L SpriteSet:*ss];
+    [((GemGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:sprite];
+    GemSprite **lSprite = (GemSprite **)lua_newuserdata(L, sizeof(GemSprite *));
     *lSprite = sprite;
     
     
@@ -47,7 +47,7 @@ static int newSprite(lua_State *L){
 }
 
 static int spriteGC (lua_State *L){
-    GeminiSprite  **s = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    GemSprite  **s = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     
     [*s release];
     
@@ -57,7 +57,7 @@ static int spriteGC (lua_State *L){
 static int spriteIndex( lua_State* L )
 {
     int rval = 0;
-    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    GemSprite  **sprite = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     if (sprite != NULL) {
         if (lua_isstring(L, -1)) {
             
@@ -78,7 +78,7 @@ static int spriteIndex( lua_State* L )
 
 static int spriteNewIndex (lua_State *L){
     int rval = 0;
-    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    GemSprite  **sprite = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     
     if (sprite != NULL) {
         if (lua_isstring(L, 2)) {
@@ -96,7 +96,7 @@ static int spriteNewIndex (lua_State *L){
 }
 
 static int spritePrepare(lua_State *L){
-    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    GemSprite  **sprite = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     
     int numargs = lua_gettop(L);
     if (numargs > 1) {
@@ -111,15 +111,15 @@ static int spritePrepare(lua_State *L){
 }
 
 static int spritePlay(lua_State *L){
-    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
-    [*sprite play:((GeminiGLKViewController *)([Gemini shared].viewController)).updateTime];
+    GemSprite  **sprite = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    [*sprite play:((GemGLKViewController *)([Gemini shared].viewController)).updateTime];
     
     return 0;
 }
 
 static int spritePause(lua_State *L){
-    GeminiSprite  **sprite = (GeminiSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
-    [*sprite pause:((GeminiGLKViewController *)([Gemini shared].viewController)).updateTime];
+    GemSprite  **sprite = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
+    [*sprite pause:((GemGLKViewController *)([Gemini shared].viewController)).updateTime];
     
     return 0;
 }
@@ -127,12 +127,12 @@ static int spritePause(lua_State *L){
 ////////// Sprite Sets //////////////////
 
 static int newSpriteSet(lua_State *L){
-    GeminiSpriteSheet **ss = (GeminiSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
+    GemSpriteSheet **ss = (GemSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
     int startFrame = luaL_checkint(L, 2);
     int frameCount = luaL_checkint(L, 3);
-    GeminiSpriteSet *spriteSet = [[GeminiSpriteSet alloc] initWithSpriteSheet:*ss StartFrame:startFrame NumFrames:frameCount];
+    GemSpriteSet *spriteSet = [[GemSpriteSet alloc] initWithSpriteSheet:*ss StartFrame:startFrame NumFrames:frameCount];
     
-    GeminiSpriteSet **lSet = (GeminiSpriteSet **)lua_newuserdata(L, sizeof(GeminiSpriteSet *));
+    GemSpriteSet **lSet = (GemSpriteSet **)lua_newuserdata(L, sizeof(GemSpriteSet *));
     *lSet = spriteSet;
     
     luaL_getmetatable(L, GEMINI_SPRITE_SET_LUA_KEY);
@@ -144,7 +144,7 @@ static int newSpriteSet(lua_State *L){
 
 // this is a library method not a sprite set object method
 static int addAnimation (lua_State *L){
-    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    GemSpriteSet  **ss = (GemSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
     const char *name = luaL_checkstring(L, 2);
     int startFrame = luaL_checkint(L, 3);
     int frameCount = luaL_checkint(L, 4);
@@ -157,7 +157,7 @@ static int addAnimation (lua_State *L){
 }
 
 static int spriteSetGC (lua_State *L){
-    GeminiSpriteSet  **ss = (GeminiSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
+    GemSpriteSet  **ss = (GemSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
     
     [*ss release];
     
@@ -172,8 +172,8 @@ static int newSpriteSheet(lua_State *L){
     NSLog(@"Using image file %@", sFileName);
     int frameWidth = luaL_checkint(L, 2);
     int frameHeight = luaL_checkint(L, 3);
-    GeminiSpriteSheet *sheet = [[GeminiSpriteSheet alloc] initWithImage:sFileName FrameWidth:frameWidth FrameHeight:frameHeight];
-    GeminiSpriteSheet **lSheet = (GeminiSpriteSheet **)lua_newuserdata(L, sizeof(GeminiSpriteSheet *));
+    GemSpriteSheet *sheet = [[GemSpriteSheet alloc] initWithImage:sFileName FrameWidth:frameWidth FrameHeight:frameHeight];
+    GemSpriteSheet **lSheet = (GemSpriteSheet **)lua_newuserdata(L, sizeof(GemSpriteSheet *));
     *lSheet = sheet;
     
     luaL_getmetatable(L, GEMINI_SPRITE_SHEET_LUA_KEY);
@@ -245,8 +245,8 @@ static int newSpriteSheetFromData(lua_State *L){
 
     }
     
-    GeminiSpriteSheet *sheet = [[GeminiSpriteSheet alloc] initWithImage:sFileName Data:frames];
-    GeminiSpriteSheet **lSheet = (GeminiSpriteSheet **)lua_newuserdata(L, sizeof(GeminiSpriteSheet *));
+    GemSpriteSheet *sheet = [[GemSpriteSheet alloc] initWithImage:sFileName Data:frames];
+    GemSpriteSheet **lSheet = (GemSpriteSheet **)lua_newuserdata(L, sizeof(GemSpriteSheet *));
     *lSheet = sheet;
     
     luaL_getmetatable(L, GEMINI_SPRITE_SHEET_LUA_KEY);
@@ -257,14 +257,14 @@ static int newSpriteSheetFromData(lua_State *L){
 }
 
 static int spriteSheetFrameCount (lua_State *L){
-    GeminiSpriteSheet  **ss = (GeminiSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
+    GemSpriteSheet  **ss = (GemSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
     lua_pushinteger(L, [(*ss) frameCount]);
      
     return 1;
 }
 
 static int spriteSheetGC (lua_State *L){
-    GeminiSpriteSheet  **ss = (GeminiSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
+    GemSpriteSheet  **ss = (GemSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
     
     [*ss release];
     

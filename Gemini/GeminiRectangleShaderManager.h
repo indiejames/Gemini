@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "GeminiShaderManager.h"
+#import "GemShaderManager.h"
 
 // Line shader uniform index
 enum {
@@ -23,6 +23,6 @@ enum {
     NUM_ATTRIBUTES_RECTANGLE
 };
 
-@interface GeminiRectangleShaderManager : GeminiShaderManager
+@interface GeminiRectangleShaderManager : GemShaderManager
 
 @end

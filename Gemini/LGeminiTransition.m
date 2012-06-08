@@ -7,14 +7,14 @@
 //
 
 #import "LGeminiTransition.h"
-#import "GeminiDisplayObject.h"
-#import "GeminiTransistion.h"
-#import "GeminiTransitionManager.h"
+#import "GemDisplayObject.h"
+#import "GemTransistion.h"
+#import "GemTransitionManager.h"
 
 int luaopen_transition_lib (lua_State *L);
 
 static int createTransition(lua_State *L, BOOL to){
-    GeminiDisplayObject **displayObj = (GeminiDisplayObject **)lua_touserdata(L, 1);
+    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 1);
     if (!lua_istable(L, 2)) {
         luaL_error(L, "transition.to/from expects second parameter to be a table");
         return 0;
@@ -37,12 +37,12 @@ static int createTransition(lua_State *L, BOOL to){
         lua_pop(L, 1);
     }
     
-    GeminiTransistion *transition = [[GeminiTransistion alloc] initWithObject:*displayObj Data:params To:to];
+    GemTransistion *transition = [[GemTransistion alloc] initWithObject:*displayObj Data:params To:to];
     
-    GeminiTransistion **ltrans = (GeminiTransistion **)lua_newuserdata(L, sizeof(GeminiTransistion *));
+    GemTransistion **ltrans = (GemTransistion **)lua_newuserdata(L, sizeof(GemTransistion *));
     *ltrans = transition;
     
-    [[GeminiTransitionManager shared] addTransition:transition];
+    [[GemTransitionManager shared] addTransition:transition];
     
     return 1;
 }

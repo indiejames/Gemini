@@ -12,13 +12,13 @@
 typedef struct {
     GLfloat position[3];
     GLfloat color[4];
-} ColoredVertex;
+} GemColoredVertex;
 
 typedef struct {
     GLfloat position[3];
     GLfloat color[4];
     GLfloat texCoord[2];
-} TexturedVertex;
+} GemTexturedVertex;
 
 
 
