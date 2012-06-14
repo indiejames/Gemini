@@ -29,9 +29,15 @@ GLfloat posVerts[12];
 GLfloat newPosVerts[12];
 GLKVector3 vectorArray[1024];
 
-GLuint rectangleVBO[2];
+GLuint rectangleVBO[4];
+GLuint lineVBO[4];
+
+
 GemColoredVertex *blendedRectangles;
 GemColoredVertex *unblendedRectangles;
+
+GLuint ringBufferOffset = 0;
+GLuint lineRingBufferOffset = 0;
 
 @implementation GemRenderer
 
@@ -185,7 +191,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
     }
     if ([rectangles count] > 0) {
-        [self renderRectangles:rectangles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+       [self renderRectangles:rectangles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
     }
     
     
@@ -194,6 +200,10 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(void)renderSpriteBatches {
     glBindVertexArrayOES(spriteVAO);
     glUseProgram(spriteShaderManager.program);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     
     NSEnumerator *textureEnumerator = [spriteBatches keyEnumerator];
     GLKTextureInfo *texture;
@@ -288,7 +298,15 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(lineShaderManager.program);
     
-   // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO[lineRingBufferOffset]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineVBO[lineRingBufferOffset + 1]);
+    if (lineRingBufferOffset == 0) {
+        lineRingBufferOffset = 2;
+    } else {
+        lineRingBufferOffset = 0;
+    }
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
     
     for (int i=0; i<[lines count]; i++) {
         GemLine *line = (GemLine *)[lines objectAtIndex:i];
@@ -317,9 +335,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         finalVerts[i*3+2] = z;
     }
     
-  //  glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-  //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    
     glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), finalVerts);
     //glBufferSubData(GL_ARRAY_BUFFER, 0, 6*line.numPoints*sizeof(GLfloat), line.verts);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, (line.numPoints - 1)*6*sizeof(GLushort), line.vertIndex);
@@ -329,7 +344,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     free(newVerts);
 }
 
-
+-(void)renderRectangleBatch {
+    
+}
 
 -(void)renderRectangles:(NSArray *)rectangles withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     
@@ -339,9 +356,19 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(rectangleShaderManager.program);
     
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[ringBufferOffset]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[ringBufferOffset + 1]);
     
-    //glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    if (ringBufferOffset == 0) {
+        ringBufferOffset = 2;
+    } else {
+        ringBufferOffset = 0;
+    }
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_RECTANGLE, 3, GL_FLOAT, GL_FALSE, sizeof(GemColoredVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_RECTANGLE, 4, GL_FLOAT, GL_FALSE, 
+                          sizeof(GemColoredVertex), (GLvoid*) (sizeof(float) * 3));
     
     
     GLuint vertOffset = 0;
@@ -396,10 +423,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         
         vertOffset += vertCount*sizeof(GemColoredVertex);
         indexOffset += indexCount*sizeof(GLushort);
-        
-        //free(vertData);
-        //free(newVerts);
-        //free(newIndex);
+       
     }
     
     glDrawElements(GL_TRIANGLES, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
@@ -469,19 +493,24 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 }
 
 -(void)setupLineRendering {
+    
+    glGenBuffers(4, lineVBO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO[2]);
+    glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineVBO[3]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
     glGenVertexArraysOES(1, &lineVAO);
     glBindVertexArrayOES(lineVAO);
     
     lineShaderManager = [[GemLineShaderManager alloc] init];
     [lineShaderManager loadShaders];
-    
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 64096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
-    
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 64096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     glUseProgram(lineShaderManager.program);
     
@@ -495,9 +524,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLfloat right = width;
     GLfloat bottom = 0;
     GLfloat top = height;
-    
-    glVertexAttribPointer(ATTRIB_VERTEX_LINE, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
-    
     
     GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
@@ -513,13 +539,20 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 -(void)setupRectangleRendering {
     
-    /*glGenBuffers(3, rectangleVBO);
+    glGenBuffers(4, rectangleVBO);
     glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, 64096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
     
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 64096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);*/
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[2]);
+    glBufferData(GL_ARRAY_BUFFER, 512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[3]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+
+    
     
     glGenVertexArraysOES(1, &rectangleVAO);
     glBindVertexArrayOES(rectangleVAO);
@@ -541,22 +574,19 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLfloat bottom = 0;
     GLfloat top = height;
     
-    glVertexAttribPointer(ATTRIB_VERTEX_RECTANGLE, 3, GL_FLOAT, GL_FALSE, sizeof(GemColoredVertex), (GLvoid *)0);
     
-    glVertexAttribPointer(ATTRIB_COLOR_RECTANGLE, 4, GL_FLOAT, GL_FALSE, 
-                          sizeof(GemColoredVertex), (GLvoid*) (sizeof(float) * 3));
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
     glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
     glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
     
     
     GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_rectangle[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
    
-    glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
-    glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
+    //glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
+    //glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -568,6 +598,15 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 }
 
 -(void)setupSpriteRendering {
+    
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, 64096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 64096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
     glGenVertexArraysOES(1, &spriteVAO);
     glBindVertexArrayOES(spriteVAO);
     

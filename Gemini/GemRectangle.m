@@ -11,9 +11,9 @@
 
 @implementation GemRectangle
 
-@synthesize verts;
+
 @synthesize vertColor;
-@synthesize vertIndex;
+
 
 -(id) initWithLuaState:(lua_State *)luaState X:(GLfloat)x0 Y:(GLfloat)y0 Width:(GLfloat)w Height:(GLfloat)h {
     self = [super initWithLuaState:luaState];
@@ -31,7 +31,7 @@
         vertColor = (GLfloat *)malloc(12*4*sizeof(GLfloat));
         vertIndex = (GLushort *)malloc(30*sizeof(GLushort));
         strokeWidth = 0;
-        [self computeVertices];
+        
         [self setStrokeColor:GLKVector4Make(1.0, 1.0, 1.0, 1.0)];
         [self setFillColor:GLKVector4Make(1.0, 1.0, 1.0, 1.0)];
     }
@@ -59,8 +59,6 @@
 
 -(void)setLayer:(GemLayer *)_layer {
     [super setLayer:_layer];
-    
-    [self computeVertices];
 }
 
 -(GLfloat) strokeWidth {
@@ -69,7 +67,7 @@
 
 -(void)setStrokeWidth:(GLfloat)w {
     strokeWidth = w;
-    [self computeVertices];
+    needsUpdate = YES;
     
 }
 
@@ -116,6 +114,24 @@
 
 -(GLKVector4 *)gradient {
     return gradient;
+}
+
+-(GLfloat *)verts {
+    if (needsUpdate) {
+        [self computeVertices];
+        
+    }
+    
+    return verts;
+    
+}
+
+-(GLushort *)vertIndex {
+    if (needsUpdate) {
+        [self computeVertices];
+    }
+    
+    return vertIndex;
 }
 
 -(void)computeVertices {
@@ -213,7 +229,7 @@
         verts[11] = z;
     }
     
-
+    needsUpdate = NO;
 }
 
 @end
