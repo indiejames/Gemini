@@ -31,13 +31,14 @@ GLKVector3 vectorArray[1024];
 
 GLuint rectangleVBO[4];
 GLuint lineVBO[4];
-
+GLuint spriteVBO[4];
 
 GemColoredVertex *blendedRectangles;
 GemColoredVertex *unblendedRectangles;
 
 GLuint ringBufferOffset = 0;
 GLuint lineRingBufferOffset = 0;
+GLuint spriteRingBufferOffset = 0;
 
 @implementation GemRenderer
 
@@ -201,9 +202,20 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     glBindVertexArrayOES(spriteVAO);
     glUseProgram(spriteShaderManager.program);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, spriteVBO[spriteRingBufferOffset]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spriteVBO[spriteRingBufferOffset+1]);
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    if (spriteRingBufferOffset == 0) {
+        spriteRingBufferOffset = 2;
+    } else {
+        spriteRingBufferOffset = 0;
+    }
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_SPRITE, 3, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_SPRITE, 4, GL_FLOAT, GL_FALSE, 
+                          sizeof(GemTexturedVertex), (GLvoid*) (sizeof(float) * 3));
+    glVertexAttribPointer(ATTRIB_TEXCOORD_SPRITE, 2, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)(sizeof(float) * 7));
     
     NSEnumerator *textureEnumerator = [spriteBatches keyEnumerator];
     GLKTextureInfo *texture;
@@ -599,13 +611,19 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 -(void)setupSpriteRendering {
     
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 64096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glGenBuffers(4, spriteVBO);
     
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 64096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, spriteVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, 32000*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spriteVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 32000*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, spriteVBO[2]);
+    glBufferData(GL_ARRAY_BUFFER, 32000*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spriteVBO[3]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 32000*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     glGenVertexArraysOES(1, &spriteVAO);
     glBindVertexArrayOES(spriteVAO);
@@ -627,12 +645,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     GLfloat right = width;
     GLfloat bottom = 0;
     GLfloat top = height;
-    
-    glVertexAttribPointer(ATTRIB_VERTEX_SPRITE, 3, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)0);
-    
-    glVertexAttribPointer(ATTRIB_COLOR_SPRITE, 4, GL_FLOAT, GL_FALSE, 
-                          sizeof(GemTexturedVertex), (GLvoid*) (sizeof(float) * 3));
-    glVertexAttribPointer(ATTRIB_TEXCOORD_SPRITE, 2, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)(sizeof(float) * 7));
     
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glEnableVertexAttribArray(ATTRIB_VERTEX_SPRITE);
