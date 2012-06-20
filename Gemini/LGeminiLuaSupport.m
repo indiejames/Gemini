@@ -97,6 +97,14 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
             lua_pushnumber(L, rot);
             return 1;
             
+        } else if (strcmp("name", key) == 0){
+            NSString *name = obj.name;
+            lua_pushstring(L, [name UTF8String]);
+            return 1;
+        } else if (strcmp("isVisible", key) == 0){
+            bool visible = obj.isVisible;
+            lua_pushboolean(L, visible);
+            return 1;
         } else {
             return genericIndex(L);
         }
@@ -106,6 +114,7 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
     return 0;
     
 }
+
 
 // generic new index method for userdata types
 int genericNewIndex(lua_State *L, GemDisplayObject **obj){
@@ -177,11 +186,21 @@ int genericNewIndex(lua_State *L, GemDisplayObject **obj){
                 [*obj setAlpha:alpha];
                 return 0;
                 
+            } else if (strcmp("name", key) == 0){
+                
+                const char *valCStr = lua_tostring(L, 3);
+                NSLog(@"Setting object name to %s", valCStr);
+                (*obj).name = [NSString stringWithUTF8String:valCStr];
+            } else if (strcmp("isVisible", key) == 0){
+                BOOL visible = lua_toboolean(L, 3);
+                [*obj setIsVisible:visible];
+                return 0;
             }
             
         }
     } 
     
+    // defualt to storing value in attached lua table
     lua_getuservalue( L, -3 );
     /* object, key, value */
     lua_pushvalue(L, -3);
@@ -190,6 +209,13 @@ int genericNewIndex(lua_State *L, GemDisplayObject **obj){
     
     return 0;
     
+}
+
+int removeSelf(lua_State *L){
+    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, -1);
+    [(*displayObj).parent remove:*displayObj];
+    
+    return 0;
 }
 
 // used to set common defaults for all display objects

@@ -63,6 +63,10 @@
     obj.parent = nil;
 }
 
+-(unsigned int) numChildren {
+    return [objects count];
+}
+
 // compute the height and width of this group based on the object within it
 -(void)recomputeWidthHeight {
     

@@ -13,6 +13,7 @@
 @synthesize selfRef;
 @synthesize propertyTableRef;
 @synthesize L;
+@synthesize name;
 
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];

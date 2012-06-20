@@ -56,6 +56,8 @@ static int transitionFrom(lua_State *L){
 }
 
 static int transitionCancel(lua_State *L){
+    GemTransistion **trans = (GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
+    [[GemTransitionManager shared] removeTransition:*trans];
     
     return 0;
 }
@@ -65,6 +67,8 @@ static int transitionDissolve(lua_State *L){
 }
 
 static int gc(lua_State *L){
+    GemTransistion **trans = (GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
+    [*trans release];
     
     return 0;
 }
@@ -80,6 +84,7 @@ static int newIndex(lua_State *L){
 static const struct luaL_Reg transitionLib_f [] = {
     {"to", transitionTo},
     {"from", transitionFrom},
+    {"cancel", transitionCancel},
     {NULL, NULL}
 };
 

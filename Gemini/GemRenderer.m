@@ -160,6 +160,11 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 
 -(void)renderDisplayGroup:(GemDisplayGroup *)group forLayer:(int)layer withAlpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
+    
+    if (!group.isVisible) {
+        return;
+    }
+    
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *rectangles = [NSMutableArray arrayWithCapacity:1];
     
@@ -170,6 +175,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     for (int i=0; i<[group.objects count]; i++) {
         
         GemDisplayObject *gemObj = (GemDisplayObject *)[group.objects objectAtIndex:i];
+        if (!gemObj.isVisible) {
+            continue;
+        }
         if (gemObj.class == GemDisplayGroup.class) {
             // recursion
             [self renderDisplayGroup:(GemDisplayGroup *)gemObj forLayer:layer withAlpha:cumulAlpha transform:cumulTransform];

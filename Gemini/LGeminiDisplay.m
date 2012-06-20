@@ -154,6 +154,7 @@ static int rectangleSetStrokeWidth(lua_State *L){
     return 0;
 }
 
+
 ///////////// lines ///////////////////////////
 static int newLine(lua_State *L){
     //NSLog(@"Creating new line...");
@@ -184,6 +185,7 @@ static int lineGC (lua_State *L){
     
     return 0;
 }
+
 
 static int lineIndex(lua_State *L){
     int rval = 0;
@@ -326,6 +328,47 @@ static int displayGroupGC (lua_State *L){
     return 0;
 }
 
+static int displayGroupIndex(lua_State *L){
+    GemDisplayGroup  **dgp = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
+    GemDisplayGroup *dg = *dgp;
+    if (lua_isnumber(L, -1)) {
+        // groups can be indexed using bracket [] notation to get contained display objects
+        int index = lua_tointeger(L, -1) - 1;
+        
+        if (dg == nil) {
+            NSLog(@"Disply group is nil");
+        }
+        
+        NSLog(@"Retrieving object at index %d from display group %@", index, dg.name);
+        if (index < 0 || index >= [dg.objects count]) {
+            // index outside of allowable range returns nil instead of throwing exception
+            lua_pushnil(L);
+        } else {
+            GemDisplayObject *obj = (GemDisplayObject *)[dg.objects objectAtIndex:index];
+            
+            int ref = obj.selfRef;
+            lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
+        }
+        
+        return 1;
+    } else if (lua_isstring(L, -1)) {
+        const char *key = lua_tostring(L, -1);
+        NSLog(@"key = %s", key);
+        if (strcmp("numChildren", key) == 0) {
+            
+            unsigned int numChildren = dg.numChildren;
+            lua_pushinteger(L, numChildren);
+            return 1;
+        } else {
+            return genericGeminiDisplayObjectIndex(L, dg);
+        }
+    } 
+    
+    return 0;
+    
+}
+
+
 static int displayGroupNewIndex (lua_State *L){
     GemDisplayGroup  **dg = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
     return genericNewIndex(L, dg);
@@ -354,27 +397,14 @@ static int displayGroupInsert(lua_State *L){
 }
 
 static int displayGroupRemove(lua_State *L){
-    //NSLog(@"Calling displayGroupRemove()");
-    int stackSize = lua_gettop(L);
     
-    if (stackSize > 2) {
-        
-        GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
-        int insertionIndex = luaL_checkint(L, 2);
-        GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 3);
-        [*group insert:*displayObj atIndex:insertionIndex];
-        
-    } else {
-        GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
-        GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 2);
-        [*group insert:*displayObj];
-        
-    }
+    GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
     
+    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 2);
+    [*group remove:*displayObj];
     
     return 0;
 }
-
 
 
 // the mappings for the library functions
@@ -393,14 +423,17 @@ static const struct luaL_Reg layer_m [] = {
     {"__gc", layerGC},
     {"__index", genericIndex},
     {"__newindex", layerNewIndex},
+    // TODO - add remove self for layers (can't call generic method)
     {NULL, NULL}
 };
 
 // mappings for the display group methods
 static const struct luaL_Reg displayGroup_m [] = {
     {"insert", displayGroupInsert},
+    {"remove", displayGroupRemove},
+    {"removeSelf", removeSelf},
     {"__gc", displayGroupGC},
-    {"__index", genericIndex},
+    {"__index", displayGroupIndex},
     {"__newindex", displayGroupNewIndex},
     {NULL, NULL}
 };
@@ -410,6 +443,7 @@ static const struct luaL_Reg line_m [] = {
     {"__gc", lineGC},
     {"__index", lineIndex},
     {"__newindex", lineNewIndex},
+    {"removeSelf", removeSelf},
     {"setColor", lineSetColor},
     {"append", lineAppendPoints},
     {NULL, NULL}
@@ -423,6 +457,7 @@ static const struct luaL_Reg rectangle_m [] = {
     {"setFillColor", rectangleSetFillColor},
     {"setStrokeColor", rectangleSetStrokeColor},
     {"setStrokeWidth", rectangleSetStrokeWidth},
+    {"removeSelf", removeSelf},
     {NULL, NULL}
 };
 

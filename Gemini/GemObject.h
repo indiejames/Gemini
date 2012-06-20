@@ -17,11 +17,13 @@
     lua_State *L;
     int selfRef;
     int propertyTableRef;
+    NSString *name;
 }
 
 @property (nonatomic) int selfRef;
 @property (nonatomic) int propertyTableRef;
-@property(readonly) lua_State *L;
+@property (readonly) lua_State *L;
+@property (nonatomic, retain) NSString *name;
 
 -(id) initWithLuaState:(lua_State *)luaState;
 -(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;

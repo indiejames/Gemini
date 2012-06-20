@@ -32,6 +32,7 @@
     GLKMatrix3 transform;
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
+    BOOL isVisible;
 }
 
 @property (nonatomic) GLfloat alpha;

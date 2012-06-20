@@ -82,9 +82,16 @@ static int spriteNewIndex (lua_State *L){
     
     if (sprite != NULL) {
         if (lua_isstring(L, 2)) {
+            const char *key = lua_tostring(L, 2);
             
-            
-            rval = genericNewIndex(L, sprite);
+            if (strcmp("currentFrame", key) == 0) {
+                int cframe = luaL_checkint(L, 3) - 1;
+                [*sprite setCurrentFrame:cframe];
+                return 0;
+                
+            } else {
+                rval = genericNewIndex(L, sprite);
+            }
                         
         }
         
@@ -299,6 +306,7 @@ static const struct luaL_Reg sprite_m [] = {
     {"__gc", spriteGC},
     {"__index", spriteIndex},
     {"__newindex", spriteNewIndex},
+    {"removeSelf", removeSelf},
     {"prepare", spritePrepare},
     {"play", spritePlay},
     {"pause", spritePlay},

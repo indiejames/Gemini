@@ -123,6 +123,10 @@
     }
 }
 
+-(void)setCurrentFrame:(int)cframe {
+    currentFrame = cframe;
+}
+
 - (void)dealloc
 {
     [spriteSheet release];

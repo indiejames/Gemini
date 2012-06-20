@@ -33,5 +33,6 @@
 -(void)update:(double)currentTime;
 -(void)play:(double)currentTime;
 -(void)pause:(double)currentTime;
+-(void)setCurrentFrame:(int)cframe;
 
 @end

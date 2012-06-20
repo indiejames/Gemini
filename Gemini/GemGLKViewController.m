@@ -162,14 +162,19 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     glClearColor(0, 0, 0, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // compute frame rate
-    frameRenderTime += self.timeSinceLastDraw;
-    frameCount += 1;
+    if (frameCount > 0) {
+        frameRenderTime += self.timeSinceLastDraw;
+    }
+    
     if (frameCount == 60) {
         double frameRate = (double)frameCount / frameRenderTime;
         frameCount = 0;
         frameRenderTime = 0;
         NSLog(@"frame rate = %f", frameRate);
     }
+    
+    frameCount += 1;
+    
     //NSLog(@"Drawing");
    // glClearColor(0, 0.0, 1.0, 1.0);
     //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);

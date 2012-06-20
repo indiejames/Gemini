@@ -13,6 +13,7 @@
 }
 
 @property (readonly) NSArray *objects;
+@property (readonly) unsigned int numChildren;
 
 -(void)remove:(GemDisplayObject *) obj;
 -(void)recomputeWidthHeight;

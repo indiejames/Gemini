@@ -17,6 +17,7 @@
 @synthesize alpha;
 @synthesize needsUpdate;
 @synthesize needsTransformUpdate;
+@synthesize isVisible;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
@@ -29,6 +30,7 @@
         yReference = 0;
         needsUpdate = YES;
         needsTransformUpdate = YES;
+        isVisible = YES;
     }
     
     return self;
@@ -70,13 +72,6 @@
     [super setBOOL:isHitTestable forKey:"isHitTestable"];
 }
 
--(BOOL)isVisible {
-    return [super getBooleanForKey:"isVisible" withDefault:YES];
-}
-
--(void)setIsVisible:(BOOL)isVisible {
-    [super setBOOL:isVisible forKey:"isVisible"];
-}
 
 -(GLfloat)xScale {
     return xScale;
