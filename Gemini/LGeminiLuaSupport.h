@@ -24,7 +24,7 @@ int genericGemDisplayGroupIndex(lua_State *L, GemDisplayGroup *obj);
 int genericNewIndex(lua_State *L, GemDisplayObject **obj);
 int removeSelf(lua_State *L);
 void setDefaultValues(lua_State *L);
-void setupObject(lua_State *L, const char *luaKey, GemDisplayObject *obj);
+void setupObject(lua_State *L, const char *luaKey, GemObject *obj);
 
 #ifdef __cplusplus
 }

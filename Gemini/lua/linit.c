@@ -29,6 +29,7 @@ extern int luaopen_spritelib (lua_State *L);
 extern int luaopen_system_lib (lua_State *L);
 extern int luaopen_display_lib (lua_State *L);
 extern int luaopen_transition_lib (lua_State *L);
+extern int luaopen_timer_lib(lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -48,6 +49,7 @@ static const luaL_Reg loadedlibs[] = {
     {"gemini", luaopen_geminiObjectLib},
     {"system", luaopen_system_lib},
     {"transition", luaopen_transition_lib},
+    {"timer", luaopen_timer_lib},
     {NULL, NULL}
 };
 

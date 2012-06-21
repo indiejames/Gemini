@@ -249,7 +249,7 @@ void setDefaultValues(lua_State *L) {
 }
 
 // generic init method
-void setupObject(lua_State *L, const char *luaKey, GemDisplayObject *obj){
+void setupObject(lua_State *L, const char *luaKey, GemObject *obj){
     
     luaL_getmetatable(L, luaKey);
     lua_setmetatable(L, -2);
@@ -257,11 +257,14 @@ void setupObject(lua_State *L, const char *luaKey, GemDisplayObject *obj){
     // append a lua table to this user data to allow the user to store values in it
     lua_newtable(L);
     lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
-    // store a reference to this table so our sprite methods can access it
+    // store a reference to this table so our object methods can access it
     obj.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
     
-    // add in some default values
-    setDefaultValues(L);
+    // add in some default values for display objects
+    if ([obj isKindOfClass:[GemDisplayObject class]]) {
+        setDefaultValues(L);
+    }
+    
     
     // set the table as the user value for the Lua object
     lua_setuservalue(L, -2);

@@ -64,6 +64,15 @@
 		7692568415278F4000BEEF0C /* GemLineShaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7692568215278F4000BEEF0C /* GemLineShaderManager.h */; };
 		7692568515278F4000BEEF0C /* GemLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GemLineShaderManager.m */; };
 		7692568615278F4000BEEF0C /* GemLineShaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7692568315278F4000BEEF0C /* GemLineShaderManager.m */; };
+		7699D3671592500A00F9865A /* LGeminiTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7699D3651592500900F9865A /* LGeminiTimer.h */; };
+		7699D3681592500A00F9865A /* LGeminiTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D3661592500A00F9865A /* LGeminiTimer.m */; };
+		7699D3691592500A00F9865A /* LGeminiTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D3661592500A00F9865A /* LGeminiTimer.m */; };
+		7699D36D159250DD00F9865A /* GemTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7699D36B159250DC00F9865A /* GemTimer.h */; };
+		7699D36E159250DD00F9865A /* GemTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D36C159250DC00F9865A /* GemTimer.m */; };
+		7699D36F159250DD00F9865A /* GemTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D36C159250DC00F9865A /* GemTimer.m */; };
+		7699D3721592587B00F9865A /* GemTimerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7699D3701592587A00F9865A /* GemTimerManager.h */; };
+		7699D3731592587B00F9865A /* GemTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D3711592587B00F9865A /* GemTimerManager.m */; };
+		7699D3741592587B00F9865A /* GemTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7699D3711592587B00F9865A /* GemTimerManager.m */; };
 		76BC9A2C14F99687006B1E17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A2B14F99687006B1E17 /* Foundation.framework */; };
 		76BC9A3214F99687006B1E17 /* Gemini.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BC9A3114F99687006B1E17 /* Gemini.m */; };
 		76BC9A3A14F99687006B1E17 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BC9A3914F99687006B1E17 /* SenTestingKit.framework */; };
@@ -367,6 +376,12 @@
 		7692567E15278EAE00BEEF0C /* GemSpriteShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSpriteShaderManager.m; sourceTree = "<group>"; };
 		7692568215278F4000BEEF0C /* GemLineShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemLineShaderManager.h; sourceTree = "<group>"; };
 		7692568315278F4000BEEF0C /* GemLineShaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemLineShaderManager.m; sourceTree = "<group>"; };
+		7699D3651592500900F9865A /* LGeminiTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiTimer.h; sourceTree = "<group>"; };
+		7699D3661592500A00F9865A /* LGeminiTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiTimer.m; sourceTree = "<group>"; };
+		7699D36B159250DC00F9865A /* GemTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemTimer.h; sourceTree = "<group>"; };
+		7699D36C159250DC00F9865A /* GemTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemTimer.m; sourceTree = "<group>"; };
+		7699D3701592587A00F9865A /* GemTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemTimerManager.h; sourceTree = "<group>"; };
+		7699D3711592587B00F9865A /* GemTimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemTimerManager.m; sourceTree = "<group>"; };
 		76BC9A2814F99687006B1E17 /* libGemini.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGemini.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BC9A2B14F99687006B1E17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		76BC9A2F14F99687006B1E17 /* Gemini-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gemini-Prefix.pch"; sourceTree = "<group>"; };
@@ -747,6 +762,12 @@
 				7624E2C315771D9100E7759E /* LGeminiPhysics.mm */,
 				76C5DAF4158A368D006C85DE /* GemRectangleBatch.h */,
 				76C5DAF5158A368D006C85DE /* GemRectangleBatch.m */,
+				7699D3651592500900F9865A /* LGeminiTimer.h */,
+				7699D3661592500A00F9865A /* LGeminiTimer.m */,
+				7699D36B159250DC00F9865A /* GemTimer.h */,
+				7699D36C159250DC00F9865A /* GemTimer.m */,
+				7699D3701592587A00F9865A /* GemTimerManager.h */,
+				7699D3711592587B00F9865A /* GemTimerManager.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1270,6 +1291,9 @@
 				7624E2BB1573D77500E7759E /* LGeminiLuaSupport.h in Headers */,
 				7624E2C415771D9100E7759E /* LGeminiPhysics.h in Headers */,
 				76C5DAF6158A368D006C85DE /* GemRectangleBatch.h in Headers */,
+				7699D3671592500A00F9865A /* LGeminiTimer.h in Headers */,
+				7699D36D159250DD00F9865A /* GemTimer.h in Headers */,
+				7699D3721592587B00F9865A /* GemTimerManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,6 +1529,9 @@
 				7624E2BC1573D77500E7759E /* LGeminiLuaSupport.m in Sources */,
 				7624E2C515771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 				76C5DAF7158A368D006C85DE /* GemRectangleBatch.m in Sources */,
+				7699D3681592500A00F9865A /* LGeminiTimer.m in Sources */,
+				7699D36E159250DD00F9865A /* GemTimer.m in Sources */,
+				7699D3731592587B00F9865A /* GemTimerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,6 +1565,9 @@
 				7624E2B81572DAC300E7759E /* GemTransistion.m in Sources */,
 				7624E2C615771D9100E7759E /* LGeminiPhysics.mm in Sources */,
 				76C5DAF8158A368D006C85DE /* GemRectangleBatch.m in Sources */,
+				7699D3691592500A00F9865A /* LGeminiTimer.m in Sources */,
+				7699D36F159250DD00F9865A /* GemTimer.m in Sources */,
+				7699D3741592587B00F9865A /* GemTimerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

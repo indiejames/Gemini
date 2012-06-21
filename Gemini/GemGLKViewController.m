@@ -51,6 +51,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 @synthesize context;
 @synthesize renderer;
 @synthesize spriteManager;
+@synthesize timerManager;
 @synthesize updateTime;
 @synthesize L;
 
@@ -88,6 +89,8 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     self.preferredFramesPerSecond = 60;
     
     [self setupGL];
+    
+    timerManager = [[GemTimerManager alloc] init];
 }
 
 - (void)viewDidUnload
@@ -146,6 +149,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     updateTime += timeDelta;
     
+    [timerManager update:updateTime];
     [spriteManager update:updateTime];
     
     [[Gemini shared] update:timeDelta];

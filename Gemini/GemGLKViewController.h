@@ -10,6 +10,7 @@
 #import "GemLineShaderManager.h"
 #import "GemRenderer.h"
 #import "GemSpriteManager.h"
+#import "GemTimerManager.h"
 
 // Uniform index.
 enum {
@@ -35,11 +36,14 @@ enum {
     GemShaderManager *lineShaderManager;
     GemRenderer *renderer;
     GemSpriteManager *spriteManager;
+    GemTimerManager *timerManager;
+    
     double updateTime;
 }
 
 @property (readonly) GemRenderer *renderer;
 @property (readonly) GemSpriteManager *spriteManager;
+@property (readonly) GemTimerManager *timerManager;
 @property (readonly) double updateTime;
 
 -(void)setPreRenderCallback:(SEL)callback;
