@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GemObject.h"
 
-@interface GemEvent : NSObject{
-    NSString *name;
+
+@interface GemEvent : GemObject {
+    GemObject *source;  // the object generating/triggering the event
 }
 
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) GemObject *source;
+
+-(id)initWithLuaState:(lua_State *)luaState Source:(GemObject *)src;
 
 @end

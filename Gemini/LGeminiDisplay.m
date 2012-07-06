@@ -339,7 +339,7 @@ static int displayGroupIndex(lua_State *L){
             NSLog(@"Disply group is nil");
         }
         
-        NSLog(@"Retrieving object at index %d from display group %@", index, dg.name);
+       // NSLog(@"Retrieving object at index %d from display group %@", index, dg.name);
         if (index < 0 || index >= [dg.objects count]) {
             // index outside of allowable range returns nil instead of throwing exception
             lua_pushnil(L);
@@ -353,7 +353,7 @@ static int displayGroupIndex(lua_State *L){
         return 1;
     } else if (lua_isstring(L, -1)) {
         const char *key = lua_tostring(L, -1);
-        NSLog(@"key = %s", key);
+        //NSLog(@"key = %s", key);
         if (strcmp("numChildren", key) == 0) {
             
             unsigned int numChildren = dg.numChildren;

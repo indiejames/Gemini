@@ -30,6 +30,7 @@ extern int luaopen_system_lib (lua_State *L);
 extern int luaopen_display_lib (lua_State *L);
 extern int luaopen_transition_lib (lua_State *L);
 extern int luaopen_timer_lib(lua_State *L);
+extern int luaopen_event_lib(lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -50,6 +51,7 @@ static const luaL_Reg loadedlibs[] = {
     {"system", luaopen_system_lib},
     {"transition", luaopen_transition_lib},
     {"timer", luaopen_timer_lib},
+    {"event", luaopen_event_lib},
     {NULL, NULL}
 };
 

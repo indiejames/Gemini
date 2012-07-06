@@ -74,13 +74,14 @@ static int timerGC (lua_State *L){
 }
 
 static int timerNewIndex(lua_State *L){
+    
     // defualt to storing value in attached lua table
     lua_getuservalue( L, -3 );
     /* object, key, value */
     lua_pushvalue(L, -3);
     lua_pushvalue(L,-3);
     lua_rawset( L, -3 );
-    
+                        
     return 0;
 }
 

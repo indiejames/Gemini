@@ -9,6 +9,7 @@
 #import "GemTimer.h"
 #import "GemGLKViewController.h"
 #import "Gemini.h"
+#import "GemEvent.h"
 
 @implementation GemTimer
 
@@ -25,7 +26,8 @@
     self = [super initWithLuaState:luaState];
     
     if (self) {
-        delay = del;
+        NSLog(@"del = %f", del);
+        delay = del / 1000.0;
         numIterations = numIters;
         iteration = 0;
         accumulatedTime = 0;
@@ -70,8 +72,9 @@
         
         if (accumulatedTime >= delay) {
             
-            GemEvent *timeEvent = [[GemEvent alloc] init];
+            GemEvent *timeEvent = [[GemEvent alloc] initWithLuaState:L Source:self];
             timeEvent.name = GEM_TIMER_EVENT_NAME;
+            timeEvent.source = self;
             [self handleEvent:timeEvent];
             
             [timeEvent release];

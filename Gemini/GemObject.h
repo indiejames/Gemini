@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GemEvent.h"
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+
+@class GemEvent;
 
 @interface GemObject : NSObject {
     NSMutableDictionary *eventHandlers;
@@ -25,7 +26,7 @@
 @property (readonly) lua_State *L;
 @property (nonatomic, retain) NSString *name;
 
--(id) initWithLuaState:(lua_State *)luaState;
+-(id)initWithLuaState:(lua_State *)luaState;
 -(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;
 -(double)getDoubleForKey:(const char*) key withDefault:(double)dflt;
 -(int)getIntForKey:(const char*) key withDefault:(int)dflt;

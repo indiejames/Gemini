@@ -11,7 +11,7 @@
 #define GEM_TIMER_EVENT_NAME @"GEM_TIMER_EVENT"
 
 @interface GemTimer : GemObject {
-    double delay;
+    double delay; // sec
     double startTime;
     int numIterations;
     int iteration;

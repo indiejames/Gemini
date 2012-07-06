@@ -189,7 +189,7 @@ int genericNewIndex(lua_State *L, GemDisplayObject **obj){
             } else if (strcmp("name", key) == 0){
                 
                 const char *valCStr = lua_tostring(L, 3);
-                NSLog(@"Setting object name to %s", valCStr);
+                //NSLog(@"Setting object name to %s", valCStr);
                 (*obj).name = [NSString stringWithUTF8String:valCStr];
             } else if (strcmp("isVisible", key) == 0){
                 BOOL visible = lua_toboolean(L, 3);

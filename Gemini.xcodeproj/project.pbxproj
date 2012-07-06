@@ -52,6 +52,9 @@
 		767CA05915154358001C94CA /* LGeminiDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 767CA05715154357001C94CA /* LGeminiDisplay.h */; };
 		767CA05A15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
 		767CA05B15154358001C94CA /* LGeminiDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 767CA05815154357001C94CA /* LGeminiDisplay.m */; };
+		768ED4DF15A78B300087A307 /* LGeminiEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 768ED4DD15A78B300087A307 /* LGeminiEvent.h */; };
+		768ED4E015A78B300087A307 /* LGeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 768ED4DE15A78B300087A307 /* LGeminiEvent.m */; };
+		768ED4E115A78B300087A307 /* LGeminiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 768ED4DE15A78B300087A307 /* LGeminiEvent.m */; };
 		7692566A1522982800BEEF0C /* GemRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 769256681522982700BEEF0C /* GemRenderer.h */; };
 		7692566B1522982800BEEF0C /* GemRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GemRenderer.m */; };
 		7692566C1522982800BEEF0C /* GemRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 769256691522982700BEEF0C /* GemRenderer.m */; };
@@ -368,6 +371,8 @@
 		767CA053150ED6D4001C94CA /* GemDisplayGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemDisplayGroup.m; sourceTree = "<group>"; };
 		767CA05715154357001C94CA /* LGeminiDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiDisplay.h; sourceTree = "<group>"; };
 		767CA05815154357001C94CA /* LGeminiDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiDisplay.m; sourceTree = "<group>"; };
+		768ED4DD15A78B300087A307 /* LGeminiEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGeminiEvent.h; sourceTree = "<group>"; };
+		768ED4DE15A78B300087A307 /* LGeminiEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGeminiEvent.m; sourceTree = "<group>"; };
 		769256681522982700BEEF0C /* GemRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemRenderer.h; sourceTree = "<group>"; };
 		769256691522982700BEEF0C /* GemRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemRenderer.m; sourceTree = "<group>"; };
 		7692567815278D4C00BEEF0C /* GemShaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemShaderManager.h; sourceTree = "<group>"; };
@@ -768,6 +773,8 @@
 				7699D36C159250DC00F9865A /* GemTimer.m */,
 				7699D3701592587A00F9865A /* GemTimerManager.h */,
 				7699D3711592587B00F9865A /* GemTimerManager.m */,
+				768ED4DD15A78B300087A307 /* LGeminiEvent.h */,
+				768ED4DE15A78B300087A307 /* LGeminiEvent.m */,
 			);
 			path = Gemini;
 			sourceTree = "<group>";
@@ -1294,6 +1301,7 @@
 				7699D3671592500A00F9865A /* LGeminiTimer.h in Headers */,
 				7699D36D159250DD00F9865A /* GemTimer.h in Headers */,
 				7699D3721592587B00F9865A /* GemTimerManager.h in Headers */,
+				768ED4DF15A78B300087A307 /* LGeminiEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1532,6 +1540,7 @@
 				7699D3681592500A00F9865A /* LGeminiTimer.m in Sources */,
 				7699D36E159250DD00F9865A /* GemTimer.m in Sources */,
 				7699D3731592587B00F9865A /* GemTimerManager.m in Sources */,
+				768ED4E015A78B300087A307 /* LGeminiEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1568,6 +1577,7 @@
 				7699D3691592500A00F9865A /* LGeminiTimer.m in Sources */,
 				7699D36F159250DD00F9865A /* GemTimer.m in Sources */,
 				7699D3741592587B00F9865A /* GemTimerManager.m in Sources */,
+				768ED4E115A78B300087A307 /* LGeminiEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
