@@ -89,7 +89,7 @@ static int rectangleNewIndex (lua_State *L){
                 rval = 0;
             } else {
                 //lua_pushstring(L, key);
-                rval = genericNewIndex(L, rect);
+                rval = genericGemDisplayObjecNewIndex(L, rect);
             }
 
         }
@@ -201,7 +201,7 @@ static int lineIndex(lua_State *L){
 
 static int lineNewIndex (lua_State *L){
     GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
-    return genericNewIndex(L, line);
+    return genericGemDisplayObjecNewIndex(L, line);
 }
 
 static int lineSetColor(lua_State *L){
@@ -285,7 +285,7 @@ GemLayer *createLayerZero(lua_State *L) {
 
 static int layerNewIndex (lua_State *L){
     GemLayer  **layer = (GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
-    return genericNewIndex(L, layer);
+    return genericGemDisplayObjecNewIndex(L, layer);
 }
 
 
@@ -371,7 +371,7 @@ static int displayGroupIndex(lua_State *L){
 
 static int displayGroupNewIndex (lua_State *L){
     GemDisplayGroup  **dg = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
-    return genericNewIndex(L, dg);
+    return genericGemDisplayObjecNewIndex(L, dg);
 }
 
 static int displayGroupInsert(lua_State *L){

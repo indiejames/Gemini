@@ -8,6 +8,15 @@
 
 #import "LGeminiLuaSupport.h"
 
+// call a lua method that takes a display object as its parameter
+void callLuaMethodForDisplayObject(lua_State *L, int methodRef, GemDisplayObject *obj){
+    lua_rawgeti(L, LUA_REGISTRYINDEX, methodRef);
+    lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
+    lua_pcall(L, 1, 0, 0);
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
+}
+
 void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs){
     luaL_newmetatable(L, key);    
     lua_pushvalue(L, -1); // duplicates the metatable
@@ -16,7 +25,7 @@ void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs
 
 // generic index method for userdata types
 int genericIndex(lua_State *L){
-    /* first check the environment */ 
+    // first check the uservalue 
     lua_getuservalue( L, -2 );
     if(lua_isnil(L,-1)){
         // NSLog(@"user value for user data is nil");
@@ -31,12 +40,12 @@ int genericIndex(lua_State *L){
     
     lua_pop( L, 2 );
     
-    /* second check the metatable */    
+    // second check the metatable   
     lua_getmetatable( L, -2 );
     lua_pushvalue( L, -2 );
     lua_rawget( L, -2 );
     
-    /* nil or otherwise, we return here */
+    // nil or otherwise, we return here
     return 1;
     
 }
@@ -117,7 +126,7 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
 
 
 // generic new index method for userdata types
-int genericNewIndex(lua_State *L, GemDisplayObject **obj){
+int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject **obj){
     
     if (lua_isstring(L, 2)) {
         
@@ -195,17 +204,20 @@ int genericNewIndex(lua_State *L, GemDisplayObject **obj){
                 BOOL visible = lua_toboolean(L, 3);
                 [*obj setIsVisible:visible];
                 return 0;
-            }
-            
+            } 
         }
+        
+        // defualt to storing value in attached lua table
+        lua_getuservalue( L, -3 );
+        /* object, key, value */
+        lua_pushvalue(L, -3);
+        lua_pushvalue(L,-3);
+        lua_rawset( L, -3 );
+        
+        return 0;
     } 
     
-    // defualt to storing value in attached lua table
-    lua_getuservalue( L, -3 );
-    /* object, key, value */
-    lua_pushvalue(L, -3);
-    lua_pushvalue(L,-3);
-    lua_rawset( L, -3 );
+    
     
     return 0;
     

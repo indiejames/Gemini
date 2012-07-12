@@ -46,6 +46,13 @@ static int newSprite(lua_State *L){
     return 1;
 }
 
+static int spriteOnStart(lua_State *L){
+    
+    NSLog(@"Called onStart");
+    
+    return 0;
+}
+
 static int spriteGC (lua_State *L){
     GemSprite  **s = (GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     
@@ -90,9 +97,12 @@ static int spriteNewIndex (lua_State *L){
                 return 0;
                 
             } else {
-                rval = genericNewIndex(L, sprite);
+                rval = genericGemDisplayObjecNewIndex(L, sprite);
             }
                         
+        } else {
+            
+            rval = genericGemDisplayObjecNewIndex(L,sprite);
         }
         
         
@@ -310,6 +320,7 @@ static const struct luaL_Reg sprite_m [] = {
     {"prepare", spritePrepare},
     {"play", spritePlay},
     {"pause", spritePlay},
+    {"onStart", spriteOnStart},
     {NULL, NULL}
 };
 

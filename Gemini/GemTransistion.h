@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "GemDisplayObject.h"
+#import "LGeminiLuaSupport.h"
 
 @interface GemTransistion : NSObject {
     double elapsedTime;
     double duration;
     double delay;
+    int onStart; // ref to lua method
+    int onComplete; // ref to lua method
+    lua_State *L;
     
     NSMutableDictionary *finalParamValues;
     NSMutableDictionary *initialParamValues;
@@ -20,7 +24,7 @@
     GemDisplayObject *obj;
 }
 
--(id)initWithObject:(GemDisplayObject *)object Data:(NSDictionary *)data To:(BOOL)to;
+-(id)initWithLuaState:(lua_State *)lua_state Object:(GemDisplayObject *)object Data:(NSDictionary *)data To:(BOOL)to;
 -(void)update:(double)secondsSinceLastUpdate;
 -(BOOL)isActive;
 

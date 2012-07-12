@@ -12,6 +12,7 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#include "Box2D.h"
 
 @class GemDisplayGroup;
 @class GemLayer;
@@ -33,6 +34,7 @@
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
     BOOL isVisible;
+    b2Body *physicsBody;
 }
 
 @property (nonatomic) GLfloat alpha;
@@ -59,6 +61,7 @@
 @property (nonatomic) GLfloat yScale;
 @property (nonatomic) BOOL needsUpdate;
 @property (nonatomic) BOOL needsTransformUpdate;
+@property (nonatomic) *physicsBody;
 
 -(GLKMatrix3) transform;
 

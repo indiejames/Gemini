@@ -18,6 +18,7 @@
 @synthesize needsUpdate;
 @synthesize needsTransformUpdate;
 @synthesize isVisible;
+@synthesize physicsBody;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];

@@ -13,6 +13,37 @@
 
 int luaopen_transition_lib (lua_State *L);
 
+// call onComplete that takes a display object as its parameter
+void callOnStartForDisplayObject(lua_State *L, int methodRef, GemDisplayObject *obj){
+    lua_rawgeti(L, LUA_REGISTRYINDEX, methodRef);
+    
+    if(lua_istable(L, -1)) {
+        lua_pushstring(L, "onStart");
+        lua_rawget(L, -2);
+    } 
+    
+    lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
+    lua_pcall(L, 1, 0, 0);
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
+}
+
+// call onComplete that takes a display object as its parameter
+void callOnCompleteForDisplayObject(lua_State *L, int methodRef, GemDisplayObject *obj){
+    lua_rawgeti(L, LUA_REGISTRYINDEX, methodRef);
+    
+    if(lua_istable(L, -1)) {
+        lua_pushstring(L, "onComplete");
+        lua_rawget(L, -2);
+    } 
+    
+    lua_rawgeti(L, LUA_REGISTRYINDEX, obj.selfRef);
+    lua_pcall(L, 1, 0, 0);
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
+}
+
+
 static int createTransition(lua_State *L, BOOL to){
     GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 1);
     if (!lua_istable(L, 2)) {
@@ -29,16 +60,23 @@ static int createTransition(lua_State *L, BOOL to){
                lua_typename(L, lua_type(L, -2)),
                lua_typename(L, lua_type(L, -1)));
         const char *key = lua_tostring(L, -2);
-        double val = lua_tonumber(L, -1);
-        
-        [params setObject:[NSNumber numberWithDouble:val] forKey:[NSString stringWithUTF8String:key]];
-        
+        if (strcmp(key, "onStart") == 0 || strcmp(key, "onComplete") == 0) {
+            // value is a function
+            int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+            [params setObject:[NSNumber numberWithInt:ref] forKey:[NSString stringWithUTF8String:key]];
+        } else {
+            
+            double val = lua_tonumber(L, -1);
+            
+            [params setObject:[NSNumber numberWithDouble:val] forKey:[NSString stringWithUTF8String:key]];
+            
+        }
+                
         /* removes 'value'; keeps 'key' for next iteration */
         lua_pop(L, 1);
     }
     
-    GemTransistion *transition = [[GemTransistion alloc] initWithObject:*displayObj Data:params To:to];
-    
+    GemTransistion *transition = [[GemTransistion alloc] initWithLuaState:L Object:*displayObj Data:params To:to];
     GemTransistion **ltrans = (GemTransistion **)lua_newuserdata(L, sizeof(GemTransistion *));
     *ltrans = transition;
     
